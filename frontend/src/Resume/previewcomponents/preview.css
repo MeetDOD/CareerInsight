@@ -1,0 +1,13 @@
+.previewStyle ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.previewStyle ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
+.previewStyle li {
+  margin-bottom: 0.2rem;
+}
