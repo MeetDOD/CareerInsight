@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Drawer,
@@ -12,12 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaUserEdit } from "react-icons/fa";
-import { useRecoilValue } from 'recoil';
-import { userState } from '@/store/auth';
 
 const Profile = () => {
-
-    const user = useRecoilValue(userState)
 
     return (
         <form className="mb-10">
@@ -25,29 +21,29 @@ const Profile = () => {
 
                 <div className="flex flex-col items-center gap-4">
                     <img
-                        src={user?.avatar}
-                        alt={user?.email}
+                        src="https://res.cloudinary.com/djoybvxgn/image/upload/v1726561371/ugbsdccquryn2c6ppwwc.png"
+                        alt="GOD IS GOOD"
                         className="w-24 h-24 rounded-full border-2 object-cover"
                     />
-                    <h2 className="text-2xl font-semibold text-gray-800">{user?.email}'s Profile</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800">meet's Profile</h2>
                 </div>
 
                 <div className="flex flex-col w-full gap-4">
                     <div className="flex flex-col sm:flex-row justify-between">
                         <p className="font-medium text-gray-700">First Name:</p>
-                        <span className="opacity-90">{user?.firstName || "N/A"}</span>
+                        <span className="opacity-90">GOD IS</span>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between">
                         <p className="font-medium text-gray-700">Last Name:</p>
-                        <span className="opacity-90">{user?.lastName || "N/A"}</span>
+                        <span className="opacity-90">GOOD</span>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between">
                         <p className="font-medium text-gray-700">Email Id:</p>
-                        <span className="opacity-90">{user?.email || "N/A"}</span>
+                        <span className="opacity-90">god@gmail.com</span>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between">
                         <p className="font-medium text-gray-700">Password:</p>
-                        <span className="opacity-90">{user?.password || "N/A"}</span>
+                        <span className="opacity-90">*****</span>
                     </div>
                     <Drawer>
                         <div className='flex flex-col items-center'>

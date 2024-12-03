@@ -1,30 +1,10 @@
 import { Button } from '@/components/ui/button'
-import React, { useContext } from 'react'
+import React from 'react'
 import html2pdf from 'html2pdf.js';
-import { ResumeInfoContext } from '@/context/ResumeContext';
-import { addResumeData } from '@/lib/resume.helper';
 import { toast } from 'sonner';
 
 
 const DonwloadResume = () => {
-
-    const [resumeInfo] = useContext(ResumeInfoContext);
-
-    const handleSave = async (e) => {
-        try{
-            e.preventDefault();
-            const result = await addResumeData(resumeInfo);
-            const {message, status} = result;
-            if(status === 200 || status === 201){
-                toast.success(message);
-            }else{
-                toast.error(message);
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
 
     const handleDownload = () => {
         const resume = document.getElementById('resume-preview');
@@ -43,7 +23,7 @@ const DonwloadResume = () => {
                 <p className='text-center text-lg font-semibold text-gray-700'>You can now download, save and share with potential clients and friends</p>
                 <div className='flex justify-center pt-5 gap-5'>
                     <Button onClick={handleDownload} >Download</Button>
-                    <Button className="px-7" onClick={(e) => handleSave(e)}>Save </Button>
+                    <Button className="px-7">Save </Button>
                 </div>
                 <div>
                 </div>

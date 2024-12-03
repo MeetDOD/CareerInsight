@@ -6,18 +6,15 @@ import Footer from './home/Footer';
 import Dashboard from './Dashboard/Dashboard';
 import MyCourses from './Dashboard/MyCourses';
 import ResumeBuilder from './Dashboard/ResumeBuilder';
-import ResumeBody from './Resume/ResumeBody';
+import ResumeBody from './AIResume/ResumeBody';
 import OnlineTest from './Dashboard/OnlineTest';
-import { GoogleOAuthWrapper } from './Auth/GoogleOAuthWrapper';
-import DonwloadResume from './Resume/DonwloadResume';
-import PrivateRoute from './Auth/PrivateRoute';
+import DonwloadResume from './AIResume/DonwloadResume';
 import { Toaster } from 'sonner';
 import InterviewSession from './AIInterview/InterviewSession'
 import InterviewFeedback from './AIInterview/InterviewFeedback'
 import InterviewQuestion from './AIInterview/InterviewQuestion'
 import CreateCourse from './AICourse/CreateCourse';
 import CourseLayout from './AICourse/CourseLayout';
-import Register from './Auth/Register';
 
 const App = () => {
   return (
@@ -27,58 +24,38 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<GoogleOAuthWrapper />} />
-          <Route path='/register' element={<Register />} />
 
           <Route path='/dashboard' element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            <Dashboard />
           } />
           <Route path='/mycourses' element={
-            <PrivateRoute>
-              <MyCourses />
-            </PrivateRoute>
+            <MyCourses />
           } />
 
           {/* Resume Builder Starts*/}
           <Route path='/resumebuilder' element={
-            <PrivateRoute>
-              <ResumeBuilder />
-            </PrivateRoute>
+            <ResumeBuilder />
           } />
           <Route path='/resumebody' element={
-            <PrivateRoute>
-              <ResumeBody />
-            </PrivateRoute>
+            <ResumeBody />
           } />
           <Route path='/downloadresume' element={
-            <PrivateRoute>
-              <DonwloadResume />
-            </PrivateRoute>
+            <DonwloadResume />
           } />
           {/* Resume Builder Ends*/}
 
           {/* Mock Interview Starts*/}
           <Route path='/mockinterview' element={
-            <PrivateRoute>
-              <OnlineTest />
-            </PrivateRoute>
+            <OnlineTest />
           } />
           <Route path='/interviewsession' element={
-            <PrivateRoute>
-              <InterviewSession />
-            </PrivateRoute>
+            <InterviewSession />
           } />
           <Route path='/interviewstarts' element={
-            <PrivateRoute>
-              <InterviewQuestion />
-            </PrivateRoute>
+            <InterviewQuestion />
           } />
           <Route path='/interviewfeedback' element={
-            <PrivateRoute>
-              <InterviewFeedback />
-            </PrivateRoute>
+            <InterviewFeedback />
           } />
           {/* Mock Interview Ends*/}
 

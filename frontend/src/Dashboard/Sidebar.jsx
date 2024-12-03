@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { tokenState, userState } from '@/store/auth';
 import { BsLayoutSidebarInset, BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { Button } from '@/components/ui/button';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera } from "react-icons/md";
@@ -9,16 +7,6 @@ import { FaTools } from "react-icons/fa";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
-    const setTokenState = useSetRecoilState(tokenState);
-    const setUserState = useSetRecoilState(userState);
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setTokenState(null);
-        setUserState(null); 
-        navigate('/login');
-    }
 
     return (
         <div>
@@ -56,7 +44,7 @@ const Sidebar = () => {
                     </div>
 
                     <div className="mt-auto">
-                        <Button variant="destructive" onClick={handleLogout} className="w-full">
+                        <Button variant="destructive" className="w-full">
                             Logout
                         </Button>
                     </div>
