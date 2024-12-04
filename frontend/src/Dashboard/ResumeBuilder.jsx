@@ -72,7 +72,7 @@ const ResumeBuilder = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
                         <Link
                             to="/resumebody"
-                            className="p-14 py-24 items-center justify-center flex border-2 border-dashed rounded-lg h-[290px] hover:scale-95 transition-all hover:shadow-md cursor-pointer"
+                            className="p-14 py-24 items-center justify-center flex border-2 border-dashed rounded-lg h-[369px] hover:scale-95 transition-all hover:shadow-md cursor-pointer"
                         >
                             <IoMdAdd size={50} />
                         </Link>
@@ -86,7 +86,7 @@ const ResumeBuilder = () => {
                                 <img
                                     src={resume.previewImage}
                                     alt={resume.title}
-                                    className="w-full h-40 object-cover rounded-lg"
+                                    className="w-full h-60 object-cover rounded-lg"
                                 />
 
                                 <div className="mt-4 flex flex-col flex-grow">

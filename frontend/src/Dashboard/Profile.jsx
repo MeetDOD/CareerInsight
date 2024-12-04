@@ -9,8 +9,8 @@ const Profile = () => {
             style={{ borderColor: `var(--borderColor)` }}
         >
             <div
-                className="w-full max-w-5xl shadow-md rounded-xl overflow-hidden"
-                style={{ backgroundColor: `var(--background-color)` }}
+                className="w-full max-w-5xl shadow-md rounded-xl overflow-hidden border border-gray-300"
+                style={{ backgroundColor: `var(--background-color)`, borderColor: `var(--borderColor)` }}
             >
                 <div className="relative">
                     <div className="h-40 bg-gradient-to-r from-indigo-400 to-purple-950"></div>
@@ -18,7 +18,7 @@ const Profile = () => {
                         <img
                             src="https://techcare-62ma.onrender.com/assets/meet-j6qXUjCm.png"
                             alt="User Avatar"
-                            className="w-28 h-28 rounded-full border-4 border-white"
+                            className="w-28 h-28 rounded-full border-4 " style={{ borderColor: `var(--background-color)` }}
                         />
                     </div>
                 </div>

@@ -65,17 +65,17 @@ const Navbar = () => {
                         Login/Signup
                     </button>
                 } */}
-                <Button size="icon" variant="ghost" className="border" onClick={toggleTheme} style={{
+                <Button size="icon" variant="secondary" className="border" onClick={toggleTheme} style={{
                     borderColor: `var(--borderColor)`,
                 }}>
-                    {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5" /> : <BsFillSunFill className="h-5 w-5" />}
+                    {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5 text-primary" /> : <BsFillSunFill className="h-5 w-5 text-primary" />}
                 </Button>
                 {/* <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Create Course
                 </Link> */}
-                <Link to="/dashboard" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
+                <Button to="/dashboard" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Dashboard
-                </Link>
+                </Button>
                 <button onClick={() => setShowMenu(true)} className='w-6 md:hidden'><GiHamburgerMenu size={25} /></button>
                 <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} bg-gray-50 md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden transition-all`} >
                     <div className='flex items-center justify-between px-5 py-6'>
