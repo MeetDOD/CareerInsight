@@ -5,6 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/ui/themeprovider';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
+import logo from "../assets/image.png"
 
 const Navbar = () => {
 
@@ -14,8 +15,7 @@ const Navbar = () => {
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
-            {/* <img src={logo} className='w-28 cursor-pointer' alt='TECHCARE' onClick={() => navigate("/")} /> */}
-            MEET
+            <img src={logo} className='w-28 cursor-pointer' alt='TECHCARE' onClick={() => navigate("/")} />
             <ul className='hidden md:flex items-start gap-5 font-medium list-none'>
                 <NavLink to="/">
                     <li className='py-1 hover:bg-primary  hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Home</li>
@@ -70,9 +70,9 @@ const Navbar = () => {
                 }}>
                     {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5" /> : <BsFillSunFill className="h-5 w-5" />}
                 </Button>
-                <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
+                {/* <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Create Course
-                </Link>
+                </Link> */}
                 <Link to="/dashboard" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Dashboard
                 </Link>

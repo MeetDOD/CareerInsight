@@ -22,14 +22,12 @@ const Dashboard = () => {
                     <Separator orientation="vertical" className="mr-2 h-4" />
                     <Breadcrumb >
                         <BreadcrumbList>
-                            <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink>
-                                    Dashboard
-                                </BreadcrumbLink>
+                            <BreadcrumbItem className="hidden md:block font-semibold">
+                                Dashboard
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage style={{ color: `var(--text-color)` }}>My Profile</BreadcrumbPage>
+                                <BreadcrumbPage className="font-semibold" style={{ color: `var(--text-color)` }}>My Profile</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>

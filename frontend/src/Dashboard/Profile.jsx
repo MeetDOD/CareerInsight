@@ -1,11 +1,63 @@
-import React from 'react'
+import React from "react";
+import { FaEdit, FaProjectDiagram, FaMedal, FaBriefcase, FaCode } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 const Profile = () => {
     return (
-        <div className='py-5'>
-            Hello Profile My friend
-        </div>
-    )
-}
+        <div
+            className="py-5 min-h-screen flex flex-col items-center"
+            style={{ borderColor: `var(--borderColor)` }}
+        >
+            <div
+                className="w-full max-w-5xl shadow-md rounded-xl overflow-hidden"
+                style={{ backgroundColor: `var(--background-color)` }}
+            >
+                <div className="relative">
+                    <div className="h-40 bg-gradient-to-r from-indigo-400 to-purple-950"></div>
+                    <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
+                        <img
+                            src="https://techcare-62ma.onrender.com/assets/meet-j6qXUjCm.png"
+                            alt="User Avatar"
+                            className="w-28 h-28 rounded-full border-4 border-white"
+                        />
+                    </div>
+                </div>
 
-export default Profile
+                <div className="mt-16 p-6 text-center">
+                    <h1 className="text-3xl font-bold">Meet Dodiya</h1>
+                    <p className="mt-2 text-lg font-semibold">
+                        Aspiring Full-Stack Developer | Passionate about building user-friendly web applications.
+                    </p>
+                    <Button className="mt-10 px-6">
+                        <FaEdit />Edit
+                    </Button>
+                </div>
+
+                <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-white">
+                    <div className="bg-primary p-4 rounded-md text-center flex flex-col items-center">
+                        <FaProjectDiagram className="text-2xl my-2" />
+                        <h2 className="text-xl font-bold">Projects</h2>
+                        <p className="font-semibold text-sm mt-1">10+ Completed</p>
+                    </div>
+                    <div className="bg-primary p-4 rounded-md text-center flex flex-col items-center">
+                        <FaCode className="text-2xl my-2" />
+                        <h2 className="text-xl font-bold">Skills</h2>
+                        <p className="font-semibold text-sm mt-1">React, Node.js, Tailwind CSS</p>
+                    </div>
+                    <div className="bg-primary p-4 rounded-md text-center flex flex-col items-center">
+                        <FaMedal className="text-2xl my-2" />
+                        <h2 className="text-xl font-bold">Certifications</h2>
+                        <p className="font-semibold text-sm mt-1">Google Cloud, AWS</p>
+                    </div>
+                    <div className="bg-primary p-4 rounded-md text-center flex flex-col items-center">
+                        <FaBriefcase className="text-2xl my-2" />
+                        <h2 className="text-xl font-bold">Experience</h2>
+                        <p className="font-semibold text-sm mt-1">2+ Years in Development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Profile;
