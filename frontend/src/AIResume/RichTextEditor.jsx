@@ -63,9 +63,9 @@ const RichTextEditor = ({ onRichTextEditorChange, index }) => {
                 <Button
                     onClick={summeryGenerater}
                     type="button"
-                    variant="outline"
+                    variant="secondary"
                     size="sm"
-                    className="border-primary text-primary flex gap-1.5 mb-3"
+                    className="border border-primary text-primary flex gap-1.5 mb-3"
                     disabled={loading}
                 >
                     <BsRobot size={20} />

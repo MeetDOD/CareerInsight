@@ -58,7 +58,7 @@ const SummeryForm = () => {
 
     return (
         <div>
-            <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8 bg-white'>
+            <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8'>
                 <h2 className='font-bold text-lg'>Summary</h2>
                 <p>Add a summary for your job title</p>
                 <form className='mt-7' onSubmit={onSave}>
@@ -67,9 +67,9 @@ const SummeryForm = () => {
                         <Button
                             onClick={summeryGenerater}
                             type="button"
-                            variant="outline"
+                            variant="secondary"
                             size="sm"
-                            className="border-primary text-primary flex gap-1.5"
+                            className="border border-primary text-primary flex gap-1.5"
                             disabled={loading}
                         >
                             <BsRobot size={20} />
@@ -81,7 +81,7 @@ const SummeryForm = () => {
                         defaultValue={resumeInfo?.summery}
                         value={summery}
                         onChange={(e) => setSummery(e.target.value)}
-                        className="mt-5"
+                        className="mt-5 inputField"
                         placeholder="Type your summary here or you can take help from AI..."
                     />
                     <div className='mt-3 flex justify-end'>

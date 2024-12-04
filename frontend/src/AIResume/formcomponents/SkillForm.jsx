@@ -17,7 +17,7 @@ const SkillForm = () => {
     useEffect(() => {
         if (resumeInfo.skills) {
             for (let i = 0; i < resumeInfo.skills.length; i++) {
-                
+
                 const { name, rating } = resumeInfo.skills[i];
                 const newSkills = [...skillsList];
                 newSkills[i] = {
@@ -54,17 +54,17 @@ const SkillForm = () => {
     }, [skillsList]);
 
     return (
-        <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8 bg-white'>
+        <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8 '>
             <h2 className='font-bold text-lg'>Skills</h2>
             <p>Add Your Top Professional Skills</p>
             <div>
                 {skillsList.map((skill, index) => (
                     <div>
                         <div key={index}>
-                            <div className='flex justify-between items-center gap-3 border p-3 my-5 rounded-lg'>
+                            <div className='flex justify-between items-center gap-3 border p-3 my-5 rounded-lg border-gray-300' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
                                 <div className='w-1/2'>
                                     <Label className="text-sm">Skill Name</Label>
-                                    <Input placeholder="Enter your skill name..." name="name" onChange={(e) => handleChange(index, 'name', e.target.value)} />
+                                    <Input className="inputField" placeholder="Enter your skill name..." name="name" onChange={(e) => handleChange(index, 'name', e.target.value)} />
                                 </div>
                                 <div>
                                     <Rating style={{ maxWidth: 120 }} name="rating" value={skill.rating} onChange={(e) => handleChange(index, 'rating', e)} />
@@ -76,8 +76,8 @@ const SkillForm = () => {
             </div>
             <div className='flex justify-between my-5'>
                 <div className='flex gap-2'>
-                    <Button onClick={addNewSkill} variant="outline" className="gap-1.5"><IoMdAdd size={20} /> Add More Skill</Button>
-                    <Button onClick={removeSkill} variant="outline" className="gap-1.5"><IoMdRemove size={20} /> Remove Skill</Button>
+                    <Button onClick={addNewSkill} variant="secondary" className="gap-1.5 border"><IoMdAdd size={20} /> Add More Skill</Button>
+                    <Button onClick={removeSkill} variant="secondary" className="gap-1.5 border"><IoMdRemove size={20} /> Remove Skill</Button>
                 </div>
                 <Button>Save</Button>
             </div>

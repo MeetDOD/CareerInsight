@@ -77,38 +77,39 @@ const ExperienceForm = () => {
         })
     }, [experienceList])
     return (
-        <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8 bg-white'>
+        <div className='p-5 rounded-lg shadow-lg border-t-primary border-t-8'>
             <h2 className='font-bold text-lg'>Professional Experience</h2>
             <p>Add Your Previous Job Experience</p>
             <div>
                 {experienceList.map((exp, index) => (
                     <div key={index}>
-                        <div className='grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg'>
+                        <div className='grid grid-cols-2 gap-3 border border-gray-300 p-3 my-5 rounded-lg' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                        >
                             <div>
                                 <Label className="text-sm">Position Title</Label>
-                                <Input placeholder="Enter your position..." name="title" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" placeholder="Enter your position..." name="title" onChange={(e) => handleChange(index, e)} />
                             </div>
                             <div>
                                 <Label className="text-sm">Company Name</Label>
-                                <Input placeholder="Enter your company name..." name="companyName" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" placeholder="Enter your company name..." name="companyName" onChange={(e) => handleChange(index, e)} />
                             </div>
                             <div>
                                 <Label className="text-sm">Company City</Label>
-                                <Input placeholder="Enter your city..." name="city" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" placeholder="Enter your city..." name="city" onChange={(e) => handleChange(index, e)} />
                             </div>
                             <div>
                                 <Label className="text-sm">Company State</Label>
-                                <Input placeholder="Enter your state..." name="state" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" placeholder="Enter your state..." name="state" onChange={(e) => handleChange(index, e)} />
                             </div>
                             <div>
                                 <Label className="text-sm">Start Date</Label>
-                                <Input type="date" placeholder="Enter your start date..." name="startDate" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" type="date" placeholder="Enter your start date..." name="startDate" onChange={(e) => handleChange(index, e)} />
                             </div>
                             <div>
                                 <Label className="text-sm">End Date</Label>
-                                <Input type="date" placeholder="Enter your end date..." name="endDate" onChange={(e) => handleChange(index, e)} />
+                                <Input className="inputField" type="date" placeholder="Enter your end date..." name="endDate" onChange={(e) => handleChange(index, e)} />
                             </div>
-                            <div className='col-span-2'>
+                            <div className='col-span-2 '>
                                 <RichTextEditor index={index} onRichTextEditorChange={(e) => handleRichChange(e, 'workSummery', index)} />
                             </div>
                         </div>
@@ -117,8 +118,8 @@ const ExperienceForm = () => {
             </div>
             <div className='flex justify-between my-5'>
                 <div className='flex gap-2'>
-                    <Button onClick={addNewExp} variant="outline" className="gap-1.5"><IoMdAdd size={20} /> Add More Experience</Button>
-                    <Button onClick={removeExp} variant="outline" className="gap-1.5"><IoMdRemove size={20} /> Remove Experience</Button>
+                    <Button onClick={addNewExp} variant="secondary" className="gap-1.5 border"><IoMdAdd size={20} /> Add More Experience</Button>
+                    <Button onClick={removeExp} variant="secondary" className="gap-1.5 border"><IoMdRemove size={20} /> Remove Experience</Button>
                 </div>
                 <Button>Save</Button>
             </div>

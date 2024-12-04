@@ -11,9 +11,9 @@ const ExperiencePreview = ({ resumeInfo }) => {
             {resumeInfo?.experience.map((exp, index) => (
                 <div key={index} className='my-5'>
                     <h2 className='text-[15px] font-bold' style={{ color: resumeInfo?.themeColor }}>{exp?.title}</h2>
-                    <h2 className='text-xs flex justify-between'>{exp?.companyName}, {exp?.city}, {exp?.state}
+                    <h2 className='text-xs flex justify-between text-black'>{exp?.companyName}, {exp?.city}, {exp?.state}
                         <span>{exp?.startDate} - {exp?.currentlyWorking ? 'Present' : exp?.endDate}</span></h2>
-                    <div className='text-xs my-2 previewStyle' dangerouslySetInnerHTML={{ __html: exp.workSummery }} />
+                    <div className='text-xs my-2 previewStyle text-black' dangerouslySetInnerHTML={{ __html: exp.workSummery }} />
                 </div>
             ))}
         </div>

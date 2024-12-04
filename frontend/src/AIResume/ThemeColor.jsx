@@ -45,14 +45,14 @@ const ThemeColor = () => {
         <div>
             <Popover>
                 <PopoverTrigger>
-                    <Button variant="outline" size="sm" className="flex gap-2"><IoIosColorPalette size={20} />Theme</Button>
+                    <Button variant="secondary" size="sm" className="flex gap-2 border"><IoIosColorPalette size={20} />Theme</Button>
                 </PopoverTrigger>
-                <PopoverContent>
-                    <h2 className='mb-3 text-sm font-bold'>Select Theme Color</h2>
-                    <div className=' grid grid-cols-5 gap-3 -mr-5'>
+                <PopoverContent className="border border-gray-300" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }} >
+                    <h2 className='mb-3 text-sm font-bold' style={{ color: `var(--text-color)` }}>Select Theme Color</h2>
+                    <div className='grid grid-cols-5 gap-3 -mr-5'>
                         {colors.map((item, index) => (
-                            <div onClick={() => onThemeChange(item)} className={`h-6 w-6 rounded-full cursor-pointer border-2 hover:border-black ${selectedColor == item && 'border-2 border-black'}`} style={{
-                                background: item
+                            <div onClick={() => onThemeChange(item)} className={`h-6 w-6 rounded-full cursor-pointer border-2 hover:border-primary ${selectedColor == item && 'border-2 border-primary'}`} style={{
+                                backgroundColor: item
                             }}>
 
                             </div>
