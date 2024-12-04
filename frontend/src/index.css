@@ -100,7 +100,7 @@
   --background-color: #111827;
   --text-color: #f9fafb;
   --nav-scroll: #111827;
-  --borderColor: #1f2937;
+  --borderColor: #444e5d;
 }
 
 body {
@@ -150,13 +150,13 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #2563eb;
+  background-color: #7c3aed;
   border-radius: 20px;
 }
 
 *::selection {
   color: white;
-  background-color: #2563eb;
+  background-color: #7c3aed;
 }
 
 body {
