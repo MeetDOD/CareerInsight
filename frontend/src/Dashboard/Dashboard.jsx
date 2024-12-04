@@ -5,7 +5,6 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
 import {
     Breadcrumb,
     BreadcrumbItem,
-    BreadcrumbLink,
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,

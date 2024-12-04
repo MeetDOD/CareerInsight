@@ -1,36 +1,127 @@
-import React from 'react'
-import { IoMdArrowRoundBack, IoMdAdd } from "react-icons/io";
-import { Button } from "@/components/ui/button"
-import { Link } from 'react-router-dom';
+import React from "react";
+import { IoMdAdd, IoMdTrash } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import AppSidebar from "./AppSidebar";
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 
 const ResumeBuilder = () => {
+    const dummyResumes = [
+        {
+            id: 1,
+            title: "Software Engineer Resume",
+            previewImage: "https://d.novoresume.com/images/doc/minimalist-resume-template.png",
+        },
+        {
+            id: 2,
+            title: "Project Manager Resume",
+            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
+        },
+        {
+            id: 3,
+            title: "Project Manager Resume",
+            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
+        },
+        {
+            id: 4,
+            title: "Project Manager Resume",
+            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
+        },
+    ];
+
     return (
         <div>
-            <Button className="flex gap-2" onClick={() => window.history.back()} size="sm"><IoMdArrowRoundBack size={20} /> Back</Button>
+            <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset style={{ backgroundColor: `var(--background-color)` }}>
+                    {/* Breadcrumb Section */}
+                    <div className="flex items-center gap-2">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block font-semibold">
+                                    Dashboard
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage
+                                        className="font-semibold"
+                                        style={{ color: `var(--text-color)` }}
+                                    >
+                                        My Resumes
+                                    </BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </div>
 
-            <div className="w-full p-10 my-5 rounded-lg bg-violet-700 text-center">
-                <div className="my-5">
-                    <h1 className="text-2xl md:text-4xl text-gray-50 font-bold leading-tight pb-2">
-                        Build Your Professional Resume in Minutes
-                    </h1>
-                    <p className="text-lg md:text-xl text-gray-100 pb-2 mt-3">
-                        Our intuitive platform helps you design and customize resumes tailored to your career goals.
-                    </p>
-                </div>
-            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
+                        <Link
+                            to="/resumebody"
+                            className="p-14 py-24 items-center justify-center flex border-2 border-dashed rounded-lg h-[290px] hover:scale-95 transition-all hover:shadow-md cursor-pointer"
+                        >
+                            <IoMdAdd size={50} />
+                        </Link>
 
-            <div>
-                <h2 className='font-bold text-2xl mt-5'>
-                    My Resume
-                </h2>
-            </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5'>
-                <Link to="/resumebody" className='p-14 py-24 items-center bg-secondary justify-center flex border-2 border-dashed rounded-lg h-[280px] hover:scale-95 transition-all hover:shadow-md cursor-pointer'>
-                    <IoMdAdd size={30} />
-                </Link>
-            </div>
+                        {dummyResumes.map((resume) => (
+                            <div
+                                key={resume.id}
+                                className="p-4 shadow-md rounded-lg flex flex-col border border-gray-300"
+                                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                            >
+                                <img
+                                    src={resume.previewImage}
+                                    alt={resume.title}
+                                    className="w-full h-40 object-cover rounded-lg"
+                                />
+
+                                <div className="mt-4 flex flex-col flex-grow">
+                                    <h3 className="text-lg font-semibold truncate">
+                                        {resume.title}
+                                    </h3>
+                                </div>
+
+                                <div className="mt-4 flex gap-2">
+                                    <Link>
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            className="flex-1 flex items-center justify-center border"
+                                        >
+                                            <FaEye />
+                                            View
+                                        </Button>
+                                    </Link>
+                                    <Button
+                                        variant="destructive"
+                                        size="sm"
+                                        className="flex-1 flex items-center justify-center"
+                                    >
+                                        <IoMdTrash />
+                                        Delete
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </SidebarInset>
+            </SidebarProvider>
         </div>
-    )
-}
+    );
+};
 
-export default ResumeBuilder
+export default ResumeBuilder;
