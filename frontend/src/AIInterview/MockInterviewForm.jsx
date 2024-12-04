@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 const MockInterviewForm = ({ onSubmit }) => {
-    const [jobRole, setJobRole] = useState('');
-    const [jobDesc, setJobDesc] = useState('');
-    const [experience, setExperience] = useState('');
+    const [jobRole, setJobRole] = useState("");
+    const [jobDesc, setJobDesc] = useState("");
+    const [experience, setExperience] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,27 +15,68 @@ const MockInterviewForm = ({ onSubmit }) => {
     };
 
     return (
-        <div className='flex flex-col gap-3 justify-center items-center'>
-            <div className='my-5 text-center gap-2 flex flex-col'>
-                <h2 className='font-bold text-2xl'>Enter Interview Details</h2>
-                <p className='font-semibold text-lg'>Fill the details properly to get question as per your choice</p>
-            </div>
-            <form onSubmit={handleSubmit} className='md:w-1/2 sm:w-full w-full gap-3 p-5 rounded-lg shadow-lg border-t-primary border-t-8 bg-white'>
-                <div className='my-3'>
-                    <Label className="font-bold text-[17px]">Job Position/Role</Label>
-                    <Input placeholder="Enter your job position or job role..." className="mt-2" type="text" value={jobRole} onChange={(e) => setJobRole(e.target.value)} required />
+        <div className="flex flex-col items-center gap-5">
+            <form
+                onSubmit={handleSubmit}
+                className="w-full max-w-2xl rounded-lg border border-gray-300 shadow-md p-6"
+                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+
+            >
+                <div className="mb-5">
+                    <Label className="text-lg font-medium ">
+                        Job Position/Role
+                    </Label>
+                    <Input
+                        placeholder="e.g: SDE, Frontend Developer, Backend Developer..."
+                        className="mt-2 inputField"
+                        type="text"
+                        value={jobRole}
+                        onChange={(e) => setJobRole(e.target.value)}
+                        required
+
+                    />
                 </div>
-                <div className='my-3'>
-                    <Label className="font-bold text-[17px]">Job Description/Tech Stack</Label>
-                    <Textarea placeholder="Enter your job description or tech stack..." className="mt-2" type="text" value={jobDesc} onChange={(e) => setJobDesc(e.target.value)} required />
+
+                <div className="mb-5">
+                    <Label className="text-lg font-medium">
+                        Job Description/Tech Stack
+                    </Label>
+                    <Textarea
+                        placeholder="Describe the job role or required tech stack"
+                        className="mt-2 inputField"
+                        type="text"
+                        value={jobDesc}
+                        onChange={(e) => setJobDesc(e.target.value)}
+                        required
+                        style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                    />
                 </div>
-                <div className='my-3 mb-7'>
-                    <Label className="font-bold text-[17px]">Years of Experience</Label>
-                    <Input placeholder="Enter your year of experience..." className="mt-2" type="number" value={experience} onChange={(e) => setExperience(e.target.value)} required />
+
+                <div className="mb-6">
+                    <Label className="text-lg font-medium inputField">
+                        Years of Experience
+                    </Label>
+                    <Input
+                        placeholder="e.g: 0, 1, 2..."
+                        className="mt-2 inputField"
+                        type="number"
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                        required
+                    />
                 </div>
-                <div className='flex justify-between'>
-                    <Button variant="secondary" className="border" type="button" onClick={() => window.history.back()}>Cancel Interview</Button>
-                    <Button type="submit">Start Interview</Button>
+
+                <div className="flex justify-between">
+                    <Button
+                        variant="secondary"
+                        className="flex-1 mx-2"
+                        onClick={() => window.history.back()}
+                    >
+                        Cancel
+                    </Button>
+                    <Button className="flex-1 mx-2" type="submit">
+                        Start Interview
+                    </Button>
                 </div>
             </form>
         </div>

@@ -109,6 +109,12 @@ body {
   border: var(--borderColor);
 }
 
+.inputField {
+  /* style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }} */
+  border-color: var(--borderColor);
+  background-color: var(--background-color);
+}
+
 .active li {
   @apply bg-primary rounded-md transition duration-300 text-white py-1 px-2;
 }

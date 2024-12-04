@@ -89,7 +89,7 @@ const InterviewQuestion = () => {
 
     return (
         <div className='my-10 grid grid-cols-1 md:grid-cols-2 gap-10'>
-            <div className='p-5 border rounded-lg bg-white'>
+            <div className='p-5 border rounded-lg border-gray-300 shadow-md' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
                 {questions?.length > 0 ? (
                     <div className="my-4 p-5 shadow-md rounded-lg ">
                         <div className='flex gap-2 items-center'>

@@ -66,7 +66,7 @@ const InterviewSession = () => {
         <div>
             <div className='my-10 grid grid-cols-1 md:grid-cols-2 gap-10'>
                 <div className='flex flex-col gap-5 '>
-                    <div className='bg-white flex flex-col p-5 gap-5 rounded-lg border'>
+                    <div className='flex flex-col p-5 gap-5 rounded-lg border border-gray-300 shadow-md' style={{ backgroundColor: `var(--background-color)`, borderColor: `var(--borderColor)` }}>
                         <h2 className='text-lg'><strong>Job Role/Job Position: </strong>{formData?.jobRole}</h2>
                         <h2 className='text-lg'><strong>Job Description/Tech Stack: </strong>{formData?.jobDesc}</h2>
                         <h2 className='text-lg'><strong>Years of Experience: </strong>{formData?.experience}</h2>
@@ -90,7 +90,7 @@ const InterviewSession = () => {
                         />
                     ) : (
                         <div className='items-center flex flex-col'>
-                            <BsFillWebcamFill className='bg-secondary p-20 h-96 w-full rounded-lg' />
+                            <BsFillWebcamFill className='border  border-gray-300 p-20 h-96 w-full rounded-lg shadow-md' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }} />
                             <Button variant="ghost" className="border w-full my-5 text-[17px]" size="lg" onClick={() => setWebCamEnabled(true)}>
                                 Please Enable WebCam/MicroPhone
                             </Button>

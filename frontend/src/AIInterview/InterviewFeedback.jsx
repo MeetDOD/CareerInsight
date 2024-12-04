@@ -28,11 +28,11 @@ const InterviewFeedback = () => {
             </h2>
             {feedbacks?.length > 0 ? (
                 feedbacks.map((feedback, index) => (
-                    <div key={index} className="mb-7 p-5 border rounded-lg bg-white shadow-md">
+                    <div key={index} className="mb-7 p-5 border rounded-lg shadow-md border-gray-300" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
                         <p className='text-yellow-400 text-lg my-2'>
                             Rating for Question {index + 1}: <strong>{feedback.feedback.rating}</strong>
                         </p>
-                        <h2 className='text-[15px] my-2 text-gray-800'>
+                        <h2 className='text-[15px] my-2'>
                             Find below the interview question, your answer, and the correct AI feedback for comparison and improvement.
                         </h2>
                         <Collapsible>

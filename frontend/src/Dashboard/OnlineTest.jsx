@@ -1,39 +1,67 @@
-import MockInterviewForm from '@/AIInterview/MockInterviewForm';
-import React from 'react'
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/ui/sidebar";
+import AppSidebar from "./AppSidebar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import MockInterviewForm from "@/AIInterview/MockInterviewForm";
 
 const OnlineTest = () => {
     const navigate = useNavigate();
 
     const handleFormSubmit = (formData) => {
-        navigate('/interviewsession', { state: { formData } });
+        navigate("/interviewsession", { state: { formData } });
     };
-    return (
-        <div>
-            <button
-                onClick={() => window.history.back()}
-                className="px-2 py-1 bg-gray-900 hover:bg-gray-800 text-white text-sm rounded"
-            >
-                <IoMdArrowRoundBack size={20} />
-            </button>
 
-            <div className="w-full p-10 my-5 rounded-lg bg-violet-700 text-center">
-                <div className="my-5">
-                    <h1 className="text-2xl md:text-4xl text-gray-50 font-bold leading-tight pb-2">
-                        Build Your Professional Resume in Minutes
+    return (
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset style={{ backgroundColor: `var(--background-color)` }}>
+                <div className="flex items-center gap-2 mb-6">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            <BreadcrumbItem className="hidden md:block font-semibold">
+                                Dashboard
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage
+                                    className="font-semibold"
+                                    style={{ color: `var(--text-color)` }}
+                                >
+                                    Mock Interview
+                                </BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                </div>
+
+                <div className="text-center mt-3 mb-10">
+                    <h1 className="text-3xl md:text-4xl font-bold text-primary">
+                        Prepare for Your Next Interview
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-100 pb-2 mt-3">
-                        Our intuitive platform helps you design and customize resumes tailored to your career goals.
+                    <p className="text-lg font-semibold  my-3">
+                        Practice your interview skills by simulating real-world questions
+                        tailored to your job role and experience level.
                     </p>
                 </div>
-            </div>
 
-            <div>
                 <MockInterviewForm onSubmit={handleFormSubmit} />
-            </div>
-        </div>
-    )
-}
+            </SidebarInset>
+        </SidebarProvider>
+    );
+};
 
-export default OnlineTest
+export default OnlineTest;
