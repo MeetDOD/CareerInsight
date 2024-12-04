@@ -1,15 +1,42 @@
-import Sidebar from '@/Dashboard/Sidebar';
 import React from 'react';
 import Profile from './Profile';
+import AppSidebar from './AppSidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from '@/components/ui/separator';
 
 const Dashboard = () => {
     return (
-        <div className="flex flex-col sm:flex-row">
-            <Sidebar />
-            <div className="flex-grow p-0 sm:pl-0 md:pl-2 lg:pl-4">
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset style={{ backgroundColor: `var(--background-color)` }}>
+                <div className="flex items-center gap-2">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Breadcrumb >
+                        <BreadcrumbList>
+                            <BreadcrumbItem className="hidden md:block">
+                                <BreadcrumbLink>
+                                    Dashboard
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage style={{ color: `var(--text-color)` }}>My Profile</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                </div>
                 <Profile />
-            </div>
-        </div>
+            </SidebarInset>
+        </SidebarProvider>
     );
 };
 

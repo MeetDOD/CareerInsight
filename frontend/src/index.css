@@ -29,6 +29,14 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -56,15 +64,14 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -80,4 +87,123 @@
 .rsw-ce ol {
   list-style: decimal;
   padding-left: 2em;
+}
+
+:root {
+  --background-color: #f9fafb;
+  --text-color: #111827;
+  --nav-scroll: #f9fafb;
+  --borderColor: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --background-color: #111827;
+  --text-color: #f9fafb;
+  --nav-scroll: #111827;
+  --borderColor: #1f2937;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: var(--borderColor);
+}
+
+.active li {
+  @apply bg-primary rounded-md transition duration-300 text-white py-1 px-2;
+}
+
+@media (max-width: 740px) {
+  .active p {
+    @apply text-white bg-primary hover:bg-primary/90;
+  }
+}
+
+.header-img-section img {
+  width: 100%;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2563eb;
+  border-radius: 20px;
+}
+
+*::selection {
+  color: white;
+  background-color: #2563eb;
+}
+
+body {
+  top: 0 !important;
+}
+
+.google-translate-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10000;
+}
+
+.goog-logo-link,
+.goog-te-banner-frame,
+.VIpgJd-ZVi9od-l4eHX-hSRGPd,
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  background-color: #2563eb !important;
+  color: white !important;
+  font-size: 15px;
+  border: 2px dotted #ffffff;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.goog-te-gadget .goog-te-combo option {
+  color: white;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.google-translate-container.hidden {
+  display: none !important;
 }

@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Button } from '@/components/ui/button';
+import { useTheme } from '@/components/ui/themeprovider';
+import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 
 const Navbar = () => {
 
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
+    const { theme, toggleTheme } = useTheme();
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
@@ -61,6 +65,11 @@ const Navbar = () => {
                         Login/Signup
                     </button>
                 } */}
+                <Button size="icon" variant="ghost" className="border" onClick={toggleTheme} style={{
+                    borderColor: `var(--borderColor)`,
+                }}>
+                    {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5" /> : <BsFillSunFill className="h-5 w-5" />}
+                </Button>
                 <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Create Course
                 </Link>
