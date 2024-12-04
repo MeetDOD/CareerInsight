@@ -81,7 +81,7 @@ const MyCourses = () => {
                     {dummyCourses.map((course) => (
                         <Link
                             key={course.id}
-                            className="p-4 shadow-md rounded-lg overflow-hidden border border-gray-300"
+                            className="p-4 shadow-md rounded-lg overflow-hidden border border-gray-300 hover:scale-95 transition-all hover:shadow-lg"
                             style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                         >
                             <img

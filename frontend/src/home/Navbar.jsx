@@ -73,18 +73,20 @@ const Navbar = () => {
                 {/* <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Create Course
                 </Link> */}
-                <Button to="/dashboard" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
-                    Dashboard
-                </Button>
+                <Link to="/dashboard">
+                    <Button className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
+                        Dashboard
+                    </Button>
+                </Link>
                 <button onClick={() => setShowMenu(true)} className='w-6 md:hidden'><GiHamburgerMenu size={25} /></button>
                 <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} bg-gray-50 md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden transition-all`} >
                     <div className='flex items-center justify-between px-5 py-6'>
                         <Link to='/'>
                             {/* <img src={logo} onClick={() => setShowMenu(false)} className='w-28 cursor-pointer' alt='TECHCARE' /> */}
                         </Link>
-                        <button className='w-7' onClick={() => setShowMenu(false)}><IoIosCloseCircleOutline size={25} /></button>
+                        <button className='w-7 text-black' onClick={() => setShowMenu(false)}><IoIosCloseCircleOutline size={25} /></button>
                     </div>
-                    <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium list-none'>
+                    <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium list-none text-black'>
                         <NavLink to="/" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Home</p></NavLink>
                         <NavLink to="/doctors" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Doctors</p></NavLink>
                         <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">About</p></NavLink>
