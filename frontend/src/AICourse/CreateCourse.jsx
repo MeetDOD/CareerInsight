@@ -8,6 +8,7 @@ import ToipcDescription from './CreateCourseForm/ToipcDescription';
 import SelectOptions from './CreateCourseForm/SelectOptions';
 import { chatSession } from '@/services/GeminiModel';
 import { ImSpinner2 } from "react-icons/im";
+import { useNavigate } from 'react-router-dom';
 
 const CreateCourse = () => {
     const [activeIndex, setactiveIndex] = useState(0);
@@ -22,22 +23,23 @@ const CreateCourse = () => {
         chapters: '',
         language: '',
     });
+    const navigate = useNavigate();
 
     const stepperOptions = [
         {
             id: 1,
             nameCategory: 'Category/Domain',
-            icon: <BiSolidCategory size={25} />
+            icon: <BiSolidCategory size={25} color='#101010' />
         },
         {
             id: 2,
             nameCategory: 'Topic/Description',
-            icon: <MdTopic size={25} />
+            icon: <MdTopic size={25} color='#101010' />
         },
         {
             id: 3,
             nameCategory: 'Options',
-            icon: <IoMdOptions size={25} />
+            icon: <IoMdOptions size={25} color='#101010' />
         },
     ]
 
@@ -50,7 +52,12 @@ const CreateCourse = () => {
             ...options,
         };
         const prompt = `Generate A course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, about, Duration. 
-        Details are as follow: Categor: ${formData.category}, Topic: ${formData.topic} and Description: ${formData.description}, Course Level: ${formData.difficulty}, Course Duration: ${formData.duration}, Number of chapters to include in the course: ${formData.chapters} and finally The language for the course should be ${formData.language}. 
+        Details are as follow: Categor: ${formData.category}, Topic: ${formData.topic} and Description: ${formData.description}, 
+        Course Level: ${formData.difficulty}, Course Duration: ${formData.duration}, Number of chapters to include in the course: ${formData.chapters} and finally The language for the course should be ${formData.language}. 
+        if course level is not provided take as Beginner, 
+        if course duration is not provided take as 4 Hours,
+        if number of chapters is not provided take as 5,
+        if language of course is not provided take as english.
         Give the response in JSON FORMAT ONLY. 
         It very Important to give response in JSON Only NOTE that`;
         try {
@@ -60,6 +67,7 @@ const CreateCourse = () => {
             const parsedResponse = JSON.parse(`[${cleanedData}]`);
             setResponse(parsedResponse);
             console.log(parsedResponse);
+            navigate("/courselayout", { state: { courseData: parsedResponse } });
         } catch (error) {
             console.error("Error generating summary: ", error);
         } finally {
@@ -71,12 +79,12 @@ const CreateCourse = () => {
         <div>
             <div className='flex flex-col justify-center items-center mt-10'>
                 <h2 className='text-4xl text-primary font-bold'>Create Course</h2>
-                <p className='text-lg mt-2 text-gray-600 font-semibold'>Enter the details properly and accurate to get the desire response from AI</p>
+                <p className='text-lg mt-2 font-semibold'>Enter the details properly and accurate to get the desire response from AI</p>
                 <div className='flex mt-20'>
                     {stepperOptions.map((item, index) => (
                         <div className='flex items-center'>
                             <div className='flex flex-col items-center w-[50px] md:w-[100px]'>
-                                <div className={`bg-gray-200 p-3 rounded-full text-white ${activeIndex >= index && 'bg-primary'}`}>
+                                <div className={`bg-gray-200 p-3 rounded-full ${activeIndex >= index && 'bg-primary'}`}>
                                     {item.icon}
                                 </div>
                                 <div>
@@ -85,9 +93,7 @@ const CreateCourse = () => {
                             </div>
 
                             {index != stepperOptions?.length - 1 &&
-                                <div className={`h-1 mb-0 md:mb-5 w-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-violet-600'}`}>
-
-                                </div>
+                                <div className={`h-1 mb-0 md:mb-5 w-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-violet-600'}`}></div>
                             }
                         </div>
                     ))}
@@ -113,16 +119,40 @@ const CreateCourse = () => {
 
             <div className='px-10 md:px-20 lg:px-44 mt-20'>
                 <div className='flex justify-between mt-10'>
-                    <Button className="border" variant="secondary" size="lg" disabled={activeIndex == 0} onClick={() => setactiveIndex(activeIndex - 1)} >Previous</Button>
-                    {activeIndex < 2 && <Button size="lg" onClick={() => setactiveIndex(activeIndex + 1)} >Next</Button>}
-                    {activeIndex == 2 &&
+                    <Button
+                        className="border"
+                        variant="secondary"
+                        size="lg"
+                        disabled={activeIndex == 0}
+                        onClick={() => setactiveIndex(activeIndex - 1)}
+                    >
+                        Previous
+                    </Button>
+
+                    {activeIndex < 2 && (
+                        <Button
+                            size="lg"
+                            onClick={() => setactiveIndex(activeIndex + 1)}
+                            disabled={(activeIndex === 0 && !category) ||
+                                (activeIndex === 1 && (!topic || !description)) ||
+                                (activeIndex === 2 && Object.values(options).some(option => !option))}
+                        >
+                            Next
+                        </Button>
+                    )}
+
+                    {activeIndex === 2 && (
                         <Button
                             onClick={handleSubmit}
                             disabled={loading}
                         >
-                            {loading ? <div className='flex flex-row gap-2'><ImSpinner2 size={20} className='animate-spin' /> Generating</div> : 'Generate Layout'}
+                            {loading ? (
+                                <div className='flex flex-row gap-2'>
+                                    <ImSpinner2 size={20} className='animate-spin' /> Generating
+                                </div>
+                            ) : 'Generate Layout'}
                         </Button>
-                    }
+                    )}
                 </div>
             </div>
         </div>

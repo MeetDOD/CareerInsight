@@ -14,10 +14,10 @@ const SelectOptions = ({ options, setOptions }) => {
                 <div className='flex flex-col gap-3'>
                     <Label>Difficulty Level</Label>
                     <Select onValueChange={(value) => handleOptionChange('difficulty', value)}>
-                        <SelectTrigger className="">
+                        <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Level" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
                             <SelectItem value="Beginner">Beginner</SelectItem>
                             <SelectItem value="Intermediate">Intermediate</SelectItem>
                             <SelectItem value="Advance">Advance</SelectItem>
@@ -28,10 +28,10 @@ const SelectOptions = ({ options, setOptions }) => {
                 <div className='flex flex-col gap-3'>
                     <Label>Course Duration</Label>
                     <Select onValueChange={(value) => handleOptionChange('duration', value)}>
-                        <SelectTrigger className="">
+                        <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Duration" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
                             <SelectItem value="4 Hours">4 Hours</SelectItem>
                             <SelectItem value="8 Hours">8 Hours</SelectItem>
                             <SelectItem value="12 Hours">12 Hours</SelectItem>
@@ -47,16 +47,17 @@ const SelectOptions = ({ options, setOptions }) => {
                         value={options.chapters}
                         onChange={(e) => handleOptionChange('chapters', e.target.value)}
                         placeholder="e.g: 10"
+                        className="inputField"
                     />
                 </div>
 
                 <div className='flex flex-col gap-3'>
                     <Label>Language</Label>
                     <Select onValueChange={(value) => handleOptionChange('language', value)}>
-                        <SelectTrigger className="">
+                        <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Language" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
                             <SelectItem value="English">English</SelectItem>
                             <SelectItem value="Hindi">Hindi</SelectItem>
                             <SelectItem value="Marathi">Marathi</SelectItem>

@@ -12,6 +12,7 @@ const ToipcDescription = ({ topic, setTopic, description, setDescription }) => {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     placeholder="e.g: Python Course, Latest Trends, Health Care etc..."
+                    className="inputField"
                 />
             </div>
 
@@ -21,6 +22,7 @@ const ToipcDescription = ({ topic, setTopic, description, setDescription }) => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Enter the detail description of the course..."
+                    className="inputField"
                 />
             </div>
         </div>

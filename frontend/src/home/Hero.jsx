@@ -15,8 +15,10 @@ const Hero = () => {
     return (
         <div className="overflow-hidden my-20">
 
-            <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(37,99,235,0.25)_0,rgba(37,99,235,0)_50%,rgba(37,99,235,0)_100%)]"></div>
-            <div className="absolute inset-0 -z-10 h-full w-full"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(37,99,235,0.5)] opacity-50 blur-[80px]"></div></div>
+            <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(124,58,237,0.25)_0,rgba(124,58,237,0)_50%,rgba(124,58,237,0)_100%)]"></div>
+            <div className="absolute inset-0 -z-10 h-full w-full">
+                <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(124,58,237,0.5)] opacity-50 blur-[80px]"></div>
+            </div>
 
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

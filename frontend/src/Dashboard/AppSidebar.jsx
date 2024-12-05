@@ -9,11 +9,12 @@ import {
     SidebarRail,
 } from '@/components/ui/sidebar';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera } from 'react-icons/md';
-import { FaTools } from 'react-icons/fa';
+import { FaTools, FaLaptop } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from "../assets/image.png";
 import { Separator } from "@/components/ui/separator"
+import { CgWebsite } from "react-icons/cg";
 
 const data = {
     navMain: [
@@ -36,6 +37,16 @@ const data = {
             title: 'Mock Interview',
             url: '/mockinterview',
             icon: MdCamera,
+        },
+        {
+            title: 'Create Course',
+            url: '/createcourse',
+            icon: FaLaptop,
+        },
+        {
+            title: 'My Portfolio',
+            url: '/createportfolio',
+            icon: CgWebsite,
         },
     ],
 };
@@ -67,9 +78,9 @@ const AppSidebar = () => {
                                         ${isActive ? 'bg-primary text-white shadow-md' : ''}`}
                                 >
                                     <div className="p-1.5 rounded-md" style={{ backgroundColor: `var(--text-color)` }}>
-                                        <item.icon style={{ color: `var(--background-color)` }} size={22} />
+                                        <item.icon style={{ color: `var(--background-color)` }} size={20} />
                                     </div>
-                                    <span className="text-base font-semibold">{item.title}</span>
+                                    <span className="text-sm font-semibold">{item.title}</span>
                                 </Link>
                             </SidebarMenuItem>
                         );

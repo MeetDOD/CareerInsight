@@ -15,10 +15,10 @@ const SelectCategory = ({ category, setCategory }) => {
                     <div
                         key={index}
                         onClick={() => handleCategoryChange(item.name)}
-                        className={`flex flex-col gap-5 p-5 border items-center rounded-lg hover:border-primary bg-white hover:bg-violet-100 cursor-pointer ${category === item.name && 'border-primary bg-violet-100'}`}
+                        className={`space-y-2 flex flex-col p-4 border hover:scale-95 transition-all shadow-md hover:shadow-lg items-center rounded-xl hover:border-primary cursor-pointer ${category === item.name && 'border border-primary'}`}
                     >
-                        <h1>{item.icon}</h1>
-                        <h1 className='text-primary font-semibold'>{item.name}</h1>
+                        <h1 className='p-2 bg-primary text-white rounded-lg'>{item.icon}</h1>
+                        <h1 className='text-primary font-bold text-lg'>{item.name}</h1>
                     </div>
                 ))}
             </div>
