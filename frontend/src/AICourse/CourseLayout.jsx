@@ -9,18 +9,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { chatSession } from '@/services/GeminiModel';
 import { ImSpinner2 } from 'react-icons/im';
 import getVideos from '@/services/YTModel';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { finalCourseState, responseState } from '@/store/courseState';
 
 const CourseLayout = () => {
-    const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const { courseData } = location.state || {};
+    const courseData = useRecoilValue(responseState);
+    const [finalCourse, setFinalCourse] = useRecoilState(finalCourseState);
 
     if (!courseData || courseData.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-                <h2 className="text-2xl font-bold text-gray-800">No course data available.</h2>
-                <p className="text-gray-600 mt-2">Please create a course first.</p>
+            <div className="flex flex-col items-center justify-center min-h-screen">
+                <h2 className="text-3xl font-bold">No course data available.</h2>
+                <p className="font-semibold text-xl mt-2">Please create a course first.</p>
             </div>
         );
     }
@@ -48,29 +50,29 @@ const CourseLayout = () => {
                     finalChapters.push({
                         title: parsedResponse.title,
                         explanation: parsedResponse.explanation,
-                        duration: parsedResponse.duration,
                         sections: parsedResponse.sections,
                         videoId,
+                        duration: chapter.duration
                     });
 
-                    console.log(finalChapters)
                 } catch (error) {
                     console.error(`Error processing chapter "${chapter.chapterName}":`, error);
                 }
             }
 
-            navigate('/finalcourse', {
-                state: {
-                    courseName: course.courseName,
-                    chapters: finalChapters,
-                },
+            setFinalCourse({
+                courseName: course.courseName,
+                chapters: finalChapters
             });
+
+            navigate('/finalcourse');
         } catch (error) {
             console.error('Error generating course content:', error);
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="min-h-screen">
@@ -92,7 +94,7 @@ const CourseLayout = () => {
                             <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
                                 <FaHandHoldingHeart size={20} />
                             </div>
-                            <span className="text-sm font-semibold">By Career Insight</span>
+                            <span className="text-sm font-semibold">Topic: {course.topic}</span>
                         </div>
                         <Button onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (
@@ -132,7 +134,7 @@ const CourseLayout = () => {
                             </div>
                             <div>
                                 <span className="font-semibold text-sm">Course Duration</span>
-                                <p className="text-lg font-bold">{course.courseDuration}</p>
+                                <p className="text-lg font-bold">{course.duration}</p>
                             </div>
                         </div>
                         <div className="flex flex-row items-center gap-4 text-center justify-center">
@@ -155,7 +157,7 @@ const CourseLayout = () => {
                             <CardTitle className="text-xl font-semibold">
                                 {`Chapter ${index + 1}: ${chapter.chapterName}`}
                             </CardTitle>
-                            <CardDescription className="mt-1 font-semibold">{chapter.about}</CardDescription>
+                            <CardDescription className="mt-1 font-semibold">{chapter.aboutChapter}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">

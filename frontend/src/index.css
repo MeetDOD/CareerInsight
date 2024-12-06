@@ -94,6 +94,7 @@
   --text-color: #111827;
   --nav-scroll: #f9fafb;
   --borderColor: #e5e7eb;
+  --section: #f3e8ff;
 }
 
 [data-theme="dark"] {
@@ -101,6 +102,7 @@
   --text-color: #f9fafb;
   --nav-scroll: #111827;
   --borderColor: #444e5d;
+  --section: #1f2937;
 }
 
 body {
@@ -110,9 +112,12 @@ body {
 }
 
 .inputField {
-  /* style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }} */
   border-color: var(--borderColor);
   background-color: var(--background-color);
+}
+
+.courseSection {
+  background-color: var(--section);
 }
 
 .active li {

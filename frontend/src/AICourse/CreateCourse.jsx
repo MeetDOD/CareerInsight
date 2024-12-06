@@ -9,20 +9,17 @@ import SelectOptions from './CreateCourseForm/SelectOptions';
 import { chatSession } from '@/services/GeminiModel';
 import { ImSpinner2 } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
+import { categoryState, descriptionState, optionsState, responseState, topicState } from '@/store/courseState';
+import { useRecoilState } from 'recoil';
 
 const CreateCourse = () => {
     const [activeIndex, setactiveIndex] = useState(0);
+    const [category, setCategory] = useRecoilState(categoryState);
+    const [topic, setTopic] = useRecoilState(topicState);
+    const [description, setDescription] = useRecoilState(descriptionState);
+    const [options, setOptions] = useRecoilState(optionsState);
+    const [response, setResponse] = useRecoilState(responseState);
     const [loading, setLoading] = useState(false);
-    const [response, setResponse] = useState(null);
-    const [category, setCategory] = useState('');
-    const [topic, setTopic] = useState('');
-    const [description, setDescription] = useState('');
-    const [options, setOptions] = useState({
-        difficulty: '',
-        duration: '',
-        chapters: '',
-        language: '',
-    });
     const navigate = useNavigate();
 
     const stepperOptions = [
@@ -65,8 +62,6 @@ const CreateCourse = () => {
             const cleanedData = data.replace(/```json|```/g, '');
             const parsedResponse = JSON.parse(`[${cleanedData}]`);
             setResponse(parsedResponse);
-            console.log(parsedResponse);
-            console.log(prompt)
             navigate("/courselayout", { state: { courseData: parsedResponse } });
         } catch (error) {
             console.error("Error generating summary: ", error);
@@ -135,7 +130,7 @@ const CreateCourse = () => {
                             onClick={() => setactiveIndex(activeIndex + 1)}
                             disabled={(activeIndex === 0 && !category) ||
                                 (activeIndex === 1 && (!topic || !description)) ||
-                                (activeIndex === 2 && Object.values(options).some(option => !option))}
+                                (activeIndex === 2)}
                         >
                             Next
                         </Button>

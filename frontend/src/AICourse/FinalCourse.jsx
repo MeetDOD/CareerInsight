@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaClock } from 'react-icons/fa';
+import { finalCourseState } from '@/store/courseState';
+import { useRecoilValue } from 'recoil';
 
 const FinalCourse = () => {
-    const location = useLocation();
-    const { courseName, chapters = [] } = location.state || {};
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
-    console.log(courseName);
-    console.log(chapters);
-
+    const { courseName, chapters } = useRecoilValue(finalCourseState);
 
     if (chapters.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen ">
-                <h2 className="text-2xl font-bold">No chapters available.</h2>
-                <p className="mt-2">Please generate course content first.</p>
+                <h2 className="text-3xl font-bold">No chapters available.</h2>
+                <p className="mt-2 text-xl font-semibold">Please generate course content first.</p>
             </div>
         );
     }
@@ -42,7 +39,7 @@ const FinalCourse = () => {
                                 </div>
                                 <div className='col-span-4'>
                                     <h2 className='font-medium'>{`${chapter.title}`}</h2>
-                                    <h2 className="text-sm font-semibold flex gap-2 items-center text-primary py-1"><FaClock />{chapter.duration}20 minutes</h2>
+                                    <h2 className="text-sm font-semibold flex gap-2 items-center text-primary py-1"><FaClock />{chapter.duration}</h2>
                                 </div>
                             </div>
                         </li>
@@ -74,11 +71,11 @@ const FinalCourse = () => {
 
                         <h2 className="text-xl mb-5 font-bold">Detail Explaination</h2>
                         {activeChapter.sections && activeChapter.sections.length > 0 && (
-                            <div className="space-y-5 text-black">
+                            <div className="space-y-5">
                                 {activeChapter.sections.map((section, secIndex) => (
                                     <div
                                         key={secIndex}
-                                        className='p-5 bg-purple-100 rounded-xl'
+                                        className='p-5 courseSection rounded-xl'
                                     >
                                         <h3 className="text-xl font-bold pb-2"><span className='text-2xl'>{secIndex + 1}.</span> {section.subtitle}</h3>
                                         <p className="font-medium text-lg">{section.content}</p>
