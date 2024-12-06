@@ -7,6 +7,9 @@ const FinalCourse = () => {
     const location = useLocation();
     const { courseName, chapters = [] } = location.state || {};
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+    console.log(courseName);
+    console.log(chapters);
+
 
     if (chapters.length === 0) {
         return (
@@ -60,7 +63,7 @@ const FinalCourse = () => {
                                 <iframe
                                     className='rounded-xl'
                                     width="100%"
-                                    height="400"
+                                    height="500"
                                     src={`https://www.youtube.com/embed/${activeChapter.videoId}`}
                                     title={`Video for ${activeChapter.title}`}
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

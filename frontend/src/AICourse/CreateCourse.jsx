@@ -51,13 +51,12 @@ const CreateCourse = () => {
             description,
             ...options,
         };
-        const prompt = `Generate A course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, about, Duration. 
+        const prompt = `Generate A course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, About Course, Duration, Language. 
         Details are as follow: Categor: ${formData.category}, Topic: ${formData.topic} and Description: ${formData.description}, 
-        Course Level: ${formData.difficulty}, Course Duration: ${formData.duration}, Number of chapters to include in the course: ${formData.chapters} and finally The language for the course should be ${formData.language}. 
-        if course level is not provided take as Beginner, 
-        if course duration is not provided take as 4 Hours,
-        if number of chapters is not provided take as 5,
-        if language of course is not provided take as english.
+        Course Level: ${formData.difficulty}, 
+        Course Duration: ${formData.duration}, 
+        Number of chapters to include in the course: ${formData.chapters},
+        language of course should be ${formData.language}. 
         Give the response in JSON FORMAT ONLY. 
         It very Important to give response in JSON Only NOTE that`;
         try {
@@ -67,6 +66,7 @@ const CreateCourse = () => {
             const parsedResponse = JSON.parse(`[${cleanedData}]`);
             setResponse(parsedResponse);
             console.log(parsedResponse);
+            console.log(prompt)
             navigate("/courselayout", { state: { courseData: parsedResponse } });
         } catch (error) {
             console.error("Error generating summary: ", error);
@@ -147,8 +147,8 @@ const CreateCourse = () => {
                             disabled={loading}
                         >
                             {loading ? (
-                                <div className='flex flex-row gap-2'>
-                                    <ImSpinner2 size={20} className='animate-spin' /> Generating
+                                <div className='flex flex-row gap-2 items-center'>
+                                    <ImSpinner2 className='animate-spin' /> Generating ...
                                 </div>
                             ) : 'Generate Layout'}
                         </Button>

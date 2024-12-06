@@ -52,6 +52,8 @@ const CourseLayout = () => {
                         sections: parsedResponse.sections,
                         videoId,
                     });
+
+                    console.log(finalChapters)
                 } catch (error) {
                     console.error(`Error processing chapter "${chapter.chapterName}":`, error);
                 }
@@ -94,8 +96,8 @@ const CourseLayout = () => {
                         </div>
                         <Button onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (
-                                <div className="flex flex-row gap-2">
-                                    <ImSpinner2 size={20} className="animate-spin" /> Generating
+                                <div className="flex flex-row gap-2 items-center">
+                                    <ImSpinner2 size={20} className="animate-spin" /> Generating ...
                                 </div>
                             ) : 'Generate Course Content'}
                         </Button>

@@ -15,7 +15,7 @@ const SelectCategory = ({ category, setCategory }) => {
                     <div
                         key={index}
                         onClick={() => handleCategoryChange(item.name)}
-                        className={`space-y-2 flex flex-col p-4 border hover:scale-95 transition-all shadow-md hover:shadow-lg items-center rounded-xl hover:border-primary cursor-pointer ${category === item.name && 'border border-primary'}`}
+                        className={`space-y-2 flex flex-col p-4 border hover:scale-95 transition-all shadow-md hover:shadow-lg items-center rounded-xl hover:border-primary cursor-pointer ${category === item.name && 'border border-primary scale-95 transition-all'}`}
                     >
                         <h1 className='p-2 bg-primary text-white rounded-lg'>{item.icon}</h1>
                         <h1 className='text-primary font-bold text-lg'>{item.name}</h1>
