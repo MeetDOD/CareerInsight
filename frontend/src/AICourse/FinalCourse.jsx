@@ -57,16 +57,17 @@ const FinalCourse = () => {
 
                         {activeChapter.videoId && (
                             <div className="mb-6">
-                                <iframe
-                                    className='rounded-xl'
-                                    width="100%"
-                                    height="500"
-                                    src={`https://www.youtube.com/embed/${activeChapter.videoId}`}
-                                    title={`Video for ${activeChapter.title}`}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
+                                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                                    <iframe
+                                        className="absolute top-0 left-0 w-full h-full rounded-xl"
+                                        src={`https://www.youtube.com/embed/${activeChapter.videoId}`}
+                                        title={`Video for ${activeChapter.title}`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
                             </div>
+
                         )}
 
                         <h2 className="text-xl mb-5 font-bold">Detail Explaination</h2>
