@@ -45,9 +45,9 @@ const sendOTP = async (email, generatedOTP) => {
 
 const register = async (req, res) => {
     try {
-        const { password, email, firstName, lastName } = req.body;
+        const { password, email, fullName } = req.body;
 
-        if (!password || !email || !firstName || !lastName) {
+        if (!password || !email || !fullName) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -79,7 +79,7 @@ const register = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
     try {
-        const { email, enteredOTP, password, firstName, lastName } = req.body;
+        const { email, enteredOTP, password, fullName } = req.body;
         console.log(req.body)
 
 
@@ -106,8 +106,7 @@ const verifyOTP = async (req, res) => {
         const newUser = new User({
             email,
             password: hashedPassword,
-            firstName,
-            lastName,
+            fullName,
             photo
         });
 
@@ -144,7 +143,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
-        res.status(200).json({ token, user: { _id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, photo: user.photo } });
+        res.status(200).json({ token, user: { _id: user._id, email: user.email, fullName: user.fullName, photo: user.photo } });
 
     } catch (error) {
         console.error("Error logging in user:", error);
@@ -155,7 +154,7 @@ const login = async (req, res) => {
 const updateProfile = async (req, res) => {
     try {
         console.log(req.user);
-        const allowedUpdates = ['username', 'firstName', 'lastName', 'phoneno', 'gender', 'dateofbirth'];
+        const allowedUpdates = ['username', 'fullName', 'phoneno', 'gender', 'dateofbirth'];
         const updates = {};
 
         // Only allow specific fields to be updated
@@ -191,8 +190,7 @@ const updateProfile = async (req, res) => {
         const userdata = {
             _id: user._id,
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            fullName: user.fullName,
             photo: user.photo,
             gender: user.gender,
         }
