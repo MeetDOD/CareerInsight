@@ -65,7 +65,7 @@ const Navbar = () => {
                         Login/Signup
                     </button>
                 } */}
-                <Button size="icon" variant="secondary" className="border" onClick={toggleTheme} style={{
+                <Button size="sm" variant="ghost" className="border" onClick={toggleTheme} style={{
                     borderColor: `var(--borderColor)`,
                 }}>
                     {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5 text-primary" /> : <BsFillSunFill className="h-5 w-5 text-primary" />}
@@ -73,9 +73,14 @@ const Navbar = () => {
                 {/* <Link to="/createcourse" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                     Create Course
                 </Link> */}
-                <Link to="/dashboard">
+                {/* <Link to="/dashboard">
                     <Button className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
                         Dashboard
+                    </Button>
+                </Link> */}
+                <Link to="/register">
+                    <Button size="sm" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
+                        Login/Signup
                     </Button>
                 </Link>
                 <button onClick={() => setShowMenu(true)} className='w-6 md:hidden'><GiHamburgerMenu size={25} /></button>
@@ -91,6 +96,8 @@ const Navbar = () => {
                         <NavLink to="/doctors" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Doctors</p></NavLink>
                         <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">About</p></NavLink>
                         <NavLink to="/contact" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Contact</p></NavLink>
+                        <NavLink to="/dashboard" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Dashboard</p></NavLink>
+                        <NavLink to="/register" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Login/Signup</p></NavLink>
                         {/* {isLoggedIn &&
                             <NavLink to="/map" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Map</p></NavLink>
                         }

@@ -17,6 +17,8 @@ import CreateCourse from './AICourse/CreateCourse';
 import CourseLayout from './AICourse/CourseLayout';
 import FinalCourse from './AICourse/FinalCourse';
 import PortfolioBuilder from './Dashboard/PortfolioBuilder';
+import UserRegister from './auth/UserRegister';
+import UserLogin from './auth/UserLogin';
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/register' element={<UserRegister />} />
+          <Route path='/login' element={<UserLogin />} />
 
           <Route path='/dashboard' element={
             <Dashboard />
