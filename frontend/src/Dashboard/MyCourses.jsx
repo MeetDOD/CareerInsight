@@ -77,11 +77,11 @@ const MyCourses = () => {
                     </Breadcrumb>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {dummyCourses.map((course) => (
                         <Link
                             key={course.id}
-                            className="p-4 shadow-md rounded-lg overflow-hidden border border-gray-300 hover:scale-95 transition-all hover:shadow-lg"
+                            className="p-2 shadow-md rounded-lg overflow-hidden border border-gray-300 hover:scale-95 transition-all hover:shadow-lg"
                             style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                         >
                             <img

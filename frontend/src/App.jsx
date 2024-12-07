@@ -16,6 +16,7 @@ import InterviewQuestion from './AIInterview/InterviewQuestion'
 import CreateCourse from './AICourse/CreateCourse';
 import CourseLayout from './AICourse/CourseLayout';
 import FinalCourse from './AICourse/FinalCourse';
+import PortfolioBuilder from './Dashboard/PortfolioBuilder';
 
 const App = () => {
   return (
@@ -64,6 +65,10 @@ const App = () => {
           <Route path='/courselayout' element={<CourseLayout />} />
           <Route path='/finalcourse' element={<FinalCourse />} />
           {/* AI Course Ends*/}
+
+          {/* AI Portfolio Builder Starts*/}
+          <Route path='/createportfolio' element={<PortfolioBuilder />} />
+          {/* AI Portfolio Builder Ends*/}
         </Routes>
         <Toaster richColors />
       </div>
