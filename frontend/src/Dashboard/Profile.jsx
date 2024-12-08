@@ -7,7 +7,6 @@ import { userState } from "@/store/auth";
 const Profile = () => {
 
     const user = useRecoilValue(userState);
-    console.log(user)
 
     return (
         <div
