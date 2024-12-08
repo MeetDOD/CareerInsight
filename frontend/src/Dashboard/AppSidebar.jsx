@@ -1,20 +1,15 @@
 import React from 'react';
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarRail,
-} from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera } from 'react-icons/md';
 import { FaTools, FaLaptop } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from "../assets/image.png";
 import { Separator } from "@/components/ui/separator"
 import { CgWebsite } from "react-icons/cg";
+import { tokenState } from '@/store/auth';
+import { useSetRecoilState } from 'recoil';
+import { toast } from 'sonner';
 
 const data = {
     navMain: [
@@ -54,9 +49,18 @@ const data = {
 const AppSidebar = () => {
 
     const location = useLocation();
+    const setTokenState = useSetRecoilState(tokenState);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setTokenState("");
+        toast.success("Logged out successfully");
+        navigate("/")
+    };
 
     return (
-        <Sidebar className="w-64 min-h-screen shadow-md" style={{ color: `var(--text-color)` }}>
+        <Sidebar className="w-64 min-h-screen shadow-md" style={{ color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
             <SidebarHeader className="px-4 py-4" style={{ backgroundColor: `var(--background-color)` }} >
                 <div className="flex items-center gap-3">
                     <img src={logo} alt="Logo" className="w-24 object-contain" />
@@ -65,7 +69,7 @@ const AppSidebar = () => {
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col px-4" style={{ backgroundColor: `var(--background-color)` }}>
-                <Separator orientation="horizontal" className="my-1.5 h-[0.2px] bg-gray-400" />
+                <Separator orientation="horizontal" className="my-1.5 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
                 <SidebarMenu>
                     {data.navMain.map((item, index) => {
                         const isActive = location.pathname === item.url;
@@ -89,9 +93,10 @@ const AppSidebar = () => {
             </SidebarContent>
 
             <SidebarFooter className="p-4" style={{ backgroundColor: `var(--background-color)`, color: `var(--text - color)` }}>
-                <Separator orientation="horizontal" className="my-3 h-[0.2px] bg-gray-400" />
+                <Separator orientation="horizontal" className="my-3 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
                 <Button
                     variant="destructive"
+                    onClick={handleLogout}
                     className="w-full py-2 text-sm font-medium hover:bg-red-600 hover:text-white transition"
                 >
                     Logout

@@ -3,12 +3,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from '@/components/ui/button';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import axios from 'axios';
 import { ImSpinner2 } from 'react-icons/im';
+import { useSetRecoilState } from 'recoil';
+import { tokenState } from '@/store/auth';
 
 const UserLogin = () => {
     const [email, setEmail] = useState("");
@@ -19,8 +21,9 @@ const UserLogin = () => {
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [verifyLoading, setVerifyLoading] = useState(false);
-    const [resendLoading, setResendLoading] = useState(false);
     const navigate = useNavigate();
+
+    const setTokenState = useSetRecoilState(tokenState);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -41,6 +44,9 @@ const UserLogin = () => {
             });
             if (res.status === 200) {
                 toast.success(res.data.message);
+                setTokenState(res.data?.token);
+                localStorage.setItem("token", res.data?.token || "");
+                navigate("/dashboard");
             } else if (res.status === 400) {
                 toast.error("User already exists");
             }
@@ -87,7 +93,6 @@ const UserLogin = () => {
             });
             if (res.status === 200) {
                 toast.success(res.data.message);
-                navigate("/");
             } else if (res.status === 400) {
                 toast.error(res.data.message);
             }

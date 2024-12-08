@@ -8,7 +8,6 @@ router.post("/login", login);
 router.put("/update-profile", authenticateToken, updateProfile);
 router.post("/verify-otp", verifyOTP);
 router.get("/getalluser", getalluser);
-router.get("/getuserbyid/:id", authenticateToken, getuserbyid);
-
+router.get("/me", authenticateToken, getuserbyid);
 
 module.exports = router;

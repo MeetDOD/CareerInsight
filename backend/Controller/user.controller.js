@@ -214,8 +214,7 @@ const getalluser = async (req, res) => {
 
 const getuserbyid = async (req, res) => {
     try {
-        const Id = req.params.id;
-        const user = await User.findById(Id);
+        const user = req.user;
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

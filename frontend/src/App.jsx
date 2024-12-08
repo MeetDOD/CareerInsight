@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Navbar from './home/Navbar';
@@ -18,61 +18,104 @@ import CourseLayout from './AICourse/CourseLayout';
 import FinalCourse from './AICourse/FinalCourse';
 import PortfolioBuilder from './Dashboard/PortfolioBuilder';
 import UserLogin from './auth/UserLogin';
+import AuthenticatedRoute from './routes/AuthenticatedRoute';
+import NonAuthenticatedRoute from './routes/NonAuthenticatedRoute';
 
 const App = () => {
   return (
     <BrowserRouter>
       <div className="mx-4 sm:mx-[10%]">
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<UserLogin />} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Home />} />
 
-          <Route path='/dashboard' element={
-            <Dashboard />
-          } />
-          <Route path='/mycourses' element={
-            <MyCourses />
-          } />
+            <Route path='/login' element={
+              <NonAuthenticatedRoute>
+                <UserLogin />
+              </NonAuthenticatedRoute>
+            } />
 
-          {/* Resume Builder Starts*/}
-          <Route path='/resumebuilder' element={
-            <ResumeBuilder />
-          } />
-          <Route path='/resumebody' element={
-            <ResumeBody />
-          } />
-          <Route path='/downloadresume' element={
-            <DonwloadResume />
-          } />
-          {/* Resume Builder Ends*/}
+            <Route path='/dashboard' element={
+              <AuthenticatedRoute>
+                <Dashboard />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/mycourses' element={
+              <AuthenticatedRoute>
+                <MyCourses />
+              </AuthenticatedRoute>
+            } />
 
-          {/* Mock Interview Starts*/}
-          <Route path='/mockinterview' element={
-            <OnlineTest />
-          } />
-          <Route path='/interviewsession' element={
-            <InterviewSession />
-          } />
-          <Route path='/interviewstarts' element={
-            <InterviewQuestion />
-          } />
-          <Route path='/interviewfeedback' element={
-            <InterviewFeedback />
-          } />
-          {/* Mock Interview Ends*/}
+            {/* Resume Builder Starts*/}
+            <Route path='/resumebuilder' element={
+              <AuthenticatedRoute>
+                <ResumeBuilder />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/resumebody' element={
+              <AuthenticatedRoute>
+                <ResumeBody />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/downloadresume' element={
+              <AuthenticatedRoute>
+                <DonwloadResume />
+              </AuthenticatedRoute>
+            } />
+            {/* Resume Builder Ends*/}
 
-          {/* AI Course Starts*/}
-          <Route path='/createcourse' element={<CreateCourse />} />
-          <Route path='/courselayout' element={<CourseLayout />} />
-          <Route path='/finalcourse' element={<FinalCourse />} />
-          {/* AI Course Ends*/}
+            {/* Mock Interview Starts*/}
+            <Route path='/mockinterview' element={
+              <AuthenticatedRoute>
+                <OnlineTest />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/interviewsession' element={
+              <AuthenticatedRoute>
+                <InterviewSession />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/interviewstarts' element={
+              <AuthenticatedRoute>
+                <InterviewQuestion />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/interviewfeedback' element={
+              <AuthenticatedRoute>
+                <InterviewFeedback />
+              </AuthenticatedRoute>
+            } />
+            {/* Mock Interview Ends*/}
 
-          {/* AI Portfolio Builder Starts*/}
-          <Route path='/createportfolio' element={<PortfolioBuilder />} />
-          {/* AI Portfolio Builder Ends*/}
-        </Routes>
-        <Toaster richColors />
+            {/* AI Course Starts*/}
+            <Route path='/createcourse' element={
+              <AuthenticatedRoute>
+                <CreateCourse />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/courselayout' element={
+              <AuthenticatedRoute>
+                <CourseLayout />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/finalcourse' element={
+              <AuthenticatedRoute>
+                <FinalCourse />
+              </AuthenticatedRoute>
+            } />
+            {/* AI Course Ends*/}
+
+            {/* AI Portfolio Builder Starts*/}
+            <Route path='/createportfolio' element={
+              <AuthenticatedRoute>
+                <PortfolioBuilder />
+              </AuthenticatedRoute>
+            } />
+            {/* AI Portfolio Builder Ends*/}
+          </Routes>
+          <Toaster richColors />
+        </Suspense>
       </div>
       <Footer />
     </BrowserRouter>
