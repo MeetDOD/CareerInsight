@@ -78,9 +78,9 @@ const Navbar = () => {
                         Dashboard
                     </Button>
                 </Link> */}
-                <Link to="/register">
+                <Link to="/login">
                     <Button size="sm" className='bg-primary hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold hidden md:block'>
-                        Login/Signup
+                        Login / Signup
                     </Button>
                 </Link>
                 <button onClick={() => setShowMenu(true)} className='w-6 md:hidden'><GiHamburgerMenu size={25} /></button>
@@ -97,7 +97,7 @@ const Navbar = () => {
                         <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">About</p></NavLink>
                         <NavLink to="/contact" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Contact</p></NavLink>
                         <NavLink to="/dashboard" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Dashboard</p></NavLink>
-                        <NavLink to="/register" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Login/Signup</p></NavLink>
+                        <NavLink to="/login" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Login / Signup</p></NavLink>
                         {/* {isLoggedIn &&
                             <NavLink to="/map" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded-md inline-block">Map</p></NavLink>
                         }
