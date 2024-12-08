@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register, login, updateProfile, verifyOTP, getalluser, getuserbyid } = require("../Controller/user.controller");
+const { register, login, updateProfile, verifyOTP, getalluser, getuserbyid, adduserdetail } = require("../Controller/user.controller");
 const { authenticateToken } = require("../Middlewares/auth.middleware")
 
 router.post("/register", register);
@@ -9,6 +9,7 @@ router.put("/update-profile", authenticateToken, updateProfile);
 router.post("/verify-otp", verifyOTP);
 router.get("/getalluser", getalluser);
 router.get("/getuserbyid/:id", authenticateToken, getuserbyid);
+router.post("/adduserdetail", authenticateToken, adduserdetail);
 
 
 module.exports = router;

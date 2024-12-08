@@ -202,6 +202,33 @@ const updateProfile = async (req, res) => {
     }
 };
 
+
+const adduserdetail = async (req, res) => {
+    try {
+        const { phoneno, gender, dateofbirth, collegename, university, academicyear, address, techstack } = req.body;
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        user.phoneno = phoneno;
+        user.gender = gender;
+        user.dateofbirth = dateofbirth;
+        user.collegename = collegename;
+        user.university = university;
+        user.academicyear = academicyear;
+        user.address = address;
+        user.techstack = techstack;
+        await user.save();
+        res.status(200).json({ message: "Extra data added successfully", user });
+    }
+    catch (error) {
+        console.error("Error adding extra data:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+
 const getalluser = async (req, res) => {
     try {
         const user = await User.find();
@@ -227,5 +254,5 @@ const getuserbyid = async (req, res) => {
     }
 }
 
-module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid };
+module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail };
 

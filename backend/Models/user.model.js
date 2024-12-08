@@ -34,6 +34,22 @@ const userSchema = new mongoose.Schema({
         type: Number
 
     },
+    address: {
+        type: String
+    },
+    techstack: {
+        type: String
+    },
+    collegename: {
+        type: String
+    },
+    university: {
+        type: String
+    },
+    academicyear: {
+        type: String
+    },
+
     userType: {
         type: String,
         default: "student"
