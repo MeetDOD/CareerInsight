@@ -5,38 +5,65 @@ import { Button } from '@/components/ui/button';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-// import { tokenState, userState } from '@/store/atoms/userauth';
-import { useSetRecoilState } from 'recoil';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
+import axios from 'axios';
+import { ImSpinner2 } from 'react-icons/im';
 
 const UserLogin = () => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [firstName, setFirstname] = useState("");
-    const [lastName, setLastname] = useState("");
+    const [password, setPassword] = useState("");
     const [otp, setOtp] = useState("");
     const [isOtpSent, setIsOtpSent] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [verifyLoading, setVerifyLoading] = useState(false);
+    const [resendLoading, setResendLoading] = useState(false);
     const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        if (!firstName || !lastName || !email || !password) {
+        if (!email || !password) {
+            toast.error('All fields are required');
+            return;
+        }
+
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/login`, {
+                email, password
+            });
+            if (res.status === 200) {
+                toast.success(res.data.message);
+            } else if (res.status === 400) {
+                toast.error("User already exists");
+            }
+        } catch (err) {
+            toast.error('Invalid email or password');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        if (!fullName || !email || !password) {
             toast.error('All fields are required');
             return;
         }
 
         try {
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/register`, {
-                firstName, lastName, email, password
+                fullName, email, password
             });
-
             if (res.status === 200) {
                 setIsOtpSent(true);
                 toast.success(res.data.message);
@@ -45,61 +72,53 @@ const UserLogin = () => {
             }
         } catch (err) {
             toast.error('Server Error');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleVerifyOtp = async () => {
+    const handleVerifyOtp = async (e) => {
+        e.preventDefault();
+        setVerifyLoading(true);
+
         try {
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/verify-otp`, {
-                email, enteredOTP: otp, firstName, lastName, password
+                email, enteredOTP: otp, fullName, password
             });
-
             if (res.status === 200) {
                 toast.success(res.data.message);
-                navigate("/login");
+                navigate("/");
             } else if (res.status === 400) {
                 toast.error(res.data.message);
             }
         } catch (err) {
             toast.error("Failed to verify OTP");
             console.log(err);
+        } finally {
+            setVerifyLoading(false);
         }
-    };
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
-        if (!email || !password) {
-            toast.error('All fields are required');
-            return;
-        }
-
-        // try {
-        //     const res = await userlogin({ email, password });
-        //     if (res.status === 200 && res.data.token) {
-        //         toast.success('Login successful');
-        //         localStorage.setItem('token', res.data.token);
-        //         localStorage.setItem('user', JSON.stringify(res.data.user));
-        //         setToken(res.data.token);
-        //         setUser(res.data.user);
-        //         navigate('/patientprofile');
-        //     } else if (res.data.message) {
-        //         toast.error(res.data.message);
-        //     }
-        // } catch (err) {
-        //     toast.error('Invalid email or password');
-        // }
     };
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        document.title = "CAREER INSIGHT | USER LOGIN";
+        document.title = "CAREER INSIGHT | USER LOGIN / SIGNUP";
     }, []);
 
     return (
-        <form className='justify-center min-h-[80vh] flex items-center flex-col' onSubmit={handleLogin}>
-            <Tabs defaultValue="login" className="w-[400px]" >
+        <form
+            className='justify-center min-h-[80vh] flex items-center flex-col'
+            onSubmit={(e) => {
+                e.preventDefault();
+                const activeTab = document.querySelector("[data-state='active']").textContent;
+                if (activeTab === "Login") {
+                    handleLogin(e);
+                } else if (activeTab === "Sign Up") {
+                    handleSignup(e);
+                }
+            }}
+        >            <Tabs defaultValue="login" className="w-[400px]" >
                 <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
-                    <TabsTrigger value="login">Login</TabsTrigger>
+                    <TabsTrigger disabled={isOtpSent} value="login">Login</TabsTrigger>
                     <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
 
@@ -143,7 +162,13 @@ const UserLogin = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full" type="submit">Login</Button>
+                            <Button className="w-full" disabled={loading} type="submit">
+                                {loading ? (
+                                    <div className='flex flex-row gap-2 items-center'>
+                                        <ImSpinner2 className='animate-spin' /> Login you in
+                                    </div>
+                                ) : 'Login'}
+                            </Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -159,12 +184,11 @@ const UserLogin = () => {
                         <CardContent className="space-y-2">
                             <div className="space-y-1">
                                 <Label htmlFor="fullname">Full Name</Label>
-                                <Input className="inputField" type="text" value={lastName} onChange={(e) => setLastname(e.target.value)} placeholder="Enter your full name" required />
+                                <Input className="inputField" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Enter Your Full Name" required />
                             </div>
                             <div className='space-y-1'>
                                 <Label htmlFor="email">Email</Label>
                                 <Input className="inputField" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Your Email" required />
-
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="password">Create Password</Label>
@@ -186,17 +210,43 @@ const UserLogin = () => {
                             {isOtpSent && (
                                 <div className='space-y-1'>
                                     <Label htmlFor="otp">Enter OTP</Label>
-                                    <Input type="number" className="inputField" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder="Enter the otp" required />
+                                    <Input
+                                        type="number"
+                                        className="inputField"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
+                                        placeholder="Enter the OTP"
+                                        required
+                                    />
                                     <div className='gap-2 flex items-center'>
-                                        <Button className="w-full mt-2" type="button" onClick={handleVerifyOtp}>Verify OTP</Button>
-                                        <Button className="w-full border mt-2" variant="ghost" type="button" onClick={handleSubmit}>Resend OTP</Button>
+                                        <Button disabled={verifyLoading} className="w-full mt-2" type="button" onClick={handleVerifyOtp}>
+                                            {verifyLoading ? (
+                                                <div className='flex flex-row gap-2 items-center'>
+                                                    <ImSpinner2 className='animate-spin' /> Verifying OTP
+                                                </div>
+                                            ) : 'Verify OTP'}
+                                        </Button>
+                                        <Button disabled={loading} className="w-full border mt-2" variant="ghost" type="button" onClick={handleSignup}>
+                                            {loading ? (
+                                                <div className='flex flex-row gap-2 items-center'>
+                                                    <ImSpinner2 className='animate-spin' /> Resending OTP
+                                                </div>
+                                            ) : 'Resend OTP'}
+                                        </Button>
                                     </div>
                                 </div>
                             )}
+
                         </CardContent>
                         <CardFooter>
                             {!isOtpSent && (
-                                <Button className="w-full" type="button" onClick={handleSubmit}>Sign Up</Button>
+                                <Button disabled={loading} className="w-full" type="submit">
+                                    {loading ? (
+                                        <div className='flex flex-row gap-2 items-center'>
+                                            <ImSpinner2 className='animate-spin' /> Sending OTP
+                                        </div>
+                                    ) : 'Sign Up'}
+                                </Button>
                             )}
                         </CardFooter>
                     </Card>
