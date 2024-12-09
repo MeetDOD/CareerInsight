@@ -11,6 +11,9 @@ import { ImSpinner2 } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
 import { categoryState, descriptionState, optionsState, responseState, topicState } from '@/store/courseState';
 import { useRecoilState } from 'recoil';
+import generateThumbnail from '@/services/ThumbnailGenerator';
+import fetchCourseThumbnail from '@/services/ThumbnailGenerator';
+import fetchRelevantImage from '@/services/ThumbnailGenerator';
 
 const CreateCourse = () => {
     const [activeIndex, setactiveIndex] = useState(0);
@@ -18,6 +21,7 @@ const CreateCourse = () => {
     const [topic, setTopic] = useRecoilState(topicState);
     const [description, setDescription] = useRecoilState(descriptionState);
     const [options, setOptions] = useRecoilState(optionsState);
+    const [thumbnail, setThumbnail] = useState(null);
     const [response, setResponse] = useRecoilState(responseState);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -48,21 +52,74 @@ const CreateCourse = () => {
             description,
             ...options,
         };
-        const prompt = `Generate A course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, About Course, Duration, Language. 
-        Details are as follow: Categor: ${formData.category}, Topic: ${formData.topic} and Description: ${formData.description}, 
-        Course Level: ${formData.difficulty}, 
-        Course Duration: ${formData.duration}, 
-        Number of chapters to include in the course: ${formData.chapters},
-        language of course should be ${formData.language}. 
-        Give the response in JSON FORMAT ONLY. 
-        It very Important to give response in JSON Only NOTE that`;
+
+        const prompt = `
+            Generate a comprehensive course tutorial in JSON format with the following fields:
+
+            1. **courseName**: The title of the course.
+            2. **description**: A detailed description of the course.
+            3. **topic**: The specific topic covered by the course.
+            4. **category**: The category under which the course falls.
+            5. **courseLevel**: The difficulty level of the course (e.g., Beginner, Intermediate, Advanced).
+            6. **duration**: The overall duration of the course (e.g., "4 hours", "2 weeks").
+            7. **language**: The language in which the course is delivered.
+            8. **chapters**: An array of chapters, where each chapter includes:
+            - **chapterName**: The title of the chapter.
+            - **aboutChapter**: A brief description of the chapter.
+            - **duration**: The estimated time to complete the chapter.
+
+            ### Course Details:
+            - **Category**: ${formData.category}
+            - **Topic**: ${formData.topic}
+            - **Description**: ${formData.description}
+            - **Course Level**: ${formData.difficulty}
+            - **Course Duration**: ${formData.duration}
+            - **Number of Chapters**: ${formData.chapters}
+            - **Language**: ${formData.language}
+
+            ### JSON Response Structure:
+            Ensure the response strictly follows this structure:
+
+            \`\`\`json
+            {
+            "courseName": "Course Title Here",
+            "description": "Detailed course description here.",
+            "topic": "Specific topic here.",
+            "category": "Category name here.",
+            "courseLevel": "Difficulty level here.",
+            "duration": "Total course duration here.",
+            "language": "Language here.",
+            "chapters": [
+                {
+                "chapterName": "Chapter 1 Title",
+                "aboutChapter": "Brief description of Chapter 1.",
+                "duration": "Duration of Chapter 1"
+                },
+                {
+                "chapterName": "Chapter 2 Title",
+                "aboutChapter": "Brief description of Chapter 2.",
+                "duration": "Duration of Chapter 2"
+                }
+            ]
+            }
+            \`\`\`
+
+            ### Requirements:
+            1. **Mandatory Fields**: All fields listed above are required. No field should be left empty.
+            2. **Consistent Format**: Ensure the response is in **valid JSON format** only.
+            3. **Meaningful Content**: Provide meaningful values for all fields. Placeholder text or empty strings are not acceptable.
+            4. **Chapters**: Generate exactly ${formData.chapters} chapters, each with unique and relevant details.
+            `;
         try {
             const result = await chatSession.sendMessage(prompt);
             const data = await result.response.text();
             const cleanedData = data.replace(/```json|```/g, '');
             const parsedResponse = JSON.parse(`[${cleanedData}]`);
+
+            const imageUrl = await fetchRelevantImage(formData.topic);
+            setThumbnail(imageUrl);
             setResponse(parsedResponse);
-            navigate("/courselayout", { state: { courseData: parsedResponse } });
+            navigate("/courselayout", { state: { courseData: parsedResponse, thumbnail: imageUrl } });
         } catch (error) {
             console.error("Error generating summary: ", error);
         } finally {

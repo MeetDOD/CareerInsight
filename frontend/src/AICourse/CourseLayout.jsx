@@ -17,6 +17,8 @@ const CourseLayout = () => {
     const [loading, setLoading] = useState(false);
     const courseData = useRecoilValue(responseState);
     const [finalCourse, setFinalCourse] = useRecoilState(finalCourseState);
+    const location = useLocation();
+    const thumbnail = location.state?.thumbnail;
 
     if (!courseData || courseData.length === 0) {
         return (
@@ -36,15 +38,54 @@ const CourseLayout = () => {
 
         try {
             for (const chapter of chapters) {
-                const prompt = `Explain the concept in detail on topic: ${course.courseName}, chapter: ${chapter.chapterName} in JSON format with fields: title, explanation, sections (with fields: subtitle, content). Ensure the response is JSON only.`;
 
+                const prompt = `
+                    Generate detailed content for a chapter of a course in JSON format. Include the following fields:
+
+                    1. **title**: The title of the chapter.
+                    2. **explanation**: A brief explanation or summary of the chapter's content.
+                    3. **sections**: An array of sections within the chapter, where each section includes:
+                    - **subtitle**: The title of the section.
+                    - **content**: Detailed content for the section.
+
+                    ### Chapter Details:
+                    - **Course Name**: ${course.courseName}
+                    - **Chapter Name**: ${chapter.chapterName}
+
+                    ### JSON Response Structure:
+                    Ensure the response strictly follows this structure:
+
+                    \`\`\`json
+                    {
+                    "title": "Chapter Title",
+                    "explanation": "Brief explanation of the chapter.",
+                    "sections": [
+                        {
+                        "subtitle": "Section 1 Subtitle",
+                        "content": "Detailed explanation for Section 1."
+                        },
+                        {
+                        "subtitle": "Section 2 Subtitle",
+                        "content": "Detailed explanation for Section 2."
+                        }
+                    ]
+                    }
+                    \`\`\`
+
+                    ### Requirements:
+                    1. **Mandatory Fields**: All fields must be provided with meaningful content. No field should be left empty or contain placeholder text.
+                    2. **Sections**: Include at least 2 sections per chapter, each with a unique subtitle and relevant content.
+                    3. **Format**: The response must be in **valid JSON format only**.
+                    4. **Consistency**: Ensure the explanation and section content are relevant to the chapter and course context.
+                    5. **Detailed Content**: Provide rich, educational content suitable for a course tutorial.
+                    `;
                 try {
                     const result = await chatSession.sendMessage(prompt);
                     const data = await result.response.text();
                     const cleanedData = data.replace(/```json|```/g, '');
                     const parsedResponse = JSON.parse(cleanedData);
 
-                    const videoResult = await getVideos(`${course.courseName}:${chapter.chapterName}`);
+                    const videoResult = await getVideos(`${course.courseName} ${chapter.chapterName}`);
                     const videoId = videoResult[0]?.id?.videoId || null;
 
                     finalChapters.push({
@@ -80,11 +121,12 @@ const CourseLayout = () => {
                 <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex items-center justify-center">
                         <img
-                            src="https://miro.medium.com/v2/resize:fit:1200/1*QJnvahq_EBdUGjYQUYrhvA.png"
-                            alt="Course"
-                            className="rounded-xl shadow-lg w-full max-w-sm md:max-w-full"
+                            src={thumbnail}
+                            alt={course.courseName}
+                            className="rounded-xl shadow-lg w-full max-w-sm md:max-w-full object-cover"
                         />
                     </div>
+
                     <div>
                         <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
                             {course.courseName}
@@ -96,7 +138,7 @@ const CourseLayout = () => {
                             </div>
                             <span className="text-sm font-semibold">Topic: {course.topic}</span>
                         </div>
-                        <Button onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
+                        <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (
                                 <div className="flex flex-row gap-2 items-center">
                                     <ImSpinner2 size={20} className="animate-spin" /> Generating ...

@@ -21,6 +21,7 @@ import UserLogin from './auth/UserLogin';
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import NonAuthenticatedRoute from './routes/NonAuthenticatedRoute';
 import { Vortex } from 'react-loader-spinner';
+import CoursesPage from './AICourse/CoursesPage';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/courses' element={<CoursesPage />} />
 
             <Route path='/login' element={
               <NonAuthenticatedRoute>

@@ -3,10 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { FaClock } from 'react-icons/fa';
 import { finalCourseState } from '@/store/courseState';
 import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/auth';
 
 const FinalCourse = () => {
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
     const { courseName, chapters } = useRecoilValue(finalCourseState);
+    const user = useRecoilValue(userState);
+
+    console.log(user._id);
+    console.log(user.fullName);
 
     if (chapters.length === 0) {
         return (

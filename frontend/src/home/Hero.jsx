@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 // import doc1 from '../assets/Hero/doc1.png';
 import { useNavigate } from 'react-router-dom';
