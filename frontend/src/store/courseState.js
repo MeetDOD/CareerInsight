@@ -31,6 +31,7 @@ export const finalCourseState = atom({
         courseName: '',
         duration:'',
         chapters: [],
+        thumbnail:''
     },
 });
 

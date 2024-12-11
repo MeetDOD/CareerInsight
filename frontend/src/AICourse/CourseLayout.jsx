@@ -103,7 +103,8 @@ const CourseLayout = () => {
 
             setFinalCourse({
                 courseName: course.courseName,
-                chapters: finalChapters
+                chapters: finalChapters,
+                thumbnail
             });
 
             navigate('/finalcourse');
@@ -131,17 +132,17 @@ const CourseLayout = () => {
                         <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
                             {course.courseName}
                         </h1>
-                        <p className="text-lg mb-6 text-white/90">{course.description}</p>
+                        <p className="text-lg mb-5 text-white/90 text-justify">{course.description}</p>
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
                                 <FaHandHoldingHeart size={20} />
                             </div>
-                            <span className="text-sm font-semibold">Topic: {course.topic}</span>
+                            <span className="text-sm font-semibold">{course.topic}</span>
                         </div>
                         <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (
                                 <div className="flex flex-row gap-2 items-center">
-                                    <ImSpinner2 size={20} className="animate-spin" /> Generating ...
+                                    <ImSpinner2 size={20} className="animate-spin" /> Generating Course Content
                                 </div>
                             ) : 'Generate Course Content'}
                         </Button>

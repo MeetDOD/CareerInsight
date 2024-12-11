@@ -1,52 +1,52 @@
-import { FaLaptopCode, FaHeartbeat, FaRobot, FaGraduationCap, FaPaintBrush, FaBusinessTime, FaMusic, FaGlobe } from "react-icons/fa";
+import { FaCode, FaServer, FaCogs, FaMobileAlt, FaDatabase, FaCloud, FaSitemap, FaTools } from "react-icons/fa";
 
 export default [
     {
         id: 1,
-        name: 'Programming',
-        icon: <FaLaptopCode size={30} />,
-        prompt: 'Explore courses on programming, coding languages, and software development.',
+        name: 'Frontend Dev',
+        icon: <FaCode size={30} />,
+        prompt: 'Build modern user interfaces with HTML, CSS, and JavaScript frameworks.',
     },
     {
         id: 2,
-        name: 'Health & Wellness',
-        icon: <FaHeartbeat size={30} />,
-        prompt: 'Discover courses about physical fitness, mental health, and wellness practices.',
+        name: 'Backend Dev',
+        icon: <FaServer size={30} />,
+        prompt: 'Learn server-side programming, databases, and APIs.',
     },
     {
         id: 3,
-        name: 'Technology',
-        icon: <FaRobot size={30} />,
-        prompt: 'Learn about the latest technologies, AI, machine learning, and more.',
+        name: 'Full Stack Dev',
+        icon: <FaCogs size={30} />,
+        prompt: 'Master both frontend and backend technologies.',
     },
     {
         id: 4,
-        name: 'Education',
-        icon: <FaGraduationCap size={30} />,
-        prompt: 'Access educational resources, online tutoring, and academic subjects.',
+        name: 'Mobile App Dev',
+        icon: <FaMobileAlt size={30} />,
+        prompt: 'Create mobile applications for Android and iOS.',
     },
     {
         id: 5,
-        name: 'Arts & Design',
-        icon: <FaPaintBrush size={30} />,
-        prompt: 'Unleash your creativity with courses on art, design, and photography.',
+        name: 'Database Management',
+        icon: <FaDatabase size={30} />,
+        prompt: 'Learn about database design, SQL, and data storage solutions.',
     },
     {
         id: 6,
-        name: 'Business Management',
-        icon: <FaBusinessTime size={30} />,
-        prompt: 'Master business strategies, leadership, and entrepreneurial skills.',
+        name: 'Cloud Computing',
+        icon: <FaCloud size={30} />,
+        prompt: 'Explore cloud platforms like AWS, Azure, and Google Cloud.',
     },
     {
         id: 7,
-        name: 'Music',
-        icon: <FaMusic size={30} />,
-        prompt: 'Learn to play instruments, compose music, or explore music theory.',
+        name: 'DSA',
+        icon: <FaSitemap size={30} />,
+        prompt: 'Master essential data structures and algorithms to improve problem-solving skills.',
     },
     {
         id: 8,
-        name: 'Languages',
-        icon: <FaGlobe size={30} />,
-        prompt: 'Learn new languages and improve communication skills across cultures.',
-    }
+        name: 'DevOps',
+        icon: <FaTools size={30} />,
+        prompt: 'Learn CI/CD, infrastructure automation, and deployment practices.',
+    },
 ];
