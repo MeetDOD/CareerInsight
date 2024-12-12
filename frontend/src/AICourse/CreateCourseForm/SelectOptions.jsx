@@ -33,22 +33,27 @@ const SelectOptions = ({ options, setOptions }) => {
                         </SelectTrigger>
                         <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
                             <SelectItem value="4 Hours">4 Hours</SelectItem>
+                            <SelectItem value="6 Hours">6 Hours</SelectItem>
                             <SelectItem value="8 Hours">8 Hours</SelectItem>
+                            <SelectItem value="10 Hours">10 Hours</SelectItem>
                             <SelectItem value="12 Hours">12 Hours</SelectItem>
-                            <SelectItem value="More than 12 Hours">More than 12 Hours</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
                 <div className='flex flex-col gap-3'>
                     <Label>No. of Chapters</Label>
-                    <Input
-                        type="number"
-                        value={options.chapters}
-                        onChange={(e) => handleOptionChange('chapters', e.target.value)}
-                        placeholder="e.g: 10"
-                        className="inputField"
-                    />
+                    <Select onValueChange={(value) => handleOptionChange('chapters', value)}>
+                        <SelectTrigger className="inputField">
+                            <SelectValue placeholder="Select No. of Chapters" />
+                        </SelectTrigger>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
+                            <SelectItem value="4">4 Chapters</SelectItem>
+                            <SelectItem value="8">8 Chapters</SelectItem>
+                            <SelectItem value="12">12 Chapters</SelectItem>
+                            <SelectItem value="16">16 Chapters</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className='flex flex-col gap-3'>

@@ -11,6 +11,7 @@ import { ImSpinner2 } from 'react-icons/im';
 import getVideos from '@/services/YTModel';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { finalCourseState, responseState } from '@/store/courseState';
+import { Input } from '@/components/ui/input';
 
 const CourseLayout = () => {
     const navigate = useNavigate();
@@ -19,6 +20,18 @@ const CourseLayout = () => {
     const [finalCourse, setFinalCourse] = useRecoilState(finalCourseState);
     const location = useLocation();
     const thumbnail = location.state?.thumbnail;
+    const [customThumbnail, setCustomThumbnail] = useState('');
+    const [imageURL, setImageURL] = useState(thumbnail);
+
+    const handleThumbnailChange = (e) => {
+        setCustomThumbnail(e.target.value);
+    };
+
+    const handleUseCustomThumbnail = () => {
+        if (customThumbnail) {
+            setImageURL(customThumbnail);
+        }
+    };
 
     if (!courseData || courseData.length === 0) {
         return (
@@ -104,7 +117,7 @@ const CourseLayout = () => {
             setFinalCourse({
                 courseName: course.courseName,
                 chapters: finalChapters,
-                thumbnail
+                thumbnail: imageURL
             });
 
             navigate('/finalcourse');
@@ -120,19 +133,34 @@ const CourseLayout = () => {
         <div className="min-h-screen">
             <div className="relative shadow-lg bg-gradient-to-r from-indigo-500 to-purple-950 text-white rounded-xl">
                 <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="flex items-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         <img
-                            src={thumbnail}
+                            src={imageURL}
                             alt={course.courseName}
                             className="rounded-xl shadow-lg w-full max-w-sm md:max-w-full object-cover"
                         />
+                        <div className="mt-4 w-full">
+                            <Input
+                                type="text"
+                                placeholder="Enter image URL"
+                                value={customThumbnail}
+                                onChange={handleThumbnailChange}
+                                className="w-full p-2 border rounded-md inputField"
+                            />
+                            <Button
+                                onClick={handleUseCustomThumbnail}
+                                className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold rounded-lg"
+                            >
+                                Use Custom Image
+                            </Button>
+                        </div>
                     </div>
 
                     <div>
                         <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
                             {course.courseName}
                         </h1>
-                        <p className="text-lg mb-5 text-white/90 text-justify">{course.description}</p>
+                        <p className="text-lg mb-5 text-gray-200 font-semibold tracking-tight text-justify">{course.description}</p>
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
                                 <FaHandHoldingHeart size={20} />

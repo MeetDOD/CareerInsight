@@ -109,8 +109,8 @@ const MyCourses = () => {
                                 />
 
                                 <div className="py-4 space-y-2">
-                                    <div className="text-lg font-bold line-clamp-1">
-                                        {course.course.courseName}
+                                    <div className="text-lg font-bold">
+                                        CareerInsight: {course.course.courseName}
                                     </div>
                                     <div className='flex justify-between'>
                                         <div className='text-[10px] p-1 bg-blue-100 rounded-full px-2 text-primary'>
@@ -142,7 +142,7 @@ const MyCourses = () => {
 
                                 <div>
                                     <Link to={`/startcourse/${course.course._id}`}>
-                                        <Button className="w-full">Read / Watch</Button>
+                                        <Button className="w-full">View Course</Button>
                                     </Link>
                                 </div>
                             </div>
