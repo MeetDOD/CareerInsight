@@ -21,9 +21,9 @@ import UserLogin from './auth/UserLogin';
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import NonAuthenticatedRoute from './routes/NonAuthenticatedRoute';
 import { Vortex } from 'react-loader-spinner';
-import CoursesPage from './AICourse/CoursesPage';
 import ViewCourseLayout from './AICourse/ViewCourseLayout';
 import StartCourse from './AICourse/StartCourse';
+import CoursesPage from './pages/CoursesPage';
 
 const App = () => {
   return (

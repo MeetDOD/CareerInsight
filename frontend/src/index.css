@@ -95,6 +95,7 @@
   --nav-scroll: #f9fafb;
   --borderColor: #e5e7eb;
   --section: #f3e8ff;
+  --skle: #e5e7eb;
 }
 
 [data-theme="dark"] {
@@ -103,12 +104,17 @@
   --nav-scroll: #111827;
   --borderColor: #444e5d;
   --section: #1f2937;
+  --skle: #1f2937;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   border: var(--borderColor);
+}
+
+.skle {
+  background-color: var(--skle);
 }
 
 .inputField {
