@@ -1,92 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaClock, FaUpload } from 'react-icons/fa';
 import { finalCourseState, responseState } from '@/store/courseState';
 import { useRecoilValue } from 'recoil';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { IoIosHome, IoMdArrowRoundBack } from 'react-icons/io';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { ImSpinner2 } from 'react-icons/im';
-import { useNavigate } from 'react-router-dom';
 
-const FinalCourse = () => {
+const StartCourse = () => {
+
+    const { id } = useParams();
+    const [course, setCourse] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
-    const { courseName, chapters, thumbnail } = useRecoilValue(finalCourseState);
-    const courseData = useRecoilValue(responseState);
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const category = courseData[0]?.category;
-    const courseLevel = courseData[0]?.courseLevel;
-    const duration = courseData[0]?.duration;
-    const language = courseData[0]?.language;
-    const topic = courseData[0]?.topic;
-    const description = courseData[0]?.description;
 
-    const handlePublish = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/usercourse/publishcourse`, {
-                thumbnail,
-                courseName,
-                chapters,
-                category,
-                courseLevel,
-                duration,
-                language,
-                topic,
-                description
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/getcourse/${id}`);
+                setCourse(response.data.course);
+                console.log(response.data.course)
+            } catch (error) {
+                console.error('Error fetching course:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-            toast.success(response.data.message);
-            navigate("/courses")
-        } catch (error) {
-            console.error('Error publishing course:', error);
-            toast.error('Failed to publish the course');
-        } finally {
-            setLoading(false);
-        }
-    };
+        fetchCourse();
+    }, [id]);
 
-    if (chapters.length === 0) {
+    if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen ">
-                <h2 className="text-3xl font-bold">No chapters available.</h2>
-                <p className="mt-2 text-xl font-semibold">Please generate course content first.</p>
+            <div className="flex justify-center items-center min-h-screen">
+                <ImSpinner2 size={50} className="animate-spin" />
             </div>
         );
     }
 
-    const activeChapter = chapters[activeChapterIndex];
+    if (!course) {
+        return <p className="text-center mt-10">Course not found.</p>;
+    }
+
+    const activeChapter = course.chapters[activeChapterIndex];
 
     return (
         <div>
-            <div className='flex justify-between mb-5'>
-                <div className='flex flex-row gap-2'>
-                    <Button size="sm" onClick={() => navigate(-1)} className="flex gap-2">
-                        <IoMdArrowRoundBack size={20} />Back
-                    </Button>
-                    <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
-                </div>
-                <Button disabled={loading} onClick={handlePublish}>
-                    {loading ? (
-                        <div className="flex flex-row gap-2 items-center">
-                            <ImSpinner2 size={20} className="animate-spin" /> Publishing this course
-                        </div>
-                    ) : (<div className="flex gap-2">
-                        <FaUpload /> Publish this course
-                    </div>)}
-                </Button>
-            </div>
             <div className="flex flex-col lg:flex-row min-h-screen" style={{ borderColor: `var(--borderColor)` }}>
                 <div className="shadow-md border rounded-xl border-gray-300 lg:w-1/4 p-4 h-screen lg:sticky top-0 overflow-y-auto" style={{ borderColor: `var(--borderColor)` }}>
-                    <h2 className="text-lg font-bold mb-4 border-b pb-4" style={{ borderColor: `var(--borderColor)` }}>{courseName}</h2>
+                    <h2 className="text-lg font-bold mb-4 border-b pb-4" style={{ borderColor: `var(--borderColor)` }}>{course.courseName}</h2>
                     <ul className="space-y-2">
-                        {chapters.map((chapter, index) => (
+                        {course.chapters.map((chapter, index) => (
                             <li
                                 key={index}
                                 onClick={() => setActiveChapterIndex(index)}
@@ -150,7 +117,7 @@ const FinalCourse = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default FinalCourse;
+export default StartCourse

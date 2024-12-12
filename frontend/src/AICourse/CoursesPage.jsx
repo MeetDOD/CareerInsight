@@ -37,6 +37,7 @@ const CoursesPage = () => {
                 {courses.map((course) => (
                     <Link
                         key={course._id}
+                        to={`/viewcourse/${course._id}`}
                         className="p-2 shadow-md rounded-lg overflow-hidden border border-gray-300 hover:scale-95 transition-all hover:shadow-lg"
                         style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                     >

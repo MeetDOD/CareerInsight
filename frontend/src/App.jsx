@@ -22,23 +22,25 @@ import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import NonAuthenticatedRoute from './routes/NonAuthenticatedRoute';
 import { Vortex } from 'react-loader-spinner';
 import CoursesPage from './AICourse/CoursesPage';
+import ViewCourseLayout from './AICourse/ViewCourseLayout';
+import StartCourse from './AICourse/StartCourse';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="mx-4 sm:mx-[10%]">
-        <Suspense fallback={
-          <div className="flex min-h-[80vh] items-center justify-center">
-            <Vortex
-              visible={true}
-              height="100"
-              width="100"
-              ariaLabel="vortex-loading"
-              wrapperClass="vortex-wrapper"
-              colors={['#7c3aed', '#a78bfa', '#7c3aed', '#c4b5fd', '#7c3aed', '#ddd6fe']}
-            />
-          </div>
-        }>
+      <Suspense fallback={
+        <div className="flex min-h-[80vh] items-center justify-center">
+          <Vortex
+            visible={true}
+            height="100"
+            width="100"
+            ariaLabel="vortex-loading"
+            wrapperClass="vortex-wrapper"
+            colors={['#7c3aed', '#a78bfa', '#7c3aed', '#c4b5fd', '#7c3aed', '#ddd6fe']}
+          />
+        </div>
+      }>
+        <div className="mx-4 sm:mx-[10%]">
           <Navbar />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -118,6 +120,18 @@ const App = () => {
                 <FinalCourse />
               </AuthenticatedRoute>
             } />
+
+            <Route path='/viewcourse/:id' element={
+              <AuthenticatedRoute>
+                <ViewCourseLayout />
+              </AuthenticatedRoute>
+            } />
+
+            <Route path='/startcourse/:id' element={
+              <AuthenticatedRoute>
+                <StartCourse />
+              </AuthenticatedRoute>
+            } />
             {/* AI Course Ends*/}
 
             {/* AI Portfolio Builder Starts*/}
@@ -129,9 +143,9 @@ const App = () => {
             {/* AI Portfolio Builder Ends*/}
           </Routes>
           <Toaster richColors />
-        </Suspense>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </Suspense>
     </BrowserRouter>
   );
 };
