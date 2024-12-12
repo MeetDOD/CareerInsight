@@ -2,45 +2,39 @@ import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/
 import AppSidebar from "./AppSidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import { FaUser } from "react-icons/fa";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { format } from 'date-fns';
 
 const MyCourses = () => {
-    const dummyCourses = [
-        {
-            id: 1,
-            image: "https://media.licdn.com/dms/image/D4D12AQF26-NZ279EaA/article-cover_image-shrink_600_2000/0/1688018102545?e=2147483647&v=beta&t=Q9aUSt_UHzSqZYyDycri3s2kqVDlPc-YM0ZzlH2yfYc",
-            title: "React Js for Beginners",
-            instructor: "John Doe",
-            date: "Dec 1, 2024",
-            progress: "50%",
-        },
-        {
-            id: 2,
-            image: "https://miro.medium.com/v2/resize:fit:1400/0*ZpjhBs0gR5oSd3Il",
-            title: "Mastering C++",
-            instructor: "Jane Smith",
-            date: "Nov 20, 2024",
-            progress: "30%",
-        },
-        {
-            id: 3,
-            image: "https://miro.medium.com/v2/resize:fit:1200/1*QJnvahq_EBdUGjYQUYrhvA.png",
-            title: "MongoDB Certification Prep",
-            instructor: "Alice Johnson",
-            date: "Nov 15, 2024",
-            progress: "75%",
-        },
-        {
-            id: 3,
-            image: "https://miro.medium.com/v2/resize:fit:1200/1*QJnvahq_EBdUGjYQUYrhvA.png",
-            title: "MongoDB Certification Prep",
-            instructor: "Alice Johnson",
-            date: "Nov 15, 2024",
-            progress: "99%",
-        },
-    ];
+
+    const [course, setCourse] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/mycourses`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
+                setCourse(response.data.enrolledCourses);
+                console.log(response.data.enrolledCourses);
+            } catch (error) {
+                toast.error("Failed to load courses.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCourses();
+    }, []);
 
     return (
         <SidebarProvider>
@@ -67,43 +61,94 @@ const MyCourses = () => {
                     </Breadcrumb>
                 </div>
 
-                <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {dummyCourses.map((course) => (
-                        <Link
-                            key={course.id}
-                            className="p-2 shadow-md rounded-lg overflow-hidden border border-gray-300 hover:scale-95 transition-all hover:shadow-lg"
-                            style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
-                        >
-                            <img
-                                src={course.image}
-                                alt={course.title}
-                                className="w-full rounded-lg  h-40 object-cover"
-                            />
-
-                            <div className="p-4">
-                                <h3 className="text-lg font-bold truncate">
-                                    {course.title}
-                                </h3>
-                                <p className="text-sm font-semibold flex items-center mt-2">
-                                    <FaUser size={15} className="mr-2" />
-                                    {course.instructor}
-                                </p>
-
-                                <div className="mt-3">
-                                    <div className="w-full bg-gray-100 rounded-full h-2">
-                                        <div
-                                            className="bg-primary h-2 rounded-full"
-                                            style={{ width: course.progress }}
-                                        ></div>
+                {loading &&
+                    <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Array.from({ length: 8 }).map((index) => (
+                            <div
+                                key={index}
+                                className="p-2 shadow-md rounded-lg border border-gray-300"
+                                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                            >
+                                <Skeleton className="w-full h-40 rounded-lg skle" />
+                                <div className="py-4 space-y-2">
+                                    <div>
+                                        <Skeleton className="h-6 w-3/4 mb-2 skle" />
                                     </div>
-                                    <p className="text-sm mt-1">
-                                        Progress: {course.progress}
-                                    </p>
+                                    <div className='flex justify-between'>
+                                        <Skeleton className="h-4 w-1/2 skle" />
+                                        <Skeleton className="h-4 w-10 skle" />
+                                    </div>
+                                </div>
+                                <Skeleton className="h-10 w-full skle" />
+                            </div>
+                        ))}
+                    </div>
+                }
+
+                {course.length <= 0 ?
+                    <div className="flex flex-col space-y-5 min-h-[70vh] items-center justify-center">
+                        <div className="text-3xl font-bold tracking-tight">
+                            Check out the latest courses to enroll
+                        </div>
+                        <Link to="/courses">
+                            <Button size="lg">View Courses</Button>
+                        </Link>
+                    </div>
+                    :
+                    <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {course.map((course) => (
+                            <div
+                                key={course.id}
+                                className="p-2 shadow-md rounded-lg overflow-hidden border border-gray-300 transition duration-300 hover:-translate-y-2"
+                                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                            >
+                                <img
+                                    src={course.course.thumbnail}
+                                    alt={course.course.courseName}
+                                    className="w-full rounded-lg  h-40 object-cover"
+                                />
+
+                                <div className="py-4 space-y-2">
+                                    <div className="text-lg font-bold line-clamp-1">
+                                        {course.course.courseName}
+                                    </div>
+                                    <div className='flex justify-between'>
+                                        <div className='text-[10px] p-1 bg-blue-100 rounded-full px-2 text-primary'>
+                                            {course.course.category}
+                                        </div>
+                                        <div className='font-bold text-xs flex flex-row items-center gap-1 text-green-400'>
+                                            <div className="w-2 h-2 bg-green-400 rounded-full border border-green-600"></div>
+                                            {course.course.duration}
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-1">
+                                        <div className="w-full bg-gray-100 rounded-full h-3">
+                                            <div
+                                                className="bg-primary h-3 rounded-full"
+                                                style={{ width: `${course.progress}%` }}
+                                            ></div>
+                                        </div>
+                                        <p className="text-sm mt-1 font-semibold tracking-tight">
+                                            My Progress: {course.progress} %
+                                        </p>
+                                    </div>
+
+                                    <div className="text-xs font-semibold text-gray-500">
+                                        Enrolled At: {format(new Date(course.enrolledAt), 'MMMM d, yyyy, h:mm a')}
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <Link to={`/startcourse/${course.course._id}`}>
+                                        <Button className="w-full">Read / Watch</Button>
+                                    </Link>
                                 </div>
                             </div>
-                        </Link>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                }
             </SidebarInset>
         </SidebarProvider>
     );

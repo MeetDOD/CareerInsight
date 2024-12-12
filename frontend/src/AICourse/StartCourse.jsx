@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FaClock, FaUpload } from 'react-icons/fa';
-import { finalCourseState, responseState } from '@/store/courseState';
-import { useRecoilValue } from 'recoil';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import { FaClock } from 'react-icons/fa';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ImSpinner2 } from 'react-icons/im';
+import { toast } from 'sonner';
+import { IoIosHome, IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
+import { Button } from '@/components/ui/button';
 
 const StartCourse = () => {
 
@@ -16,6 +14,7 @@ const StartCourse = () => {
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCourse = async () => {
@@ -33,6 +32,29 @@ const StartCourse = () => {
         fetchCourse();
     }, [id]);
 
+    const updateUserProgress = async () => {
+        try {
+            const totalChapters = course.chapters.length;
+            const progress = Math.round(((activeChapterIndex + 1) / totalChapters) * 100);
+            await axios.put(
+                `${import.meta.env.VITE_BASE_URL}/api/usercourse/updateprogress`,
+                {
+                    courseId: id,
+                    progress: progress,
+                    activeChapterIndex: activeChapterIndex
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+            toast.success("Your course progress updated")
+        } catch (error) {
+            console.error('Error updating progress:', error);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
@@ -49,6 +71,12 @@ const StartCourse = () => {
 
     return (
         <div>
+            <div className='flex flex-row gap-2 justify-between mb-5'>
+                <Button size="sm" onClick={() => navigate(-1)} className="flex gap-2">
+                    <IoMdArrowRoundBack size={20} />Back
+                </Button>
+                <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
+            </div>
             <div className="flex flex-col lg:flex-row min-h-screen" style={{ borderColor: `var(--borderColor)` }}>
                 <div className="shadow-md border rounded-xl border-gray-300 lg:w-1/4 p-4 h-screen lg:sticky top-0 overflow-y-auto" style={{ borderColor: `var(--borderColor)` }}>
                     <h2 className="text-lg font-bold mb-4 border-b pb-4" style={{ borderColor: `var(--borderColor)` }}>{course.courseName}</h2>
@@ -98,7 +126,7 @@ const StartCourse = () => {
 
                             )}
 
-                            <h2 className="text-xl mb-5 font-bold">Detail Explaination</h2>
+                            <h2 className="text-xl mb-5 font-bold">Detailed <span className='text-primary'>Explaination</span></h2>
                             {activeChapter.sections && activeChapter.sections.length > 0 && (
                                 <div className="space-y-5">
                                     {activeChapter.sections.map((section, secIndex) => (
@@ -107,11 +135,29 @@ const StartCourse = () => {
                                             className='p-5 courseSection rounded-xl'
                                         >
                                             <h3 className="text-xl font-bold pb-2"><span className='text-2xl'>{secIndex + 1}.</span> {section.subtitle}</h3>
-                                            <p className="font-medium text-lg text-justify">{section.content}</p>
+                                            <p className="font-medium text-lg text-justify tracking-tight">{section.content}</p>
                                         </div>
                                     ))}
                                 </div>
                             )}
+                            <div className='flex flex-row gap-2 justify-between mt-5'>
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onClick={() => setActiveChapterIndex(prev => Math.max(prev - 1, 0))}
+                                    className="flex gap-2 border"
+                                    disabled={activeChapterIndex === 0}
+                                >
+                                    <IoMdArrowRoundBack size={20} /> Previous
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    onClick={() => { activeChapterIndex === course.chapters.length - 1 ? navigate("/mycourses") : setActiveChapterIndex(prev => prev + 1); updateUserProgress() }}
+                                    className="flex gap-2 px-5"
+                                >
+                                    {activeChapterIndex === course.chapters.length - 1 ? 'Finish' : 'Next'} <IoMdArrowRoundForward size={20} />
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>

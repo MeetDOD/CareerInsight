@@ -45,6 +45,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/courses' element={<CoursesPage />} />
+            <Route path='/viewcourse/:id' element={<ViewCourseLayout />} />
 
             <Route path='/login' element={
               <NonAuthenticatedRoute>
@@ -118,12 +119,6 @@ const App = () => {
             <Route path='/finalcourse' element={
               <AuthenticatedRoute>
                 <FinalCourse />
-              </AuthenticatedRoute>
-            } />
-
-            <Route path='/viewcourse/:id' element={
-              <AuthenticatedRoute>
-                <ViewCourseLayout />
               </AuthenticatedRoute>
             } />
 

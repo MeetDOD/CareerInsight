@@ -24,6 +24,6 @@ const CourseSchema = new mongoose.Schema({
     description: String,
     chapters: [ChapterSchema],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-});
+},{timestamps:true});
 
 module.exports = mongoose.model('Course', CourseSchema);

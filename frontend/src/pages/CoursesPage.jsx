@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
 
 const CoursesPage = () => {
     const [courses, setCourses] = useState([]);
@@ -18,7 +19,6 @@ const CoursesPage = () => {
                 setLoading(true);
             }
         };
-
         fetchCourses();
     }, []);
 
@@ -69,7 +69,7 @@ const CoursesPage = () => {
                                 className="w-full rounded-lg h-40 object-cover"
                             />
                             <div className="py-4 space-y-2">
-                                <div className="text-lg font-bold">
+                                <div className="text-lg font-bold line-clamp-2">
                                     {course.courseName}
                                 </div>
                                 <div className='flex justify-between'>
@@ -81,10 +81,13 @@ const CoursesPage = () => {
                                         {course.duration}
                                     </div>
                                 </div>
+                                <div className="text-xs font-semibold text-gray-500">
+                                    Published At: {format(new Date(course.createdAt), 'MMMM d, yyyy, h:mm a')}
+                                </div>
                             </div>
                             <div>
                                 <Link to={`/viewcourse/${course._id}`}>
-                                    <Button className="w-full">Start Now</Button>
+                                    <Button className="w-full">More Details</Button>
                                 </Link>
                             </div>
                         </div>

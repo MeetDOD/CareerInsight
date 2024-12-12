@@ -153,7 +153,7 @@ const CourseLayout = () => {
             <div className="py-10">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-6 shadow-md rounded-lg border border-primary border-l-4 border-r-4">
-                        <div className="flex flex-row items-center gap-4 text-center justify-center">
+                        <div className="flex flex-row items-center gap-4 text-start justify-center">
                             <div className="p-1.5 rounded-md bg-primary">
                                 <MdCategory className="text-white" size={35} />
                             </div>
@@ -162,7 +162,7 @@ const CourseLayout = () => {
                                 <p className="text-lg font-bold">{course.category}</p>
                             </div>
                         </div>
-                        <div className="flex flex-row items-center gap-4 text-center justify-center">
+                        <div className="flex flex-row items-center gap-4 text-start justify-center">
                             <div className="p-1.5 rounded-md bg-primary">
                                 <FaClock className="text-white" size={35} />
                             </div>
@@ -171,7 +171,7 @@ const CourseLayout = () => {
                                 <p className="text-lg font-bold">{course.courseLevel}</p>
                             </div>
                         </div>
-                        <div className="flex flex-row items-center gap-4 text-center justify-center">
+                        <div className="flex flex-row items-center gap-4 text-start justify-center">
                             <div className="p-1.5 rounded-md bg-primary">
                                 <AiOutlineFieldTime className="text-white" size={35} />
                             </div>
@@ -180,7 +180,7 @@ const CourseLayout = () => {
                                 <p className="text-lg font-bold">{course.duration}</p>
                             </div>
                         </div>
-                        <div className="flex flex-row items-center gap-4 text-center justify-center">
+                        <div className="flex flex-row items-center gap-4 text-start justify-center">
                             <div className="p-1.5 rounded-md bg-primary">
                                 <FaLanguage className="text-white" size={35} />
                             </div>

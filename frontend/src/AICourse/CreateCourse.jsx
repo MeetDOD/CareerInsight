@@ -11,8 +11,6 @@ import { ImSpinner2 } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
 import { categoryState, descriptionState, optionsState, responseState, topicState } from '@/store/courseState';
 import { useRecoilState } from 'recoil';
-import generateThumbnail from '@/services/ThumbnailGenerator';
-import fetchCourseThumbnail from '@/services/ThumbnailGenerator';
 import fetchRelevantImage from '@/services/ThumbnailGenerator';
 
 const CreateCourse = () => {

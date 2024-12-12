@@ -1,3 +1,4 @@
+const { User } = require('../Models/user.model');
 const Course = require('../Models/usercourse.model');
 
 const addCourse = async (req, res) => {
@@ -52,4 +53,76 @@ const getCourseById = async (req, res) => {
     }
 };
 
-module.exports = { addCourse,getCourses,getCourseById };
+const enrollInCourse = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { courseId } = req.body;
+
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const alreadyEnrolled = user.enrolledCourses.some(enrolled => enrolled.course.equals(courseId));
+        if (alreadyEnrolled) {
+            return res.status(400).json({ message: 'This Course is already enrolled' });
+        }
+
+        user.enrolledCourses.push({ course: courseId });
+        await user.save();
+
+        res.status(200).json({ message: 'Enrolled in course successfully', enrolledCourses: user.enrolledCourses });
+    } catch (error) {
+        console.error('Error enrolling in course:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const getEnrolledCourses = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const user = await User.findById(userId).populate('enrolledCourses.course');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ enrolledCourses: user.enrolledCourses });
+    } catch (error) {
+        console.error('Error fetching enrolled courses:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const updateProgress = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { courseId, progress, activeChapterIndex } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const course = user.enrolledCourses.find(enrolled => enrolled.course.toString() === courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'User is not enrolled in this course' });
+        }
+
+        course.progress = progress;
+        course.activeChapterIndex = activeChapterIndex; 
+        await user.save();
+
+        res.status(200).json({ message: 'Progress updated successfully', progress: course.progress, activeChapterIndex: course.activeChapterIndex });
+    } catch (error) {
+        console.error('Error updating progress:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = { addCourse,getCourses,getCourseById,getEnrolledCourses,enrollInCourse,updateProgress };
