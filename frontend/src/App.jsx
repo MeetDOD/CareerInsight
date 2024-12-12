@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Navbar from './home/Navbar';
@@ -20,26 +20,27 @@ import PortfolioBuilder from './Dashboard/PortfolioBuilder';
 import UserLogin from './auth/UserLogin';
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import NonAuthenticatedRoute from './routes/NonAuthenticatedRoute';
-import { Vortex } from 'react-loader-spinner';
 import ViewCourseLayout from './AICourse/ViewCourseLayout';
 import StartCourse from './AICourse/StartCourse';
 import CoursesPage from './pages/CoursesPage';
+import Lottie from "lottie-react";
+import loader from "./assets/loader.json";
 
 const App = () => {
+
   return (
     <BrowserRouter>
-      <Suspense fallback={
-        <div className="flex min-h-[80vh] items-center justify-center">
-          <Vortex
-            visible={true}
-            height="100"
-            width="100"
-            ariaLabel="vortex-loading"
-            wrapperClass="vortex-wrapper"
-            colors={['#7c3aed', '#a78bfa', '#7c3aed', '#c4b5fd', '#7c3aed', '#ddd6fe']}
-          />
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="flex min-h-[80vh] items-center justify-center">
+            <Lottie
+              className="w-36 sm:w-52 md:w-64 lg:w-80 xl:w-72"
+              animationData={loader}
+              loop={true}
+            />
+          </div>
+        }
+      >
         <div className="mx-4 sm:mx-[10%]">
           <Navbar />
           <Routes>
