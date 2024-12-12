@@ -25,6 +25,7 @@ import StartCourse from './AICourse/StartCourse';
 import CoursesPage from './pages/CoursesPage';
 import Lottie from "lottie-react";
 import loader from "./assets/loader.json";
+import GoogleTranslate from './services/GoogleTranslator';
 
 const App = () => {
 
@@ -43,6 +44,7 @@ const App = () => {
       >
         <div className="mx-4 sm:mx-[10%]">
           <Navbar />
+          <GoogleTranslate />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/courses' element={<CoursesPage />} />
