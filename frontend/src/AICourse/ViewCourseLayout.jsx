@@ -17,12 +17,23 @@ const ViewCourseLayout = () => {
     const [loading, setLoading] = useState(true);
     const isLoggedIn = useRecoilValue(loggedInState);
     const navigate = useNavigate();
+    const [isEnrolled, setIsEnrolled] = useState(false);
 
     useEffect(() => {
         const fetchCourse = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/getcourse/${id}`);
                 setCourse(response.data.course);
+
+                if (isLoggedIn) {
+                    const enrolledResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/enrolled`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    });
+                    const enrolledCourses = enrolledResponse.data.enrolledCourses;
+                    setIsEnrolled(enrolledCourses.some((enrolled) => enrolled.course._id === response.data.course._id));
+                }
             } catch (error) {
                 setLoading(true);
             } finally {
@@ -40,6 +51,11 @@ const ViewCourseLayout = () => {
             return;
         }
 
+        if (isEnrolled) {
+            navigate(`/startcourse/${course._id}`);
+            return;
+        }
+
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_BASE_URL}/api/usercourse/enroll`,
@@ -52,6 +68,7 @@ const ViewCourseLayout = () => {
             );
             if (response.status === 200) {
                 toast.success("Happy Learning 😊");
+                setIsEnrolled(true);
                 navigate(`/startcourse/${course._id}`);
             }
         } catch (error) {
@@ -129,13 +146,16 @@ const ViewCourseLayout = () => {
                                     </div>
                                     <span className="text-sm font-semibold">{course.topic}</span>
                                 </div>
-                                <Button
-                                    onClick={handleStart}
-                                    className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold rounded-lg"
-                                >
-                                    {/* {isEnrolled ? "Continue Learning" : "Start Learning"} */}
-                                    Start Learning
-                                </Button>
+                                {isEnrolled
+                                    ?
+                                    <Button size="lg" onClick={handleStart} className="mt-6 w-full text-[16px] bg-green-400 hover:bg-green-500 text-gray-900 font-bold rounded-lg">
+                                        Explore this course
+                                    </Button>
+                                    :
+                                    <Button size="lg" onClick={handleStart} className="mt-6 w-full text-[16px] bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-lg">
+                                        Enroll in this course
+                                    </Button>
+                                }
                             </div>
                         </div>
                     </div>

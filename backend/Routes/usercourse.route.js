@@ -9,5 +9,6 @@ router.get('/getcourse/:id', getCourseById);
 router.post('/enroll', authenticateToken, enrollInCourse);
 router.get('/mycourses', authenticateToken, getEnrolledCourses);
 router.put('/updateprogress', authenticateToken, updateProgress); 
+router.get('/enrolled', authenticateToken, getEnrolledCourses);
 
 module.exports = router;
