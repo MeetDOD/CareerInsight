@@ -183,7 +183,7 @@ body {
 .google-translate-container {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  right: -40px;
   z-index: 10000;
 }
 

@@ -35,7 +35,7 @@ const App = () => {
         fallback={
           <div className="flex min-h-[80vh] items-center justify-center">
             <Lottie
-              className="w-36 sm:w-52 md:w-64 lg:w-80 xl:w-72"
+              className="w-40 sm:w-52 md:w-64 lg:w-80 xl:w-[340px]"
               animationData={loader}
               loop={true}
             />
