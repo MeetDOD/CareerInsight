@@ -123,14 +123,14 @@ const MyCourses = () => {
                                     </div>
 
                                     <div className="pt-1">
-                                        <div className="w-full bg-gray-100 rounded-full h-3">
+                                        <div className="w-full bg-gray-100 rounded-full h-2">
                                             <div
-                                                className="bg-primary h-3 rounded-full"
+                                                className="bg-primary h-2 rounded-full"
                                                 style={{ width: `${course.progress}%` }}
                                             ></div>
                                         </div>
-                                        <p className="text-sm mt-1 font-semibold tracking-tight">
-                                            My Progress: {course.progress} %
+                                        <p className="text-xs mt-1 font-semibold tracking-tight">
+                                            My Progress {course.progress}%
                                         </p>
                                     </div>
 

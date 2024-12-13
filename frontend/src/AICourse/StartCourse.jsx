@@ -49,7 +49,7 @@ const StartCourse = () => {
                     }
                 }
             );
-            toast.success("Your course progress updated")
+            toast.success("Your course progress updated");
         } catch (error) {
             console.error('Error updating progress:', error);
         }
@@ -72,8 +72,8 @@ const StartCourse = () => {
     return (
         <div>
             <div className='flex flex-row gap-2 justify-between mb-5'>
-                <Button size="sm" onClick={() => navigate(-1)} className="flex gap-2">
-                    <IoMdArrowRoundBack size={20} />Back
+                <Button size="sm" onClick={() => navigate("/mycourses")} className="flex gap-2">
+                    <IoMdArrowRoundBack size={20} />My Courses
                 </Button>
                 <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
             </div>
@@ -84,10 +84,9 @@ const StartCourse = () => {
                         {course.chapters.map((chapter, index) => (
                             <li
                                 key={index}
-                                onClick={() => setActiveChapterIndex(index)}
-                                className={`px-3 py-2 rounded-lg cursor-pointer ${activeChapterIndex === index
+                                className={`px-3 py-2 rounded-lg ${activeChapterIndex === index
                                     ? 'bg-purple-100 text-black font-semibold'
-                                    : ' hover:bg-purple-100 hover:text-black'
+                                    : ' '
                                     }`}>
                                 <div className='grid grid-cols-5 items-center'>
                                     <div>
@@ -144,7 +143,7 @@ const StartCourse = () => {
                                 <Button
                                     variant="secondary"
                                     size="sm"
-                                    onClick={() => setActiveChapterIndex(prev => Math.max(prev - 1, 0))}
+                                    onClick={() => { setActiveChapterIndex(prev => Math.max(prev - 1, 0)); window.scrollTo(0, 0) }}
                                     className="flex gap-2 border"
                                     disabled={activeChapterIndex === 0}
                                 >
@@ -152,7 +151,7 @@ const StartCourse = () => {
                                 </Button>
                                 <Button
                                     size="sm"
-                                    onClick={() => { activeChapterIndex === course.chapters.length - 1 ? navigate("/mycourses") : setActiveChapterIndex(prev => prev + 1); updateUserProgress() }}
+                                    onClick={() => { activeChapterIndex === course.chapters.length - 1 ? navigate("/mycourses") : setActiveChapterIndex(prev => prev + 1); updateUserProgress(); window.scrollTo(0, 0) }}
                                     className="flex gap-2 px-5"
                                 >
                                     {activeChapterIndex === course.chapters.length - 1 ? 'Finish' : 'Next'} <IoMdArrowRoundForward size={20} />
