@@ -61,10 +61,10 @@ const AppSidebar = () => {
 
     return (
         <Sidebar className="w-64 min-h-screen shadow-md" style={{ color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
-            <SidebarHeader className="px-4 py-4" style={{ backgroundColor: `var(--background-color)` }} >
+            <SidebarHeader className="px-4" style={{ backgroundColor: `var(--background-color)` }} >
                 <div className="flex items-center gap-3">
-                    <img src={logo} alt="Logo" className="w-24 object-contain" />
-                    <span className="text-sm text-primary font-bold">Carrer Insights</span>
+                    {/* <img src={logo} alt="Logo" className="w-24 object-contain" /> */}
+                    <span className="text-lg mx-auto pt-2 text-primary font-bold">📖 Carrer Insights</span>
                 </div>
             </SidebarHeader>
 

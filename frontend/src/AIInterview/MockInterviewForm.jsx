@@ -24,7 +24,7 @@ const MockInterviewForm = ({ onSubmit }) => {
             >
                 <div className="mb-5">
                     <Label className="text-lg font-medium ">
-                        Job Position/Role
+                        Job Position / Role
                     </Label>
                     <Input
                         placeholder="e.g: SDE, Frontend Developer, Backend Developer..."
@@ -39,7 +39,7 @@ const MockInterviewForm = ({ onSubmit }) => {
 
                 <div className="mb-5">
                     <Label className="text-lg font-medium">
-                        Job Description/Tech Stack
+                        Job Description / Tech Stack
                     </Label>
                     <Textarea
                         placeholder="Describe the job role or required tech stack"
