@@ -186,8 +186,8 @@ const CourseLayout = () => {
                                 <MdCategory className="text-white" size={35} />
                             </div>
                             <div>
-                                <span className="font-semibold text-sm">Category</span>
-                                <p className="text-lg font-bold">{course.category}</p>
+                                <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Category</span>
+                                <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.category}</p>
                             </div>
                         </div>
                         <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -195,8 +195,8 @@ const CourseLayout = () => {
                                 <FaClock className="text-white" size={35} />
                             </div>
                             <div>
-                                <span className="font-semibold text-sm">Course Level</span>
-                                <p className="text-lg font-bold">{course.courseLevel}</p>
+                                <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Course Level</span>
+                                <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.courseLevel}</p>
                             </div>
                         </div>
                         <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -204,8 +204,8 @@ const CourseLayout = () => {
                                 <AiOutlineFieldTime className="text-white" size={35} />
                             </div>
                             <div>
-                                <span className="font-semibold text-sm">Course Duration</span>
-                                <p className="text-lg font-bold">{course.duration}</p>
+                                <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Course Duration</span>
+                                <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.duration}</p>
                             </div>
                         </div>
                         <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -213,13 +213,14 @@ const CourseLayout = () => {
                                 <FaLanguage className="text-white" size={35} />
                             </div>
                             <div>
-                                <span className="font-semibold text-sm">Language</span>
-                                <p className="text-lg font-bold">{course.language}</p>
+                                <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Language</span>
+                                <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.language}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <div className="space-y-6">
                 {course.chapters?.map((chapter, index) => (

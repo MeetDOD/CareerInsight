@@ -139,7 +139,7 @@ const ViewCourseLayout = () => {
                                 <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
                                     {course.courseName}
                                 </h1>
-                                <p className="text-lg mb-5 text-white/85 text-justify tracking-tight">{course.description}</p>
+                                <p className="text-lg mb-5 text-white/85 tracking-tight">{course.description}</p>
                                 <div className="flex items-center gap-2">
                                     <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
                                         <FaHandHoldingHeart size={20} />
@@ -168,8 +168,8 @@ const ViewCourseLayout = () => {
                                         <MdCategory className="text-white" size={35} />
                                     </div>
                                     <div>
-                                        <span className="font-semibold text-sm">Category</span>
-                                        <p className="text-lg font-bold">{course.category}</p>
+                                        <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Category</span>
+                                        <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.category}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -177,8 +177,8 @@ const ViewCourseLayout = () => {
                                         <FaClock className="text-white" size={35} />
                                     </div>
                                     <div>
-                                        <span className="font-semibold text-sm">Course Level</span>
-                                        <p className="text-lg font-bold">{course.courseLevel}</p>
+                                        <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Course Level</span>
+                                        <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.courseLevel}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -186,8 +186,8 @@ const ViewCourseLayout = () => {
                                         <AiOutlineFieldTime className="text-white" size={35} />
                                     </div>
                                     <div>
-                                        <span className="font-semibold text-sm">Course Duration</span>
-                                        <p className="text-lg font-bold">{course.duration}</p>
+                                        <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Course Duration</span>
+                                        <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.duration}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-row items-center gap-4 text-start justify-center">
@@ -195,13 +195,14 @@ const ViewCourseLayout = () => {
                                         <FaLanguage className="text-white" size={35} />
                                     </div>
                                     <div>
-                                        <span className="font-semibold text-sm">Language</span>
-                                        <p className="text-lg font-bold">{course.language}</p>
+                                        <span className="font-semibold text-sm sm:text-xs md:text-sm lg:text-base">Language</span>
+                                        <p className="text-lg sm:text-sm md:text-lg lg:text-xl font-bold">{course.language}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     <div className="space-y-6">
                         {course.chapters?.map((chapter, index) => (
