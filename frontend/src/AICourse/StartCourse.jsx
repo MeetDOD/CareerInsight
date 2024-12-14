@@ -7,6 +7,7 @@ import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
 import { IoIosHome, IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
+import Loader from '@/services/Loader';
 
 const StartCourse = () => {
 
@@ -21,7 +22,10 @@ const StartCourse = () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/getcourse/${id}`);
                 setCourse(response.data.course);
-                console.log(response.data.course)
+                const savedIndex = localStorage.getItem(`progress_${id}`);
+                if (savedIndex) {
+                    setActiveChapterIndex(parseInt(savedIndex, 10));
+                }
             } catch (error) {
                 console.error('Error fetching course:', error);
             } finally {
@@ -49,6 +53,7 @@ const StartCourse = () => {
                     }
                 }
             );
+            localStorage.setItem(`progress_${id}`, activeChapterIndex + 1);
             toast.success("Your course progress updated");
         } catch (error) {
             console.error('Error updating progress:', error);
@@ -57,14 +62,12 @@ const StartCourse = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <ImSpinner2 size={50} className="animate-spin" />
-            </div>
+            <Loader />
         );
     }
 
     if (!course) {
-        return <p className="text-center mt-10">Course not found.</p>;
+        return <p className="text-center text-xl mt-10">Course not found.</p>;
     }
 
     const activeChapter = course.chapters[activeChapterIndex];

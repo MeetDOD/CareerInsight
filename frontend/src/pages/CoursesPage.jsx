@@ -70,7 +70,7 @@ const CoursesPage = () => {
                             />
                             <div className="py-4 space-y-2">
                                 <div className="text-lg font-bold line-clamp-2">
-                                    CareerInsights: {course.courseName}
+                                    CareerInsight: {course.courseName}
                                 </div>
                                 <div className='flex justify-between'>
                                     <div className='text-[10px] p-1 bg-blue-100 rounded-full px-2 text-primary'>
@@ -82,7 +82,7 @@ const CoursesPage = () => {
                                     </div>
                                 </div>
                                 <div className="text-xs font-semibold text-gray-500">
-                                    Published At: {format(new Date(course.createdAt), 'MMMM d, yyyy, h:mm a')}
+                                    Published At: {format(new Date(course.createdAt), 'MMMM d, yyyy')}
                                 </div>
                             </div>
                             <div>

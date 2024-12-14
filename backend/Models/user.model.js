@@ -58,7 +58,8 @@ const userSchema = new mongoose.Schema({
         {
             course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
             enrolledAt: { type: Date, default: Date.now },
-            progress: { type: Number, default: 0 }        
+            progress: { type: Number, default: 0 }    ,
+            activeChapterIndex: { type: Number, default: 0 }    
         }
     ],
 },

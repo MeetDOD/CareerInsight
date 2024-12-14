@@ -115,10 +115,15 @@ const updateProgress = async (req, res) => {
         }
 
         course.progress = progress;
-        course.activeChapterIndex = activeChapterIndex; 
+        course.activeChapterIndex = activeChapterIndex + 1;
+
         await user.save();
 
-        res.status(200).json({ message: 'Progress updated successfully', progress: course.progress, activeChapterIndex: course.activeChapterIndex });
+        res.status(200).json({ 
+            message: 'Progress updated successfully', 
+            progress: course.progress, 
+            activeChapterIndex: course.activeChapterIndex
+        });
     } catch (error) {
         console.error('Error updating progress:', error);
         res.status(500).json({ message: 'Internal server error' });
