@@ -2,10 +2,14 @@ import { useTheme } from '@/components/ui/themeprovider'
 import FAQ from '@/home/FAQ'
 import Footer from '@/home/Footer'
 import Hero from '@/home/Hero'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Home = () => {
     const { theme } = useTheme();
+
+    useEffect(() => {
+        document.title = "CAREERINSIGHT";
+    }, []);
     return (
         <div>
             {theme === 'dark' ? (

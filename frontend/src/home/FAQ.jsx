@@ -21,126 +21,106 @@ const FAQ = () => {
     const questionsLeft = [
         {
             id: 1,
-            question: "How can I register as a new patient?",
-            answer: "To register, click on the 'Sign Up' button on the homepage and fill out the required information including your personal details, medical history, and contact information.",
+            question: 'What is Career Insight?',
+            answer: 'Career Insight is a web app designed to help 2nd and 3rd-year students stay ahead in the tech world by providing insights into trending technologies, tools, and frameworks.',
         },
         {
             id: 2,
-            question: "How do I schedule an appointment?",
-            answer:
-                "You can schedule an appointment by navigating to the 'Appointments' section. Select your preferred doctor, available time slot, and provide details about your health concern.",
+            question: 'How do I sign up for Career Insight?',
+            answer: 'You can sign up by clicking the "Sign Up" button on the homepage and providing your name, email address, and a password.',
         },
         {
             id: 3,
-            question: "Can I view my previous medical records?",
-            answer:
-                "Yes, once logged in, you can access your medical records from the 'Health Records' section. This includes past consultations, prescriptions, and test results.",
+            question: 'What kind of technology trends does Career Insight cover?',
+            answer: 'Career Insight covers trends in software development, data science, artificial intelligence, cloud computing, and other emerging tech fields.',
         },
         {
-            id: 5,
-            question: "How secure is my personal health information?",
-            answer: "We prioritize your privacy and security. All your personal and health data is encrypted and complies with healthcare privacy standards such as HIPAA.",
-        }
+            id: 4,
+            question: 'Is Career Insight free to use?',
+            answer: 'Yes, Career Insight offers a free plan for students. Some advanced features might be available through a premium subscription.',
+        },
     ];
 
     const questionsRight = [
         {
+            id: 5,
+            question: 'How are the technology trends curated?',
+            answer: 'We scrape data from multiple trusted sources, including blogs, articles, and tutorials, to bring you the latest and most relevant trends.',
+        },
+        {
+            id: 6,
+            question: 'Can I customize the technology suggestions?',
+            answer: 'Yes, you can customize your preferences by selecting your areas of interest in your profile settings to get tailored suggestions.',
+        },
+        {
             id: 7,
-            question: "Can I cancel or reschedule an appointment?",
-            answer: "Yes, appointments can be canceled or rescheduled from the 'Appointments' section, provided you make the changes at least 24 hours in advance.",
+            question: 'How can I access additional learning resources?',
+            answer: 'Career Insight provides links to relevant blogs, articles, and tutorials. These resources are aggregated and displayed on your dashboard.',
         },
         {
-            id: 9,
-            question: "Is there an option for online consultation?",
-            answer: "Yes, we offer online video consultations with doctors. You can select this option while scheduling your appointment.",
+            id: 8,
+            question: 'How do I contact support if I need help?',
+            answer: 'You can reach out to our support team by visiting the "Contact Us" section and submitting your query. We’re here to help!',
         },
-        {
-            id: 10,
-            question: "How do I update my personal or medical information?",
-            answer: "You can update your information by visiting the 'Profile' section and editing your details. Ensure that all your medical records are accurate and up-to-date.",
-        },
-        {
-            id: 11,
-            question: "Are my video consultations recorded?",
-            answer: "No, video consultations are not recorded to ensure your privacy. All consultations are secure and confidential.",
-        }
     ];
 
     return (
-        <div className='mb-10'>
-            <div className='flex flex-col items-center gap-5 px-4 my-20'>
-                <h1 className='text-2xl md:text-3xl font-bold text-center'>
-                    Frequently Asked <span className='text-primary'>Questions</span>
+        <div className="mb-10">
+            <div className="flex flex-col items-center gap-5 px-4 my-20">
+                <h1 className="text-2xl md:text-3xl font-bold text-center">
+                    Frequently Asked <span className="text-primary">Questions</span>
                 </h1>
-                <p className='w-1/2 text-center text-lg opacity-90'>
-                    Private online consultations with verified doctors in all specialties
+                <p className="w-1/2 text-center text-lg opacity-90">
+                    Discover how Career Insight can help you stay updated and grow your tech skills.
                 </p>
             </div>
             <div className="flex flex-col md:flex-row justify-between gap-y-8 md:gap-x-6 sectionMargin">
                 <div className="w-full md:w-1/2 space-y-4">
                     {questionsLeft.map((item, index) => (
-                        <div
-                            key={item.id}
-                            className="rounded-lg shadow-md"
-                        >
+                        <div key={item.id} className="rounded-lg shadow-md">
                             <div
-                                className={`question px-5 py-4 cursor-pointer flex justify-between items-center ${activeIndexLeft === index ? 'font-semibold' : 'font-medium'}`}
+                                className={`question px-5 py-4 cursor-pointer flex justify-between items-center ${activeIndexLeft === index ? 'font-semibold' : 'font-medium'
+                                    }`}
                                 onClick={() => toggleQuestionLeft(index)}
                             >
                                 {item.question}
                                 <span
-                                    className={`transform transition-transform duration-200 text-2xl ${activeIndexLeft === index ? 'rotate-45 text-primary' : 'rotate-0 text-gray-400'}`}
+                                    className={`transform transition-transform duration-200 text-2xl ${activeIndexLeft === index ? 'rotate-45 text-primary' : 'rotate-0 text-gray-400'
+                                        }`}
                                 >
                                     +
                                 </span>
                             </div>
                             <div
-                                className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndexLeft === index ? 'max-h-[200px] py-5 opacity-100' : 'max-h-0 py-0 opacity-0'}`}
-                                style={{
-                                    maxHeight: activeIndexLeft === index ? '200px' : '0',
-                                    paddingTop: activeIndexLeft === index ? '1rem' : '0',
-                                    paddingBottom: activeIndexLeft === index ? '1rem' : '0',
-                                    opacity: activeIndexLeft === index ? '1' : '0',
-                                }}
+                                className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndexLeft === index ? 'max-h-[200px] py-5 opacity-100' : 'max-h-0 py-0 opacity-0'
+                                    }`}
                             >
-                                <div
-                                    className="answer px-5 text-sm"
-                                    dangerouslySetInnerHTML={{ __html: item.answer }}
-                                />
+                                <div className="answer px-5 text-sm" dangerouslySetInnerHTML={{ __html: item.answer }} />
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className="w-full md:w-1/2 space-y-4">
                     {questionsRight.map((item, index) => (
-                        <div
-                            key={item.id}
-                            className="rounded-lg shadow-md"
-                        >
+                        <div key={item.id} className="rounded-lg shadow-md">
                             <div
-                                className={`question px-5 py-4 cursor-pointer flex justify-between items-center ${activeIndexRight === index ? 'font-semibold' : 'font-medium'}`}
+                                className={`question px-5 py-4 cursor-pointer flex justify-between items-center ${activeIndexRight === index ? 'font-semibold' : 'font-medium'
+                                    }`}
                                 onClick={() => toggleQuestionRight(index)}
                             >
                                 {item.question}
                                 <span
-                                    className={`transform transition-transform duration-200 text-2xl ${activeIndexRight === index ? 'rotate-45 text-primary' : 'rotate-0 text-gray-400'}`}
+                                    className={`transform transition-transform duration-200 text-2xl ${activeIndexRight === index ? 'rotate-45 text-primary' : 'rotate-0 text-gray-400'
+                                        }`}
                                 >
                                     +
                                 </span>
                             </div>
                             <div
-                                className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndexRight === index ? 'max-h-[200px] py-5 opacity-100' : 'max-h-0 py-0 opacity-0'}`}
-                                style={{
-                                    maxHeight: activeIndexRight === index ? '200px' : '0',
-                                    paddingTop: activeIndexRight === index ? '1rem' : '0',
-                                    paddingBottom: activeIndexRight === index ? '1rem' : '0',
-                                    opacity: activeIndexRight === index ? '1' : '0',
-                                }}
+                                className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndexRight === index ? 'max-h-[200px] py-5 opacity-100' : 'max-h-0 py-0 opacity-0'
+                                    }`}
                             >
-                                <div
-                                    className="answer px-5 text-sm"
-                                    dangerouslySetInnerHTML={{ __html: item.answer }}
-                                />
+                                <div className="answer px-5 text-sm" dangerouslySetInnerHTML={{ __html: item.answer }} />
                             </div>
                         </div>
                     ))}

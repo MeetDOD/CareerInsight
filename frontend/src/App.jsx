@@ -25,6 +25,8 @@ import StartCourse from './AICourse/StartCourse';
 import CoursesPage from './pages/CoursesPage';
 import GoogleTranslate from './services/GoogleTranslator';
 import Loader from './services/Loader';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 const App = () => {
 
@@ -40,6 +42,8 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/courses' element={<CoursesPage />} />
             <Route path='/viewcourse/:id' element={<ViewCourseLayout />} />
+            <Route path='/about' element={<AboutUs />} />
+            <Route path='/contact' element={<ContactUs />} />
 
             <Route path='/login' element={
               <NonAuthenticatedRoute>
