@@ -1,18 +1,17 @@
 import React from 'react';
 // import logo from '../assets/Hero/logo.png';
-import { FaGithub, FaLinkedin, FaHome, FaInfoCircle, FaPhone } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaHome, FaInfoCircle, FaBook } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { FaUserDoctor } from "react-icons/fa6";
 import { MdCall } from "react-icons/md";
 
 const socialLinks = [
-    { id: 'github', url: 'https://github.com/MeetDOD/code_o_festa_2024', icon: FaGithub },
+    { id: 'github', url: 'https://github.com/MeetDOD', icon: FaGithub },
     { id: 'linkedin', url: 'https://www.linkedin.com/in/meetdodiya', icon: FaLinkedin }
 ];
 
 const quickLinks = [
     { id: 'home', label: 'Home', hash: '/', icon: FaHome },
-    { id: 'doctors', label: 'Doctors', hash: '/doctors', icon: FaUserDoctor },
+    { id: 'courses', label: 'Courses', hash: '/courses', icon: FaBook },
     { id: 'about', label: 'About', hash: '/about', icon: FaInfoCircle },
     { id: 'contact', label: 'Contact', hash: '/contact', icon: MdCall }
 ];
@@ -23,7 +22,7 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-2xl mx-auto">
                 <div className="flex flex-col items-center md:items-start p-4">
                     {/* <img src={logo} alt="Logo" className="w-40 mb-4" /> */}
-                    <h2 className="font-bold text-xl mb-4 ">For Source Code</h2>
+                    <h2 className="font-bold text-primary text-3xl mb-4">For Source Code</h2>
                     <ul className="flex list-none p-0 gap-2">
                         {socialLinks.map((link) => (
                             <li key={link.id} className="hover:-translate-y-1 transition-transform duration-300 hover:text-primary">
@@ -53,14 +52,14 @@ const Footer = () => {
                 </div>
 
                 <div className="p-4">
-                    <h2 className="text-primary font-bold text-3xl mb-4">About TECHCARE</h2>
-                    <p className="text-[1rem] font-normal">
-                        <span className='text-3xl'>👋</span>Say Hello to India’s top doctors via video consultation, get digital prescriptions, order medicines, book doctor appointments & lab tests, find doctors near you, get health packages, ask a free health question to doctors 😷</p>
-                </div>
+                    <h2 className="font-bold text-primary text-3xl mb-4">About Career Insight</h2>
+                    <p className="font-semibold">
+                        <span className="text-3xl">👋</span> <span className="font-bold text-xl tracking-tight text-primary">Career Insight</span> is dedicated to helping students build professional portfolios, gain career insights, and connect with industry experts. Start your journey towards career success today!
+                    </p></div>
             </div>
 
             <div className="text-center text-sm font-semibold mt-7 pt-4 mb-2.5">
-                Made with <span className='text-xl'>💓</span> by brainstromers, Copyright © 2024 All rights reserved by <span className='text-primary font-bold'>Meet, Ramesh & Kashish</span>
+                Made with <span className='text-xl'>💓</span> by careerinsight, Copyright © 2024 All rights reserved by <span className='text-primary font-bold'>Meet, Ramesh & Kashish</span>
             </div>
         </footer>
     );

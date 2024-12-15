@@ -22,14 +22,19 @@ const CoursesPage = () => {
         fetchCourses();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = "CAREERINSIGHT | COURSES";
+    }, []);
+
     return (
         <div>
             <div className='flex flex-col items-center gap-2 my-10 px-4'>
                 <h1 className='text-2xl md:text-3xl font-bold text-center'>
                     Latest <span className='text-primary'>Courses</span>
                 </h1>
-                <p className='text-center text-lg opacity-90'>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur, at.
+                <p className='text-center text-lg opacity-90 tracking-tight'>
+                    Explore our newest courses designed to help you gain essential skills and advance your career.
                 </p>
             </div>
             {loading ?

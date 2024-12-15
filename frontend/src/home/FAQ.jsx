@@ -67,10 +67,10 @@ const FAQ = () => {
     return (
         <div className="mb-10">
             <div className="flex flex-col items-center gap-5 px-4 my-20">
-                <h1 className="text-2xl md:text-3xl font-bold text-center">
-                    Frequently Asked <span className="text-primary">Questions</span>
+                <h1 className='text-2xl md:text-3xl font-bold text-center'>
+                    Frequently <span className="text-primary">Asked Questions</span>
                 </h1>
-                <p className="w-1/2 text-center text-lg opacity-90">
+                <p className='text-center text-lg opacity-90 tracking-tight'>
                     Discover how Career Insight can help you stay updated and grow your tech skills.
                 </p>
             </div>
