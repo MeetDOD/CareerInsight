@@ -117,13 +117,13 @@ const InterviewQuestion = () => {
                         </Button>
                     )}
 
-                    {currentQuestionIndex < questions.length - 1 && (
+                    {currentQuestionIndex < questions?.length - 1 && (
                         <Button className="flex gap-1" onClick={handleNext} size="lg">
                             Next <IoMdArrowRoundForward size={20} />
                         </Button>
                     )}
 
-                    {currentQuestionIndex === questions.length - 1 && (
+                    {currentQuestionIndex === questions?.length - 1 && (
                         <Button
                             className="flex gap-1"
                             onClick={() => {

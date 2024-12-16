@@ -29,8 +29,8 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-16 p-6 text-center">
-                    <h1 className="text-3xl font-bold">{user.fullName}</h1>
-                    <h1 className="text-lg  text-gray-600">~ {user.email}</h1>
+                    <h1 className="text-3xl font-bold">{user?.fullName}</h1>
+                    <h1 className="text-lg  text-gray-600">~ {user?.email}</h1>
                     <p className="mt-2 text-lg font-semibold">
                         Aspiring Full-Stack Developer | Passionate about building user-friendly web applications.
                     </p>

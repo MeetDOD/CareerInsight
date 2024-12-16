@@ -25,7 +25,6 @@ const MyCourses = () => {
                     }
                 );
                 setCourse(response.data.enrolledCourses);
-                console.log(response.data.enrolledCourses);
             } catch (error) {
                 toast.error("Failed to load courses.");
             } finally {
