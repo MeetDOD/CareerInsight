@@ -3,12 +3,19 @@ import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import hero from '../assets/hero.png';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { loggedInState } from '@/store/auth';
 
 const Hero = () => {
     const navigate = useNavigate();
+    const isLoggedIn = useRecoilValue(loggedInState);
 
     function handleExplore() {
-        navigate("/dashboard");
+        if (isLoggedIn) {
+            navigate("/dashboard");
+        } else {
+            navigate("/login");
+        }
     }
 
     function handleCourse() {

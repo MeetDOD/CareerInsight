@@ -1,6 +1,5 @@
 import { useTheme } from '@/components/ui/themeprovider'
 import FAQ from '@/home/FAQ'
-import Footer from '@/home/Footer'
 import Hero from '@/home/Hero'
 import React, { useEffect } from 'react'
 

@@ -79,12 +79,12 @@ const AppSidebar = () => {
                                     to={item.url}
                                     className={`flex items-center gap-3.5 px-3 py-2 my-0.5 rounded-lg text-sm font-medium transition-all duration-200
                                         hover:bg-primary hover:text-white hover:shadow-sm
-                                        ${isActive ? 'bg-primary text-white shadow-md' : ''}`}
-                                >
+                                        ${isActive ? "bg-primary shadow-md" : ''}`}
+                                    style={{ color: `var(--text-color)` }}>
                                     <div className="p-1.5 rounded-md" style={{ backgroundColor: `var(--text-color)` }}>
                                         <item.icon style={{ color: `var(--background-color)` }} size={20} />
                                     </div>
-                                    <span className="text-sm font-semibold">{item.title}</span>
+                                    <div className="text-sm font-semibold">{item.title}</div>
                                 </Link>
                             </SidebarMenuItem>
                         );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -24,6 +24,20 @@ const Navbar = () => {
         toast.success("Logged out successfully");
         navigate("/")
     };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.ctrlKey && e.key.toLowerCase() === 'q') {
+                toggleTheme();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [toggleTheme]);
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b' style={{ borderColor: `var(--borderColor)` }}>
