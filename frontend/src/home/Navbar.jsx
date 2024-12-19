@@ -102,7 +102,7 @@ const Navbar = () => {
             );
             toast.success('Details added successfully!');
             setShowAddDetailsDialog(false);
-            navigate('/dashboard');
+            navigate('/');
         } catch (err) {
             toast.error('Failed to add details. Please try again.');
         } finally {
@@ -218,7 +218,7 @@ const Navbar = () => {
                                     name='gender'
                                 >
                                     <SelectTrigger className="inputField">
-                                        <SelectValue placeholder='Enter your gender' />
+                                        <SelectValue placeholder='Select your gender' />
                                     </SelectTrigger>
 
                                     <SelectContent
@@ -226,6 +226,7 @@ const Navbar = () => {
                                     >
                                         <SelectItem value="Male">Male</SelectItem>
                                         <SelectItem value="Female">Female</SelectItem>
+                                        <SelectItem value="Not to say">Not to say</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

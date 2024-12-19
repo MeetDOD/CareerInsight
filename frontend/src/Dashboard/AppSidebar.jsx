@@ -56,7 +56,7 @@ const AppSidebar = () => {
         localStorage.removeItem("token");
         setTokenState("");
         toast.success("Logged out successfully");
-        navigate("/login")
+        navigate("/")
     };
 
     return (
