@@ -21,7 +21,7 @@ const UserLogin = () => {
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [verifyLoading, setVerifyLoading] = useState(false);
-    const [activeTab, setActiveTab] = useState("signup"); // Added state to manage the active tab
+    const [activeTab, setActiveTab] = useState("login");
     const navigate = useNavigate();
     const [timer, setTimer] = useState(300);
     const [timerRunning, setTimerRunning] = useState(false);
@@ -110,7 +110,7 @@ const UserLogin = () => {
             });
             if (res.status === 200) {
                 toast.success(res.data.message);
-                setActiveTab("login"); // Switch to login tab after OTP verification
+                setActiveTab("login");
             } else if (res.status === 400) {
                 toast.error(res.data.message);
             }

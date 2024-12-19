@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 
 const SelectOptions = ({ options, setOptions }) => {
     const handleOptionChange = (key, value) => {
