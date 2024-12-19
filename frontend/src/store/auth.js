@@ -28,15 +28,10 @@ export const userState = selector({
 
 export const loggedInState = selector({
     key: "loggedInState",
-    get: async ({get}) => {
-        const token = get(tokenState);
-        
-        if (!token) return false;
-
-        const user = get(userState);
-
-        if (!user) return false;
-
-        return true;
-    }
-})
+    get: ({ get }) => {
+      const token = get(tokenState);
+      const user = get(userState);
+      return Boolean(token && user);
+    },
+  });
+  

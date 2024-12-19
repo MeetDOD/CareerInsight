@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from 'axios';
 import { ImSpinner2 } from 'react-icons/im';
 import { useSetRecoilState } from 'recoil';
@@ -21,7 +21,10 @@ const UserLogin = () => {
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [verifyLoading, setVerifyLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState("signup"); // Added state to manage the active tab
     const navigate = useNavigate();
+    const [timer, setTimer] = useState(300);
+    const [timerRunning, setTimerRunning] = useState(false);
 
     const setTokenState = useSetRecoilState(tokenState);
 
@@ -73,6 +76,7 @@ const UserLogin = () => {
             if (res.status === 200) {
                 setIsOtpSent(true);
                 toast.success(res.data.message);
+                startTimer();
             } else if (res.status === 400) {
                 toast.error("User already exists");
             }
@@ -81,6 +85,19 @@ const UserLogin = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const startTimer = () => {
+        setTimerRunning(true);
+        const intervalId = setInterval(() => {
+            setTimer((prev) => {
+                if (prev === 1) {
+                    clearInterval(intervalId);
+                    setTimerRunning(false);
+                }
+                return prev - 1;
+            });
+        }, 1000);
     };
 
     const handleVerifyOtp = async (e) => {
@@ -93,6 +110,7 @@ const UserLogin = () => {
             });
             if (res.status === 200) {
                 toast.success(res.data.message);
+                setActiveTab("login"); // Switch to login tab after OTP verification
             } else if (res.status === 400) {
                 toast.error(res.data.message);
             }
@@ -121,9 +139,10 @@ const UserLogin = () => {
                     handleSignup(e);
                 }
             }}
-        >            <Tabs defaultValue="login" className="w-[400px]" >
+        >
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-[400px]" >
                 <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
-                    <TabsTrigger disabled={isOtpSent} value="login">Login</TabsTrigger>
+                    <TabsTrigger value="login">Login</TabsTrigger>
                     <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
 
@@ -132,7 +151,7 @@ const UserLogin = () => {
                         <CardHeader>
                             <CardTitle className="font-bold" >Welcome <span className='text-primary'>User</span></CardTitle>
                             <CardDescription>
-                                Lorem ipsum dolor sit amet consectetur adipisicing.
+                                Ready to shape your future? Let's build your career together.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
@@ -183,7 +202,7 @@ const UserLogin = () => {
                         <CardHeader>
                             <CardTitle className="font-bold" >Join <span className='text-primary'>Career Insight</span></CardTitle>
                             <CardDescription>
-                                Lorem ipsum dolor sit amet consectetur adipisicing.
+                                Start building your future today. Create your personalized career journey.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
@@ -223,6 +242,9 @@ const UserLogin = () => {
                                         placeholder="Enter the OTP"
                                         required
                                     />
+                                    <div>
+                                        {timerRunning && <span className="text-sm">{`Time remaining: ${Math.floor(timer / 60)}:${timer % 60 < 10 ? '0' + timer % 60 : timer % 60}`}</span>}
+                                    </div>
                                     <div className='gap-2 flex items-center'>
                                         <Button disabled={verifyLoading} className="w-full mt-2" type="button" onClick={handleVerifyOtp}>
                                             {verifyLoading ? (
@@ -241,7 +263,6 @@ const UserLogin = () => {
                                     </div>
                                 </div>
                             )}
-
                         </CardContent>
                         <CardFooter>
                             {!isOtpSent && (

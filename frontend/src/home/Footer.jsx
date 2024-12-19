@@ -18,7 +18,7 @@ const quickLinks = [
 
 const Footer = () => {
     return (
-        <footer className="px-8 pt-10 pb-5 w-full font-montserrat mt-20 text-white bg-gray-950 rounded-t-xl">
+        <footer className="px-8 pt-10 pb-5 w-full font-montserrat mt-20 text-white bg-black/80 rounded-t-2xl">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-2xl mx-auto">
                 <div className="flex flex-col items-center md:items-start p-4">
                     {/* <img src={logo} alt="Logo" className="w-40 mb-4" /> */}

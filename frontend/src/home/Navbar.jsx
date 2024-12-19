@@ -6,9 +6,13 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/ui/themeprovider';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import logo from "../assets/image.png"
-import { loggedInState, tokenState } from '@/store/auth';
+import { loggedInState, tokenState, userState } from '@/store/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import axios from 'axios';
 
 const Navbar = () => {
 
@@ -17,6 +21,44 @@ const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
     const isLoggedIn = useRecoilValue(loggedInState);
     const setTokenState = useSetRecoilState(tokenState);
+    const user = useRecoilValue(userState);
+    const [showAddDetailsDialog, setShowAddDetailsDialog] = useState(false);
+
+    const [formData, setFormData] = useState({
+        phoneno: '',
+        gender: '',
+        dateofbirth: '',
+        collegename: '',
+        university: '',
+        academicyear: '',
+        address: '',
+        techstack: '',
+    });
+
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        if (user && isDetailsIncomplete(user)) {
+            setShowAddDetailsDialog(true);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        setIsFormValid(!Object.values(formData).some((value) => !value));
+    }, [formData]);
+
+    const isDetailsIncomplete = (user) => {
+        return Object.values({
+            phoneno: user.phoneno,
+            gender: user.gender,
+            dateofbirth: user.dateofbirth,
+            collegename: user.collegename,
+            university: user.university,
+            academicyear: user.academicyear,
+            address: user.address,
+            techstack: user.techstack,
+        }).some((value) => !value);
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -38,6 +80,31 @@ const Navbar = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [toggleTheme]);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSaveDetails = async (e) => {
+        e.preventDefault();
+        if (!isFormValid) return;
+
+        try {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/adduserdetail`, formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+            toast.success('Details added successfully!');
+            setShowAddDetailsDialog(false);
+            navigate('/dashboard');
+        } catch (err) {
+            toast.error('Failed to add details. Please try again.');
+            console.log(err)
+        }
+    };
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b' style={{ borderColor: `var(--borderColor)` }}>
@@ -108,6 +175,131 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
+
+            <Dialog open={showAddDetailsDialog} onOpenChange={() => { }} closeOnEsc={false} closeOnOutsideClick={false}>
+                <DialogContent className='sm:max-w-[425px]' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                    <DialogHeader>
+                        <DialogTitle>Complete Your Profile</DialogTitle>
+                        <DialogDescription>Please fill out all required fields to continue.</DialogDescription>
+                    </DialogHeader>
+                    <form className='grid gap-4 py-4'>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='phoneno' className='text-right'>
+                                Phone Number
+                            </Label>
+                            <Input
+                                id='phoneno'
+                                name='phoneno'
+                                placeholder='Enter your phone number'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                                type="number"
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='gender' className='text-right'>
+                                Gender
+                            </Label>
+                            <Input
+                                id='gender'
+                                name='gender'
+                                placeholder='Enter your gender'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                                type="text"
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='dateofbirth' className='text-right'>
+                                Date of Birth
+                            </Label>
+                            <Input
+                                id='dateofbirth'
+                                name='dateofbirth'
+                                placeholder='Enter your date of birth'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                                type="date"
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='collegename' className='text-right'>
+                                College Name
+                            </Label>
+                            <Input
+                                id='collegename'
+                                name='collegename'
+                                placeholder='Enter your college name'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='university' className='text-right'>
+                                University
+                            </Label>
+                            <Input
+                                id='university'
+                                name='university'
+                                placeholder='Enter your university'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='academicyear' className='text-right'>
+                                Academic Year
+                            </Label>
+                            <Input
+                                id='academicyear'
+                                name='academicyear'
+                                placeholder='Enter your academic year'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='address' className='text-right'>
+                                Address
+                            </Label>
+                            <Input
+                                id='address'
+                                name='address'
+                                placeholder='Enter your address'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                            />
+                        </div>
+
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor='techstack' className='text-right'>
+                                Tech Stack
+                            </Label>
+                            <Input
+                                id='techstack'
+                                name='techstack'
+                                placeholder='Enter your tech stack'
+                                onChange={handleChange}
+                                className='col-span-3 inputField'
+                            />
+                        </div>
+
+                        <DialogFooter>
+                            <Button type='button' onClick={handleSaveDetails} disabled={!isFormValid}>
+                                Save Details
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
         </div>
     )
 }

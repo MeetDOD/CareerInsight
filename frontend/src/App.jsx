@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Navbar from './home/Navbar';
@@ -50,7 +50,6 @@ const App = () => {
                 <UserLogin />
               </NonAuthenticatedRoute>
             } />
-
             <Route path='/dashboard' element={
               <AuthenticatedRoute>
                 <Dashboard />

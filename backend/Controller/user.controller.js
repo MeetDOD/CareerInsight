@@ -143,7 +143,9 @@ const login = async (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
-        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, email: user.email, fullName: user.fullName, photo: user.photo } });
+        const userDetailsIncomplete = !user.phoneno || !user.gender || !user.dateofbirth || !user.collegename || !user.university || !user.academicyear || !user.address || !user.techstack;
+
+        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, email: user.email, fullName: user.fullName, photo: user.photo },userDetailsIncomplete });
 
     } catch (error) {
         console.error("Error logging in user:", error);
@@ -219,7 +221,7 @@ const adduserdetail = async (req, res) => {
         user.address = address;
         user.techstack = techstack;
         await user.save();
-        res.status(200).json({ message: "Extra data added successfully", user });
+        res.status(200).json({ message: "Your details added successfully", user });
     }
     catch (error) {
         console.error("Error adding extra data:", error);
