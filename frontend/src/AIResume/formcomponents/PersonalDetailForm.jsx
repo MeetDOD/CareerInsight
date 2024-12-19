@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ResumeInfoContext } from '@/context/ResumeContext'
 import React, { useContext } from 'react'
+import { toast } from 'sonner'
 
 const PersonalDetailForm = ({ enableNext }) => {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext);
@@ -14,6 +15,10 @@ const PersonalDetailForm = ({ enableNext }) => {
             ...resumeInfo,
             [name]: value
         })
+    }
+
+    const handleClick = () => {
+        toast.success("Saved successfully")
     }
 
     const onSave = (e) => {
@@ -52,7 +57,7 @@ const PersonalDetailForm = ({ enableNext }) => {
                     </div>
                 </div>
                 <div className='mt-3 flex justify-end'>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit" onClick={handleClick}>Save</Button>
                 </div>
             </form>
         </div>

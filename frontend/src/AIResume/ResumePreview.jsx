@@ -12,7 +12,7 @@ const ResumePreview = () => {
     return (
         <div id="resume-preview" className='shadow-lg h-full p-7 border-t-[20px] bg-white rounded-lg'
             style={{
-                borderColor: resumeInfo?.themeColor
+                borderColor: resumeInfo?.themeColor,
             }}
         >
             <PersonalDetailPreview resumeInfo={resumeInfo} />

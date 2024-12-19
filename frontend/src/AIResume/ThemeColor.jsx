@@ -51,7 +51,7 @@ const ThemeColor = () => {
                     <h2 className='mb-3 text-sm font-bold' style={{ color: `var(--text-color)` }}>Select Theme Color</h2>
                     <div className='grid grid-cols-5 gap-3 -mr-5'>
                         {colors.map((item, index) => (
-                            <div onClick={() => onThemeChange(item)} className={`h-6 w-6 rounded-full cursor-pointer border-2 hover:border-primary ${selectedColor == item && 'border-2 border-primary'}`} style={{
+                            <div onClick={() => onThemeChange(item)} key={index} className={`h-6 w-6 rounded-full cursor-pointer border-2 hover:border-primary ${selectedColor == item && 'border-2 border-primary'}`} style={{
                                 backgroundColor: item
                             }}>
 

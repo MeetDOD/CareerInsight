@@ -9,6 +9,7 @@ import SkillForm from './formcomponents/SkillForm';
 import DonwloadResume from './DonwloadResume';
 import { useNavigate } from 'react-router-dom';
 import ThemeColor from './ThemeColor';
+import FontStyle from './FontStyle';
 
 const ResumeForm = () => {
     const [activeForm, setActiveForm] = useState(1);
@@ -24,6 +25,7 @@ const ResumeForm = () => {
                 <div className='flex gap-2'>
                     <Button onClick={handleNavigate} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
                     <ThemeColor />
+                    <FontStyle />
                 </div>
                 <div className='flex gap-2'>
                     {activeForm > 1 &&
