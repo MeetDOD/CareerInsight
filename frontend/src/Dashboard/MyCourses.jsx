@@ -108,7 +108,7 @@ const MyCourses = () => {
                                 />
 
                                 <div className="py-4 space-y-2">
-                                    <div className="text-lg font-bold">
+                                    <div className="text-lg font-bold line-clamp-1">
                                         CareerInsight: {course.course.courseName}
                                     </div>
                                     <div className='flex justify-between'>
