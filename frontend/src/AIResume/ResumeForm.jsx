@@ -21,24 +21,39 @@ const ResumeForm = () => {
     }
     return (
         <div>
-            <div className='flex justify-between items-center mb-5'>
-                <div className='flex gap-2'>
-                    <Button onClick={handleNavigate} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-5 gap-4 sm:gap-2">
+                <div className="flex gap-2">
+                    <Button onClick={handleNavigate} size="sm" className="flex gap-2">
+                        <IoIosHome size={20} />
+                    </Button>
                     <ThemeColor />
                     <FontStyle />
                 </div>
-                <div className='flex gap-2'>
-                    {activeForm > 1 &&
-                        <Button size="sm" className="flex gap-2" onClick={() => setActiveForm(activeForm - 1)}><IoMdArrowRoundBack size={20} />
+
+                <div className="flex gap-2">
+                    {activeForm > 1 && (
+                        <Button
+                            size="sm"
+                            className="flex gap-2"
+                            onClick={() => setActiveForm(activeForm - 1)}
+                        >
+                            <IoMdArrowRoundBack size={20} />
                             Back
-                        </Button>}
+                        </Button>
+                    )}
                     {activeForm < 6 && (
-                        <Button disabled={!enableNext} className="flex gap-2" onClick={() => setActiveForm(activeForm + 1)} size="sm">
+                        <Button
+                            disabled={!enableNext}
+                            className="flex gap-2"
+                            onClick={() => setActiveForm(activeForm + 1)}
+                            size="sm"
+                        >
                             Next <IoMdArrowRoundForward size={20} />
                         </Button>
                     )}
                 </div>
             </div>
+
             {activeForm == 1 ? <PersonalDetailForm enableNext={(v) => setEnableNext(v)} />
                 : activeForm == 2 ? <SummeryForm />
                     : activeForm == 3 ? <ExperienceForm />

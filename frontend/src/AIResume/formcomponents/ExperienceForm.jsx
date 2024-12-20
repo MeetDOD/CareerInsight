@@ -56,7 +56,7 @@ const ExperienceForm = () => {
             <div>
                 {experienceList.map((exp, index) => (
                     <div key={index}>
-                        <div className="grid grid-cols-2 gap-3 border border-gray-300 p-3 my-5 rounded-lg">
+                        <div className="grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg" style={{ borderColor: `var(--borderColor)` }}>
                             <div>
                                 <Label className="text-sm">Position Title</Label>
                                 <Input
