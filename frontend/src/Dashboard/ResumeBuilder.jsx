@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoMdAdd, IoMdTrash } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppSidebar from "./AppSidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
@@ -16,6 +16,7 @@ import { format } from 'date-fns';
 const ResumeBuilder = () => {
     const [resumes, setResumes] = useState([]);
     const user = useRecoilValue(userState);
+    const naviagte = useNavigate();
 
     useEffect(() => {
         const fetchResumes = async () => {
@@ -107,7 +108,7 @@ const ResumeBuilder = () => {
                                 </div>
 
                                 <div className="mt-4 flex gap-2">
-                                    <Button variant="secondary" size="sm" className="flex-1 flex items-center justify-center border">
+                                    <Button onClick={() => naviagte(`/viewmyresume/${resume._id}`)} variant="secondary" size="sm" className="flex-1 flex items-center justify-center border">
                                         <FaEye />
                                         View
                                     </Button>

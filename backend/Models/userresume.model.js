@@ -6,14 +6,24 @@ const educationSchema = new mongoose.Schema({
         required: true 
     },
     startDate: { 
-        type: String, 
+        type: Date, 
+        default: Date.now,
         required: true 
     },
     endDate: { 
-        type: String, 
+        type: Date, 
+        default: Date.now,
         required: true 
     },
     degree: { 
+        type: String, 
+        required: true 
+    },
+    major: { 
+        type: String, 
+        required: true 
+    },
+    description: { 
         type: String, 
         required: true 
     },
@@ -36,6 +46,20 @@ const experienceSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    startDate: { 
+        type: Date, 
+        default: Date.now,
+        required: true 
+    },
+    endDate: { 
+        type: Date, 
+        default: Date.now,
+        required: true 
+    },
+    workSummary:{
+        type:String,
+        required: true
+    }
 });
 
 const skillSchema = new mongoose.Schema({

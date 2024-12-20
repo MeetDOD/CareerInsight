@@ -14,6 +14,7 @@ const DonwloadResume = () => {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    console.log(resumeInfo)
 
     const handleSubmit = async () => {
         setLoading(true);

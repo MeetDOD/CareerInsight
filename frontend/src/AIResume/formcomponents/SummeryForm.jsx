@@ -8,25 +8,25 @@ import { Label } from '@/components/ui/label';
 import { ImSpinner2 } from "react-icons/im";
 import { toast } from 'sonner';
 
-const SummeryForm = () => {
+const summaryForm = () => {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext);
-    const [summery, setSummery] = useState(resumeInfo?.summery || '');
+    const [summary, setsummary] = useState(resumeInfo?.summary || '');
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(null);
 
     useEffect(() => {
         setResumeInfo((prev) => ({
             ...prev,
-            summery,
+            summary,
         }));
-    }, [summery, setResumeInfo]);
+    }, [summary, setResumeInfo]);
 
     const onSave = (e) => {
         e.preventDefault();
         toast.success("Summary saved successfully!");
     };
 
-    const summeryGenerater = async () => {
+    const summaryGenerater = async () => {
         setLoading(true);
 
         const prompt = `Job Title: ${resumeInfo?.jobTitle}. 
@@ -77,7 +77,7 @@ const SummeryForm = () => {
                     <div className="flex justify-between items-end">
                         <Label className="text-sm">Add Summary</Label>
                         <Button
-                            onClick={summeryGenerater}
+                            onClick={summaryGenerater}
                             type="button"
                             variant="secondary"
                             size="sm"
@@ -90,8 +90,8 @@ const SummeryForm = () => {
                     </div>
                     <Textarea
                         required
-                        value={summery}
-                        onChange={(e) => setSummery(e.target.value)}
+                        value={summary}
+                        onChange={(e) => setsummary(e.target.value)}
                         className="mt-5 inputField"
                         placeholder="Type your summary here or you can take help from AI..."
                     />
@@ -107,7 +107,7 @@ const SummeryForm = () => {
                         <div
                             key={index}
                             onClick={() => {
-                                setSummery(item.summary);
+                                setsummary(item.summary);
                                 toast.success("Added AI-generated response to your summary");
                             }}
                             className="border my-4 p-5 shadow-md rounded-lg cursor-pointer transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
@@ -125,4 +125,4 @@ const SummeryForm = () => {
     );
 };
 
-export default SummeryForm;
+export default summaryForm;

@@ -27,6 +27,7 @@ import GoogleTranslate from './services/GoogleTranslator';
 import Loader from './services/Loader';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import ViewMyResume from './AIResume/ViewMyResume';
 
 const App = () => {
 
@@ -75,6 +76,11 @@ const App = () => {
             <Route path='/downloadresume' element={
               <AuthenticatedRoute>
                 <DonwloadResume />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/viewmyresume/:resumeId' element={
+              <AuthenticatedRoute>
+                <ViewMyResume />
               </AuthenticatedRoute>
             } />
             {/* Resume Builder Ends*/}

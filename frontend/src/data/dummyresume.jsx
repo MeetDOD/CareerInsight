@@ -7,7 +7,7 @@ export default {
     email: 'dodiyameet041@gmail.com',
     themeColor: '#7c3aed',
     fontStyle: 'Arial',
-    summery: 'god is good, god is great ! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima?',
+    summary: 'god is good, god is great ! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima?',
     experience: [
         {
             id: 1,
@@ -15,18 +15,17 @@ export default {
             companyName: 'TCS',
             city: 'Thane',
             state: 'Maharashtra',
-            startDate: 'Jan 2021',
-            endDate: 'Dec 2024',
-            currentlyWorking: true,
-            workSummery: 'Built, Learned and Developed Full stack projects for various clients also enhancing my Web Development skills through this Internship'
+            startDate: 'December 12, 2024 ',
+            endDate: 'December 12, 2025',
+            workSummary: 'Built, Learned and Developed Full stack projects for various clients also enhancing my Web Development skills through this Internship'
         }
     ],
     education: [
         {
             id: 1,
             universityName: 'Mumbai University',
-            startDate: 'March 2021',
-            endDate: 'March 2025',
+            startDate: 'December 1, 2019',
+            endDate: 'December 1, 2025',
             degree: 'B.E',
             major: 'Cyber Security',
             description: '1st in my class, cgpa: 9.09 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, illum!'

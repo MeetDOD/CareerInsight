@@ -4,7 +4,7 @@ const SummeryPreview = ({ resumeInfo }) => {
     return (
         <div>
             <p className='text-xs text-black' style={{ fontFamily: resumeInfo?.fontStyle }}>
-                {resumeInfo?.summery}
+                {resumeInfo?.summary}
             </p>
         </div>
     )
