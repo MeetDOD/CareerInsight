@@ -52,9 +52,11 @@ const experienceSchema = new mongoose.Schema({
         required: true 
     },
     endDate: { 
-        type: Date, 
-        default: Date.now,
-        required: true 
+        type: Date
+    },
+    currentlyWorking: { 
+        type: Boolean, 
+        default: false 
     },
     workSummary:{
         type:String,

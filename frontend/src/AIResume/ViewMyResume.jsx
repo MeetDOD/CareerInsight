@@ -133,7 +133,7 @@ const ViewMyResume = () => {
                         <div key={index} className='my-5'>
                             <h2 className='text-[15px] font-bold' style={{ color: resumeInfo?.themeColor, fontFamily: resumeInfo?.fontStyle }}>{exp?.title}</h2>
                             <h2 className='text-xs flex justify-between text-black' style={{ fontFamily: resumeInfo?.fontStyle }}>{exp?.companyName}, {exp?.city}, {exp?.state}
-                                <span style={{ fontFamily: resumeInfo?.fontStyle }}>{format(new Date(exp?.startDate), 'MMMM d, yyyy')} - {format(new Date(exp?.endDate), 'MMMM d, yyyy')}</span></h2>
+                                <span style={{ fontFamily: resumeInfo?.fontStyle }}>{format(new Date(exp?.startDate), 'MMMM d, yyyy')} - {exp?.currentlyWorking ? 'Present' : format(new Date(exp?.endDate), 'MMMM d, yyyy')}</span></h2>
                             <div className='text-xs my-2 previewStyle text-black' style={{ fontFamily: resumeInfo?.fontStyle }} dangerouslySetInnerHTML={{ __html: exp.workSummary }} />
                         </div>
                     ))}

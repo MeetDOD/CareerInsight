@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import RichTextEditor from '../RichTextEditor';
 import { ResumeInfoContext } from '@/context/ResumeContext';
 import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
+import { Checkbox } from "@/components/ui/checkbox"
 
 const formField = {
     title: '',
@@ -14,6 +14,7 @@ const formField = {
     state: '',
     startDate: '',
     endDate: '',
+    currentlyWorking: false,
     workSummary: '',
 };
 
@@ -115,7 +116,20 @@ const ExperienceForm = () => {
                                     name="endDate"
                                     value={exp.endDate || ''}
                                     onChange={(e) => handleChange(index, e)}
+                                    disabled={exp.currentlyWorking}
                                 />
+                            </div>
+                            <div className="flex items-center mt-2">
+                                <Checkbox
+                                    id={`currently-working-${index}`}
+                                    checked={exp.currentlyWorking}
+                                    onCheckedChange={(checked) => {
+                                        const newEntries = experienceList.slice();
+                                        newEntries[index].currentlyWorking = checked;
+                                        setExperienceList(newEntries);
+                                    }}
+                                />
+                                <Label htmlFor={`currently-working-${index}`} className="ml-2 text-sm">Currently Working</Label>
                             </div>
                             <div className="col-span-2">
                                 <RichTextEditor

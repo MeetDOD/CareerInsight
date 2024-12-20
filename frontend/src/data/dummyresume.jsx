@@ -17,6 +17,7 @@ export default {
             state: 'Maharashtra',
             startDate: 'December 12, 2024 ',
             endDate: 'December 12, 2025',
+            currentlyWorking: false,
             workSummary: 'Built, Learned and Developed Full stack projects for various clients also enhancing my Web Development skills through this Internship'
         }
     ],
