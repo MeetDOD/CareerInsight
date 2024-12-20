@@ -75,8 +75,11 @@ const MyCourses = () => {
                                     </div>
                                     <div className='flex justify-between'>
                                         <Skeleton className="h-4 w-1/2 skle" />
-                                        <Skeleton className="h-4 w-10 skle" />
+                                        <Skeleton className="h-4 w-16 skle" />
                                     </div>
+                                    <Skeleton className="h-3 w-full skle" />
+                                    <Skeleton className="h-3 w-24 skle" />
+                                    <Skeleton className="h-3 w-60 skle" />
                                 </div>
                                 <Skeleton className="h-10 w-full skle" />
                             </div>
