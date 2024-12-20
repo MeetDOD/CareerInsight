@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
 
 const CoursesPage = () => {
     const [courses, setCourses] = useState([]);
@@ -11,12 +12,14 @@ const CoursesPage = () => {
 
     useEffect(() => {
         const fetchCourses = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/getallcourses`);
                 setCourses(response.data.courses.reverse());
-                setLoading(false);
             } catch (err) {
-                setLoading(true);
+                toast.error("Failed to fetch courses");
+            } finally {
+                setLoading(false);
             }
         };
         fetchCourses();
@@ -52,8 +55,11 @@ const CoursesPage = () => {
                                 </div>
                                 <div className='flex justify-between'>
                                     <Skeleton className="h-4 w-1/2 skle" />
-                                    <Skeleton className="h-4 w-10 skle" />
+                                    <Skeleton className="h-4 w-16 skle" />
                                 </div>
+                                <Skeleton className="h-3 w-full skle" />
+                                <Skeleton className="h-3 w-24 skle" />
+                                <Skeleton className="h-3 w-60 skle" />
                             </div>
                             <Skeleton className="h-10 w-full skle" />
                         </div>
