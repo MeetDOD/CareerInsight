@@ -26,7 +26,6 @@ const ResumeBuilder = () => {
                     },
                 });
                 setResumes(response.data.resumes);
-                console.log(response.data.resumes)
             } catch (error) {
                 console.error(error);
                 toast.error("Failed to fetch resumes");
@@ -36,6 +35,21 @@ const ResumeBuilder = () => {
             fetchResumes();
         }
     }, [user._id]);
+
+    const handleDelete = async (resumeId) => {
+        try {
+            await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/userresume/deleteuserresume/${resumeId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            toast.success("Resume deleted successfully");
+            setResumes((prevResumes) => prevResumes.filter((resume) => resume._id !== resumeId));
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to delete resume");
+        }
+    };
 
     return (
         <div>
@@ -80,7 +94,7 @@ const ResumeBuilder = () => {
                             >
                                 <img
                                     src={
-                                        `https://ui-avatars.com/api/?name=${encodeURIComponent(resume.jobTitle)}&size=150&background=7c3aed&color=fff`
+                                        `https://ui-avatars.com/api/?name=${encodeURIComponent(resume.jobTitle)}&size=150&background=${resume.themeColor.replace("#", "")}&color=fff`
                                     }
                                     alt={resume.jobTitle}
                                     className="w-full h-60 object-cover rounded-lg"
@@ -97,7 +111,7 @@ const ResumeBuilder = () => {
                                         <FaEye />
                                         View
                                     </Button>
-                                    <Button variant="destructive" size="sm" className="flex-1 flex items-center justify-center">
+                                    <Button onClick={() => handleDelete(resume._id)} variant="destructive" size="sm" className="flex-1 flex items-center justify-center">
                                         <IoMdTrash />
                                         Delete
                                     </Button>

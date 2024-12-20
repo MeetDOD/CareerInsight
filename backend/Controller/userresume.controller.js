@@ -16,7 +16,7 @@ const saveResume = async (req,res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error', error });
     }
-}
+};
 
 const getAllResumesByUser = async (req, res) => {
     const { userId } = req.params;
@@ -31,4 +31,21 @@ const getAllResumesByUser = async (req, res) => {
     }
 };
 
-module.exports = {saveResume,getAllResumesByUser};
+const deleteResume = async (req, res) => {
+    const { resumeId } = req.params;
+
+    try {
+        const deletedResume = await Resume.findByIdAndDelete(resumeId);
+
+        if (!deletedResume) {
+            return res.status(404).json({ message: "Resume not found" });
+        }
+
+        res.status(200).json({ message: "Resume deleted successfully", deletedResume });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+};
+
+module.exports = {saveResume,getAllResumesByUser,deleteResume};
