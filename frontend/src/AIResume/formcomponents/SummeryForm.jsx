@@ -28,9 +28,30 @@ const SummeryForm = () => {
 
     const summeryGenerater = async () => {
         setLoading(true);
+
         const prompt = `Job Title: ${resumeInfo?.jobTitle}. 
-        Based on this job title, generate a brief JSON-formatted summary for a resume, 
-        covering three experience levels: 'Fresher', 'Mid-Level', and 'Experienced'.`;
+        Based on this job title, generate a brief JSON-formatted summary for a resume, covering three experience levels: 'Fresher', 'Mid-Level', and 'Experienced'. The response must be a valid JSON array of objects with each object containing the following fields:
+        1. "experienceLevel" - The experience category ('Fresher', 'Mid-Level', or 'Experienced').
+        2. "summary" - A concise, professionally crafted summary tailored to the experience level.
+
+        The format of the JSON should strictly be:
+
+        [
+        {
+            "experienceLevel": "Fresher",
+            "summary": "A brief professional summary suitable for a fresher."
+        },
+        {
+            "experienceLevel": "Mid-Level",
+            "summary": "A brief professional summary suitable for someone with 3+ years of experience."
+        },
+        {
+            "experienceLevel": "Experienced",
+            "summary": "A brief professional summary suitable for an experienced professional."
+        }
+        ]
+
+        Ensure the response is valid JSON and avoid using additional formatting like code blocks.`;
 
         try {
             const result = await chatSession.sendMessage(prompt);
@@ -52,7 +73,7 @@ const SummeryForm = () => {
             <div className="p-5 rounded-lg shadow-lg border-t-primary border-t-8">
                 <h2 className="font-bold text-lg">Summary</h2>
                 <p>Add a summary for your job title</p>
-                <form className="mt-7" onSubmit={onSave}>
+                <form className="mt-7" onSubmit={onSave} >
                     <div className="flex justify-between items-end">
                         <Label className="text-sm">Add Summary</Label>
                         <Button
@@ -82,7 +103,7 @@ const SummeryForm = () => {
             {response && (
                 <div className="my-5">
                     <h2 className="font-bold text-xl">AI Suggestions</h2>
-                    {response.experienceLevels.map((item, index) => (
+                    {response.map((item, index) => (
                         <div
                             key={index}
                             onClick={() => {
