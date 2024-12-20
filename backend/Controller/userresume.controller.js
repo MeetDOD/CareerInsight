@@ -18,4 +18,17 @@ const saveResume = async (req,res) => {
     }
 }
 
-module.exports = {saveResume};
+const getAllResumesByUser = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const resumes = await Resume.find({ userId });
+
+        res.status(200).json({ resumes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+};
+
+module.exports = {saveResume,getAllResumesByUser};

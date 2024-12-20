@@ -98,7 +98,7 @@ const MyCourses = () => {
                         {course.map((course) => (
                             <div
                                 key={course.id}
-                                className="p-2 shadow-md rounded-lg overflow-hidden border border-gray-300 transition duration-300 hover:-translate-y-2"
+                                className="p-2 shadow-md rounded-lg overflow-hidden border transition duration-300 hover:-translate-y-2"
                                 style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                             >
                                 <img

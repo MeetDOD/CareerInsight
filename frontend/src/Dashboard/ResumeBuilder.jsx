@@ -1,46 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd, IoMdTrash } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import AppSidebar from "./AppSidebar";
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/components/ui/sidebar";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/store/auth";
+import axios from "axios";
+import { toast } from "sonner";
+import { format } from 'date-fns';
 
 const ResumeBuilder = () => {
-    const dummyResumes = [
-        {
-            id: 1,
-            title: "Software Engineer Resume",
-            previewImage: "https://d.novoresume.com/images/doc/minimalist-resume-template.png",
-        },
-        {
-            id: 2,
-            title: "Project Manager Resume",
-            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
-        },
-        {
-            id: 3,
-            title: "Project Manager Resume",
-            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
-        },
-        {
-            id: 4,
-            title: "Project Manager Resume",
-            previewImage: "https://cdn.create.microsoft.com/catalog-assets/en-us/4a338a41-94b9-4793-9854-c3ae1b34923f/thumbnails/616/modern-hospitality-resume-brown-modern-simple-1-1-a8a2b9b17cad.webp",
-        },
-    ];
+    const [resumes, setResumes] = useState([]);
+    const user = useRecoilValue(userState);
+
+    useEffect(() => {
+        const fetchResumes = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/userresume/getalluserresume/${user._id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                setResumes(response.data.resumes);
+                console.log(response.data.resumes)
+            } catch (error) {
+                console.error(error);
+                toast.error("Failed to fetch resumes");
+            }
+        };
+        if (user._id) {
+            fetchResumes();
+        }
+    }, [user._id]);
 
     return (
         <div>
@@ -68,48 +63,41 @@ const ResumeBuilder = () => {
                         </Breadcrumb>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-5">
                         <Link
                             to="/resumebody"
-                            className="p-14 py-24 items-center justify-center flex border-2 border-dashed rounded-lg h-[369px] hover:scale-95 transition-all hover:shadow-md cursor-pointer"
+                            className="p-14 py-24 items-center justify-center flex border-2 border-dashed rounded-lg h-[385px] hover:scale-95 transition-all hover:shadow-md cursor-pointer"
+                            style={{ borderColor: `var(--borderColor)` }}
                         >
                             <IoMdAdd size={50} />
                         </Link>
 
-                        {dummyResumes.map((resume) => (
+                        {resumes.map((resume) => (
                             <div
-                                key={resume.id}
-                                className="p-4 shadow-md rounded-lg flex flex-col border border-gray-300"
+                                key={resume._id}
+                                className="p-4 shadow-md rounded-lg flex flex-col border transition duration-300 hover:-translate-y-2"
                                 style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                             >
                                 <img
-                                    src={resume.previewImage}
-                                    alt={resume.title}
+                                    src={
+                                        `https://ui-avatars.com/api/?name=${encodeURIComponent(resume.jobTitle)}&size=150&background=7c3aed&color=fff`
+                                    }
+                                    alt={resume.jobTitle}
                                     className="w-full h-60 object-cover rounded-lg"
                                 />
-
                                 <div className="mt-4 flex flex-col flex-grow">
-                                    <h3 className="text-lg font-semibold truncate">
-                                        {resume.title}
-                                    </h3>
+                                    <h3 className="text-lg font-semibold truncate line-clamp-1">{resume.jobTitle}</h3>
+                                </div>
+                                <div className="text-xs font-semibold text-gray-500">
+                                    Created At: {format(new Date(resume.createdAt), 'MMMM d, yyyy')}
                                 </div>
 
                                 <div className="mt-4 flex gap-2">
-                                    <Link>
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            className="flex-1 flex items-center justify-center border"
-                                        >
-                                            <FaEye />
-                                            View
-                                        </Button>
-                                    </Link>
-                                    <Button
-                                        variant="destructive"
-                                        size="sm"
-                                        className="flex-1 flex items-center justify-center"
-                                    >
+                                    <Button variant="secondary" size="sm" className="flex-1 flex items-center justify-center border">
+                                        <FaEye />
+                                        View
+                                    </Button>
+                                    <Button variant="destructive" size="sm" className="flex-1 flex items-center justify-center">
                                         <IoMdTrash />
                                         Delete
                                     </Button>
