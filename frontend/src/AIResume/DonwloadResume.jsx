@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ImSpinner2 } from 'react-icons/im';
+import { FaDownload, FaSave } from "react-icons/fa";
 
 const DonwloadResume = () => {
     const [resumeInfo] = useContext(ResumeInfoContext);
@@ -54,8 +55,12 @@ const DonwloadResume = () => {
                 <h2 className='text-center text-3xl font-bold'>Congrats your resume is ready</h2>
                 <p className='text-center text-lg font-semibold py-3'>You can now download, save and share with potential clients and friends</p>
                 <div className='flex justify-center pt-5 gap-5'>
-                    <Button onClick={handleDownload} >Download</Button>
-                    <Button className="px-7" onClick={handleSubmit} disabled={loading}>
+                    <Button onClick={handleDownload} size="lg" className="flex gap-2">
+                        <FaDownload size={20} />
+                        Download
+                    </Button>
+                    <Button size="lg" className="px-7" onClick={handleSubmit} disabled={loading}>
+                        <FaSave />
                         {loading ? (
                             <div className='flex flex-row gap-2 items-center'>
                                 <ImSpinner2 className='animate-spin' /> Saving  your resume

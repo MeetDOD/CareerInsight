@@ -4,34 +4,52 @@ import { FaEye } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import AppSidebar from "./AppSidebar";
-import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import axios from "axios";
 import { toast } from "sonner";
-import { format } from 'date-fns';
+import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ResumeBuilder = () => {
     const [resumes, setResumes] = useState([]);
     const user = useRecoilValue(userState);
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchResumes = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/userresume/getalluserresume/${user._id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
+                const response = await axios.get(
+                    `${import.meta.env.VITE_BASE_URL}/api/userresume/getalluserresume/${user._id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
+                );
                 setResumes(response.data.resumes);
             } catch (error) {
-                console.error(error);
                 toast.error("Failed to fetch resumes");
+            } finally {
+                setLoading(false);
             }
         };
+
         if (user._id) {
             fetchResumes();
         }
@@ -39,13 +57,18 @@ const ResumeBuilder = () => {
 
     const handleDelete = async (resumeId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/userresume/deleteuserresume/${resumeId}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+            await axios.delete(
+                `${import.meta.env.VITE_BASE_URL}/api/userresume/deleteuserresume/${resumeId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
             toast.success("Resume deleted successfully");
-            setResumes((prevResumes) => prevResumes.filter((resume) => resume._id !== resumeId));
+            setResumes((prevResumes) =>
+                prevResumes.filter((resume) => resume._id !== resumeId)
+            );
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete resume");
@@ -87,38 +110,77 @@ const ResumeBuilder = () => {
                             <IoMdAdd size={50} />
                         </Link>
 
-                        {resumes.map((resume) => (
-                            <div
-                                key={resume._id}
-                                className="p-4 shadow-md rounded-lg flex flex-col border transition duration-300 hover:-translate-y-2"
-                                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
-                            >
-                                <img
-                                    src={
-                                        `https://ui-avatars.com/api/?name=${encodeURIComponent(resume.jobTitle)}&size=150&background=${resume.themeColor.replace("#", "")}&color=fff`
-                                    }
-                                    alt={resume.jobTitle}
-                                    className="w-full h-60 object-cover rounded-lg"
-                                />
-                                <div className="mt-4 flex flex-col flex-grow">
-                                    <h3 className="text-lg font-semibold truncate line-clamp-1">{resume.jobTitle}</h3>
+                        {loading
+                            ? Array.from({ length: 5 }).map((_, index) => (
+                                <div
+                                    key={index}
+                                    className="p-4 shadow-md rounded-lg flex flex-col border"
+                                    style={{
+                                        borderColor: `var(--borderColor)`,
+                                    }}
+                                >
+                                    <Skeleton className="w-full h-56 rounded-lg skle" />
+                                    <Skeleton className="h-6 w-3/4 mt-4 skle" />
+                                    <Skeleton className="h-4 w-1/2 mt-2 skle" />
+                                    <div className="flex gap-2 mt-4">
+                                        <Skeleton className="h-10 w-full skle" />
+                                        <Skeleton className="h-10 w-full skle" />
+                                    </div>
                                 </div>
-                                <div className="text-xs font-semibold text-gray-500">
-                                    Created At: {format(new Date(resume.createdAt), 'MMMM d, yyyy')}
-                                </div>
+                            ))
+                            : resumes.map((resume) => (
+                                <div
+                                    key={resume._id}
+                                    className="p-4 shadow-md rounded-lg flex flex-col border transition duration-300 hover:-translate-y-2"
+                                    style={{
+                                        borderColor: `var(--borderColor)`,
+                                        backgroundColor: `var(--background-color)`,
+                                    }}
+                                >
+                                    <img
+                                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                            resume.jobTitle
+                                        )}&size=150&background=${resume.themeColor.replace(
+                                            "#",
+                                            ""
+                                        )}&color=fff`}
+                                        alt={resume.jobTitle}
+                                        className="w-full h-60 object-cover rounded-lg"
+                                    />
+                                    <div className="mt-4 flex flex-col flex-grow">
+                                        <h3 className="text-lg font-semibold truncate line-clamp-1">
+                                            {resume.jobTitle}
+                                        </h3>
+                                    </div>
+                                    <div className="text-xs font-semibold text-gray-500">
+                                        Created At:{" "}
+                                        {format(new Date(resume.createdAt), "MMMM d, yyyy")}
+                                    </div>
 
-                                <div className="mt-4 flex gap-2">
-                                    <Button onClick={() => naviagte(`/viewmyresume/${resume._id}`)} variant="secondary" size="sm" className="flex-1 flex items-center justify-center border">
-                                        <FaEye />
-                                        View
-                                    </Button>
-                                    <Button onClick={() => handleDelete(resume._id)} variant="destructive" size="sm" className="flex-1 flex items-center justify-center">
-                                        <IoMdTrash />
-                                        Delete
-                                    </Button>
+                                    <div className="mt-4 flex gap-2">
+                                        <Button
+                                            onClick={() =>
+                                                navigate(`/viewmyresume/${resume._id}`)
+                                            }
+                                            variant="secondary"
+                                            size="sm"
+                                            className="flex-1 flex items-center justify-center border"
+                                        >
+                                            <FaEye />
+                                            View
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleDelete(resume._id)}
+                                            variant="destructive"
+                                            size="sm"
+                                            className="flex-1 flex items-center justify-center"
+                                        >
+                                            <IoMdTrash />
+                                            Delete
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </SidebarInset>
             </SidebarProvider>
