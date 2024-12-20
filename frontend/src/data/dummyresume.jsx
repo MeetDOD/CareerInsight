@@ -5,7 +5,7 @@ export default {
     address: 'Bhayandar (E), Maharashtra',
     phone: 9372575530,
     email: 'dodiyameet041@gmail.com',
-    themeColor: '#ff6666',
+    themeColor: '#7c3aed',
     fontStyle: 'Arial',
     summery: 'god is good, god is great ! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima?',
     experience: [

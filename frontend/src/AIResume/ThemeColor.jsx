@@ -14,7 +14,7 @@ const ThemeColor = () => {
     const colors = [
         "#000000",
         "#E74C3C",
-        "#C0392B",
+        "#7c3aed",
         "#3498DB",
         "#2980B9",
         "#1ABC9C",

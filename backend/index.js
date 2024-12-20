@@ -7,6 +7,7 @@ require('./Config/db');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./Routes/user.route');
 const courseRoutes = require('./Routes/usercourse.route');
+const resumeRoutes = require('./Routes/userresume.route');
 const fileUpload = require('express-fileupload');
 // const googlemeetroute = require('./Routes/googlemeetauth.route');
 const { cloudnairyconnect } = require("./Config/cloudinary");
@@ -30,6 +31,7 @@ cloudnairyconnect();
 
 app.use("/api/user", userRoute);
 app.use("/api/usercourse", courseRoutes);
+app.use("/api/userresume", resumeRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
