@@ -97,7 +97,7 @@ const CoursesPage = () => {
                                 </div>
                             </div>
                             <div>
-                                <Link to={`/viewcourse/${course._id}`}>
+                                <Link to={`/viewcourse/${course._id}/careerinsight/${course.courseName}`}>
                                     <Button className="w-full">More Details</Button>
                                 </Link>
                             </div>

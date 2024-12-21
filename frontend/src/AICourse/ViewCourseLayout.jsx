@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FaHandHoldingHeart, FaClock, FaLanguage } from 'react-icons/fa';
+import { FaClock, FaLanguage } from 'react-icons/fa';
 import { MdCategory } from 'react-icons/md';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { loggedInState } from '@/store/auth';
 import { useRecoilValue } from 'recoil';
 import { toast } from 'sonner';
+import learn from "../assets/learn.gif"
+import { format } from 'date-fns';
 
 const ViewCourseLayout = () => {
     const { id } = useParams();
@@ -76,6 +78,18 @@ const ViewCourseLayout = () => {
         }
     };
 
+    const handleShare = () => {
+        const sharableLink = `${window.location.origin}/viewcourse/${course._id}/careerinsight/${course.courseName}`;
+
+        navigator.clipboard.writeText(sharableLink)
+            .then(() => {
+                toast.success("Sharable link copied to clipboard!");
+            })
+            .catch(() => {
+                toast.error("Failed to copy the link to clipboard.");
+            });
+    };
+
     return (
         <div className="min-h-screen">
             {loading && !course ?
@@ -139,23 +153,51 @@ const ViewCourseLayout = () => {
                                 <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
                                     {course.courseName}
                                 </h1>
-                                <p className="text-lg mb-5 text-white/85 tracking-tight">{course.description}</p>
-                                <div className="flex items-center gap-2">
-                                    <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
-                                        <FaHandHoldingHeart size={20} />
+                                <p className="text-lg mb-4 text-gray-200 tracking-tight">{course.description}</p>
+
+                                <div className="flex flex-wrap items-center justify-between rounded-lg">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        <img className="rounded-md w-9 h-9" src={learn} alt="Learn More" />
+                                        <span className="text-[17px] font-semibold text-white">
+                                            {course.topic}
+                                        </span>
                                     </div>
-                                    <span className="text-sm font-semibold">{course.topic}</span>
+                                    <div className="text-gray-200">
+                                        {format(new Date(course.createdAt), 'MMMM d, yyyy')}
+                                    </div>
                                 </div>
-                                {isEnrolled
-                                    ?
-                                    <Button size="lg" onClick={handleStart} className="mt-6 w-full text-[16px] bg-green-400 hover:bg-green-500 text-gray-900 font-bold rounded-lg">
-                                        Explore this course
-                                    </Button>
-                                    :
-                                    <Button size="lg" onClick={handleStart} className="mt-6 w-full text-[16px] bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-lg">
-                                        Enroll in this course
-                                    </Button>
-                                }
+
+                                <div className="flex flex-wrap gap-4 mt-4">
+                                    <div className="flex-1">
+                                        {isEnrolled ? (
+                                            <Button
+                                                size="lg"
+                                                onClick={handleStart}
+                                                className="w-full text-[16px] bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow-md "
+                                            >
+                                                Explore this course
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                size="lg"
+                                                onClick={handleStart}
+                                                className="w-full text-[16px] bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold rounded-lg shadow-md"
+                                            >
+                                                Enroll in this course
+                                            </Button>
+                                        )}
+                                    </div>
+                                    <div className="flex-1">
+                                        <Button
+                                            size="lg"
+                                            onClick={handleShare}
+                                            className="w-full text-[16px] bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-md"
+                                        >
+                                            Share this course
+                                        </Button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
