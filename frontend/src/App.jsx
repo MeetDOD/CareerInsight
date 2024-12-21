@@ -28,6 +28,7 @@ import Loader from './services/Loader';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import ViewMyResume from './AIResume/ViewMyResume';
+import NotFound from './pages/NotFound';
 
 const App = () => {
 
@@ -137,6 +138,8 @@ const App = () => {
               </AuthenticatedRoute>
             } />
             {/* AI Portfolio Builder Ends*/}
+
+            <Route path='/*' element={<NotFound />} />
           </Routes>
           <Toaster richColors />
         </div>
