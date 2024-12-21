@@ -6,6 +6,6 @@ const { saveResume, getAllResumesByUser, deleteResume, getResumeById } = require
 router.post("/savemyresume", authenticateToken, saveResume);
 router.get("/getalluserresume/:userId", authenticateToken, getAllResumesByUser);
 router.delete("/deleteuserresume/:resumeId", authenticateToken, deleteResume);
-router.get("/getuserresumebyid/:resumeId", authenticateToken, getResumeById);
+router.get("/getuserresumebyid/:resumeId", getResumeById);
 
 module.exports = router;

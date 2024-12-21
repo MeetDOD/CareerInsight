@@ -35,7 +35,7 @@ const ResumeBuilder = () => {
             setLoading(true);
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_BASE_URL}/api/userresume/getalluserresume/${user._id}`,
+                    `${import.meta.env.VITE_BASE_URL}/api/userresume/getalluserresume/${user?._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -50,10 +50,10 @@ const ResumeBuilder = () => {
             }
         };
 
-        if (user._id) {
+        if (user?._id) {
             fetchResumes();
         }
-    }, [user._id]);
+    }, [user?._id]);
 
     const handleDelete = async (resumeId) => {
         try {
@@ -67,7 +67,7 @@ const ResumeBuilder = () => {
             );
             toast.success("Resume deleted successfully");
             setResumes((prevResumes) =>
-                prevResumes.filter((resume) => resume._id !== resumeId)
+                prevResumes.filter((resume) => resume?._id !== resumeId)
             );
         } catch (error) {
             console.error(error);
@@ -130,7 +130,7 @@ const ResumeBuilder = () => {
                             ))
                             : resumes.map((resume) => (
                                 <div
-                                    key={resume._id}
+                                    key={resume?._id}
                                     className="p-4 shadow-md rounded-lg flex flex-col border transition duration-300 hover:-translate-y-2"
                                     style={{
                                         borderColor: `var(--borderColor)`,
@@ -139,29 +139,27 @@ const ResumeBuilder = () => {
                                 >
                                     <img
                                         src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                            resume.jobTitle
-                                        )}&size=150&background=${resume.themeColor.replace(
+                                            resume?.jobTitle
+                                        )}&size=150&background=${resume?.themeColor.replace(
                                             "#",
                                             ""
                                         )}&color=fff`}
-                                        alt={resume.jobTitle}
+                                        alt={resume?.jobTitle}
                                         className="w-full h-60 object-cover rounded-lg"
                                     />
                                     <div className="mt-4 flex flex-col flex-grow">
                                         <h3 className="text-lg font-semibold truncate line-clamp-1">
-                                            {resume.jobTitle}
+                                            {resume?.jobTitle}
                                         </h3>
                                     </div>
                                     <div className="text-xs font-semibold text-gray-500">
                                         Created At:{" "}
-                                        {format(new Date(resume.createdAt), "MMMM d, yyyy")}
+                                        {format(new Date(resume?.createdAt), "MMMM d, yyyy")}
                                     </div>
 
                                     <div className="mt-4 flex gap-2">
                                         <Button
-                                            onClick={() =>
-                                                navigate(`/viewmyresume/${resume._id}`)
-                                            }
+                                            onClick={() => navigate(`/viewmyresume/${resume?._id}/careerinsight/${user._id}/${user.fullName}`)}
                                             variant="secondary"
                                             size="sm"
                                             className="flex-1 flex items-center justify-center border"
@@ -170,7 +168,7 @@ const ResumeBuilder = () => {
                                             View
                                         </Button>
                                         <Button
-                                            onClick={() => handleDelete(resume._id)}
+                                            onClick={() => handleDelete(resume?._id)}
                                             variant="destructive"
                                             size="sm"
                                             className="flex-1 flex items-center justify-center"

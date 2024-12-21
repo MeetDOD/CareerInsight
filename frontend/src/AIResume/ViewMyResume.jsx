@@ -4,24 +4,23 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import Loader from '@/services/Loader';
-import { IoIosHome, IoMdArrowRoundBack } from 'react-icons/io';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
-import { FaDownload } from "react-icons/fa";
+import { FaDownload, FaShare, FaHome } from "react-icons/fa";
 import html2pdf from 'html2pdf.js';
+import { userState } from '@/store/auth';
+import { useRecoilValue } from 'recoil';
 
 const ViewMyResume = () => {
     const { resumeId } = useParams();
     const [resumeInfo, setResumeInfo] = useState(null);
     const navigate = useNavigate();
+    const user = useRecoilValue(userState);
 
     useEffect(() => {
         const fetchResume = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/userresume/getuserresumebyid/${resumeId}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/userresume/getuserresumebyid/${resumeId}`);
                 setResumeInfo(response.data.resume);
             } catch (error) {
                 toast.error("Failed to fetch the resume");
@@ -50,6 +49,18 @@ const ViewMyResume = () => {
         toast.success("Resume downloaded successfully")
     };
 
+    const handleShare = () => {
+        const sharableLink = `${window.location.origin}/viewmyresume/${resumeInfo._id}/careerinsight/${user?._id}/${user?.fullName}`;
+
+        navigator.clipboard.writeText(sharableLink)
+            .then(() => {
+                toast.success("Sharable link copied to clipboard!");
+            })
+            .catch(() => {
+                toast.error("Failed to copy the link to clipboard.");
+            });
+    };
+
     return (
         <div className='mx-auto lg:mx-60 xl:mx-60'>
             <div className="flex justify-between mb-5">
@@ -64,10 +75,14 @@ const ViewMyResume = () => {
                         Back
                     </Button>
                     <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2">
-                        <IoIosHome size={20} />
+                        <FaHome size={20} />
                     </Button>
                 </div>
-                <div>
+                <div className='flex flex-row gap-2'>
+                    <Button onClick={handleShare} size="sm" className="flex gap-2">
+                        <FaShare size={20} />
+                        Share
+                    </Button>
                     <Button onClick={handleDownload} size="sm" className="flex gap-2">
                         <FaDownload size={20} />
                         Download

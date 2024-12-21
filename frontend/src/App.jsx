@@ -28,8 +28,11 @@ import Loader from './services/Loader';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import ViewMyResume from './AIResume/ViewMyResume';
+import { userState } from './store/auth';
+import { useRecoilValue } from 'recoil';
 
 const App = () => {
+  const user = useRecoilValue(userState);
 
   return (
     <BrowserRouter>
@@ -78,10 +81,8 @@ const App = () => {
                 <DonwloadResume />
               </AuthenticatedRoute>
             } />
-            <Route path='/viewmyresume/:resumeId' element={
-              <AuthenticatedRoute>
-                <ViewMyResume />
-              </AuthenticatedRoute>
+            <Route path={`/viewmyresume/:resumeId/careerinsight/:userId/:username`} element={
+              <ViewMyResume />
             } />
             {/* Resume Builder Ends*/}
 
