@@ -11,17 +11,22 @@ import { ImSpinner2 } from 'react-icons/im';
 import { FaDownload, FaSave } from "react-icons/fa";
 
 const DonwloadResume = () => {
-    const [resumeInfo] = useContext(ResumeInfoContext);
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    console.log(resumeInfo)
+
+    if (!user) {
+        navigate("/");
+        return
+    }
+
+    const [resumeInfo] = useContext(ResumeInfoContext);
 
     const handleSubmit = async () => {
         setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userresume/savemyresume`, {
-                userId: user._id,
+                userId: user?._id,
                 resumeInfo,
             }, {
                 headers: {

@@ -28,17 +28,14 @@ import Loader from './services/Loader';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import ViewMyResume from './AIResume/ViewMyResume';
-import { userState } from './store/auth';
-import { useRecoilValue } from 'recoil';
 
 const App = () => {
-  const user = useRecoilValue(userState);
 
   return (
-    <BrowserRouter>
-      <Suspense
-        fallback={<Loader />}
-      >
+    <Suspense
+      fallback={<Loader />}
+    >
+      <BrowserRouter>
         <div className="mx-4 sm:mx-[10%]">
           <Navbar />
           <GoogleTranslate />
@@ -144,8 +141,8 @@ const App = () => {
           <Toaster richColors />
         </div>
         <Footer />
-      </Suspense>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Suspense>
   );
 };
 

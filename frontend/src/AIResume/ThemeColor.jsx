@@ -5,7 +5,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Button } from '@/components/ui/button';
-import { IoIosColorPalette } from "react-icons/io";
+import { IoColorPalette } from "react-icons/io5";
 import { ResumeInfoContext } from '@/context/ResumeContext';
 
 const ThemeColor = () => {
@@ -45,7 +45,7 @@ const ThemeColor = () => {
         <div>
             <Popover>
                 <PopoverTrigger>
-                    <Button variant="secondary" size="sm" className="flex gap-2 border"><IoIosColorPalette size={20} />Theme</Button>
+                    <Button variant="secondary" size="sm" className="text-gray-200 flex gap-2 bg-gradient-to-r from-violet-400 via-purple-500 to-indigo-600 hover:bg-gradient-to-r hover:from-red-600 hover:via-green-700 hover:to-blue-700"><IoColorPalette size={25} />Theme</Button>
                 </PopoverTrigger>
                 <PopoverContent className="border border-gray-300" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }} >
                     <h2 className='mb-3 text-sm font-bold' style={{ color: `var(--text-color)` }}>Select Theme Color</h2>

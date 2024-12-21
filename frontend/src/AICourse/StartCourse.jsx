@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FaClock } from 'react-icons/fa';
+import { FaClock, FaHome } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { IoIosHome, IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
 import Loader from '@/services/Loader';
 
@@ -78,7 +77,7 @@ const StartCourse = () => {
                 <Button size="sm" onClick={() => navigate("/mycourses")} className="flex gap-2">
                     <IoMdArrowRoundBack size={20} />My Courses
                 </Button>
-                <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><IoIosHome size={20} /></Button>
+                <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><FaHome size={20} /></Button>
             </div>
             <div className="flex flex-col lg:flex-row min-h-screen" style={{ borderColor: `var(--borderColor)` }}>
                 <div className="shadow-md border rounded-xl border-gray-300 lg:w-1/4 p-4 h-screen lg:sticky top-0 overflow-y-auto" style={{ borderColor: `var(--borderColor)` }}>
