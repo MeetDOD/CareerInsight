@@ -8,6 +8,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from 'date-fns';
+import CourseRecommendation from "./CourseRecommendation";
 
 const MyCourses = () => {
 
@@ -156,6 +157,9 @@ const MyCourses = () => {
                         ))}
                     </div>
                 }
+
+                <CourseRecommendation />
+
             </SidebarInset>
         </SidebarProvider>
     );

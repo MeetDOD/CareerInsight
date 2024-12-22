@@ -53,15 +53,15 @@ const OnlineTest = () => {
                     </Breadcrumb>
                 </div>
 
-                <div className="text-center mt-3 mb-10">
-                    <h1 className="text-3xl md:text-4xl font-bold text-primary">
-                        Prepare for Your Next Interview
+                <div className="text-center my-3 mb-10">
+                    <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+                        Ace Your Next Interview
                     </h1>
-                    <p className="text-lg font-semibold  my-3">
-                        Practice your interview skills by simulating real-world questions
-                        tailored to your job role and experience level.
+                    <p className="text-lg font-semibold tracking-tighter mt-2 text-gray-500">
+                        Master interview skills with role-specific, real-world questions.
                     </p>
                 </div>
+
 
                 <MockInterviewForm onSubmit={handleFormSubmit} />
             </SidebarInset>

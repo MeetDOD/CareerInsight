@@ -133,8 +133,8 @@ const CreateCourse = () => {
     return (
         <div>
             <div className='flex flex-col justify-center items-center mt-10'>
-                <h2 className='text-4xl text-primary font-bold'>Create Course</h2>
-                <p className='text-lg mt-2 font-semibold'>Enter the details properly and accurate to get the desire response from AI</p>
+                <h2 className='text-4xl text-primary font-bold tracking-tight'>Create Course</h2>
+                <p className='text-lg mt-2 font-semibold tracking-tighter text-gray-500'>Enter the details properly and accurate to get the desire response from AI</p>
                 <div className='flex mt-20'>
                     {stepperOptions.map((item, index) => (
                         <div className='flex items-center'>

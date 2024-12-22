@@ -32,13 +32,12 @@ const userSchema = new mongoose.Schema({
     },
     phoneno: {
         type: Number
-
     },
     address: {
         type: String
     },
     techstack: {
-        type: String
+        type: [String]
     },
     collegename: {
         type: String
