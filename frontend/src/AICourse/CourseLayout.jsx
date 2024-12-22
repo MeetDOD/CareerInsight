@@ -4,7 +4,6 @@ import { FaClock, FaLanguage } from 'react-icons/fa';
 import { MdCategory } from 'react-icons/md';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { Button } from '@/components/ui/button';
-import { FaHandHoldingHeart } from "react-icons/fa6";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { chatSession } from '@/services/GeminiModel';
 import { ImSpinner2 } from 'react-icons/im';
@@ -12,6 +11,7 @@ import getVideos from '@/services/YTModel';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { finalCourseState, responseState } from '@/store/courseState';
 import { Input } from '@/components/ui/input';
+import learn from "../assets/learn.gif"
 
 const CourseLayout = () => {
     const navigate = useNavigate();
@@ -31,6 +31,10 @@ const CourseLayout = () => {
         if (customThumbnail) {
             setImageURL(customThumbnail);
         }
+    };
+
+    const handleResetToDefaultImage = () => {
+        setImageURL(thumbnail);
     };
 
     if (!courseData || courseData.length === 0) {
@@ -144,7 +148,7 @@ const CourseLayout = () => {
                             alt={course.courseName}
                             className="rounded-xl shadow-lg w-full max-w-sm md:max-w-full object-cover"
                         />
-                        <div className="mt-4 w-full">
+                        <div className="mt-6 w-full">
                             <Input
                                 type="text"
                                 placeholder="Enter image URL"
@@ -152,12 +156,20 @@ const CourseLayout = () => {
                                 onChange={handleThumbnailChange}
                                 className="w-full p-2 border rounded-md inputField"
                             />
-                            <Button
-                                onClick={handleUseCustomThumbnail}
-                                className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold rounded-lg"
-                            >
-                                Use Custom Image
-                            </Button>
+                            <div className='flex flex-row gap-4 mt-5'>
+                                <Button
+                                    onClick={handleUseCustomThumbnail}
+                                    className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 rounded-lg"
+                                >
+                                    Use Custom Image
+                                </Button>
+                                <Button
+                                    onClick={handleResetToDefaultImage}
+                                    className="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-lg"
+                                >
+                                    Default Image
+                                </Button>
+                            </div>
                         </div>
                     </div>
 
@@ -166,11 +178,13 @@ const CourseLayout = () => {
                             {course.courseName}
                         </h1>
                         <p className="text-lg mb-5 text-gray-200 font-semibold tracking-tight text-justify">{course.description}</p>
-                        <div className="flex items-center gap-2">
-                            <div className="p-1.5 text-gray-800 rounded-md bg-yellow-400">
-                                <FaHandHoldingHeart size={20} />
+                        <div className="flex flex-wrap items-center justify-between rounded-lg">
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <img className="rounded-md w-9 h-9" src={learn} alt="Learn More" />
+                                <span className="text-[17px] font-semibold text-white">
+                                    {course.topic}
+                                </span>
                             </div>
-                            <span className="text-sm font-semibold">{course.topic}</span>
                         </div>
                         <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (

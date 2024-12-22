@@ -20,11 +20,6 @@ const data = {
             icon: MdSpaceDashboard,
         },
         {
-            title: 'My Courses',
-            url: '/mycourses',
-            icon: MdLibraryBooks,
-        },
-        {
             title: 'Resume Builder',
             url: '/resumebuilder',
             icon: FaTools,
@@ -35,14 +30,19 @@ const data = {
             icon: MdCamera,
         },
         {
-            title: 'Create Course',
-            url: '/createcourse',
-            icon: FaLaptop,
-        },
-        {
             title: 'My Portfolio',
             url: '/createportfolio',
             icon: CgWebsite,
+        },
+        {
+            title: 'My Courses',
+            url: '/mycourses',
+            icon: MdLibraryBooks,
+        },
+        {
+            title: 'Create Course',
+            url: '/createcourse',
+            icon: FaLaptop,
         },
         {
             title: 'Recommendation',
