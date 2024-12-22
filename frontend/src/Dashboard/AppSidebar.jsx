@@ -10,6 +10,7 @@ import { CgWebsite } from "react-icons/cg";
 import { tokenState } from '@/store/auth';
 import { useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
+import { FaHandHoldingHeart } from "react-icons/fa";
 
 const data = {
     navMain: [
@@ -42,6 +43,11 @@ const data = {
             title: 'My Portfolio',
             url: '/createportfolio',
             icon: CgWebsite,
+        },
+        {
+            title: 'Recommendation',
+            url: '/courserecommendation',
+            icon: FaHandHoldingHeart,
         },
     ],
 };

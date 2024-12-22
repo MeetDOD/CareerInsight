@@ -29,6 +29,7 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import ViewMyResume from './AIResume/ViewMyResume';
 import NotFound from './pages/NotFound';
+import CourseRecommendation from './Dashboard/CourseRecommendation';
 
 const App = () => {
 
@@ -60,6 +61,11 @@ const App = () => {
             <Route path='/mycourses' element={
               <AuthenticatedRoute>
                 <MyCourses />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/courserecommendation' element={
+              <AuthenticatedRoute>
+                <CourseRecommendation />
               </AuthenticatedRoute>
             } />
 
