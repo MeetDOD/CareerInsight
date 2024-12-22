@@ -90,6 +90,11 @@ const ViewCourseLayout = () => {
             });
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = "CAREERINSIGHT | VIEW COURSE";
+    }, []);
+
     return (
         <div className="min-h-screen">
             {loading && !course ?

@@ -35,6 +35,11 @@ const MyCourses = () => {
         fetchCourses();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | MY COURSES`;
+    }, []);
+
     return (
         <SidebarProvider>
             <AppSidebar />

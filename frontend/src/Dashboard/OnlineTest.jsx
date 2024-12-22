@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     SidebarInset,
@@ -22,6 +22,11 @@ const OnlineTest = () => {
     const handleFormSubmit = (formData) => {
         navigate("/interviewsession", { state: { formData } });
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | MOCK INTERVIEW`;
+    }, []);
 
     return (
         <SidebarProvider>

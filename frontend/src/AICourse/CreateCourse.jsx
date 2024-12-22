@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiSolidCategory } from "react-icons/bi";
 import { MdTopic } from "react-icons/md";
 import { IoMdOptions } from "react-icons/io";
@@ -125,6 +125,11 @@ const CreateCourse = () => {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | CREATE A COURSE`;
+    }, []);
+
     return (
         <div>
             <div className='flex flex-col justify-center items-center mt-10'>
@@ -193,6 +198,7 @@ const CreateCourse = () => {
 
                     {activeIndex === 2 && (
                         <Button
+                            size="lg"
                             onClick={handleSubmit}
                             disabled={loading}
                         >

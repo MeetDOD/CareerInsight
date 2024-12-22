@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaEdit, FaProjectDiagram, FaMedal, FaBriefcase, FaCode } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useRecoilValue } from "recoil";
@@ -7,6 +7,11 @@ import { userState } from "@/store/auth";
 const Profile = () => {
 
     const user = useRecoilValue(userState);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | ${user?.fullName.toUpperCase()}'s PROFILE`;
+    }, []);
 
     return (
         <div

@@ -75,6 +75,11 @@ const ResumeBuilder = () => {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | MY RESUMES PROFILE`;
+    }, []);
+
     return (
         <div>
             <SidebarProvider>

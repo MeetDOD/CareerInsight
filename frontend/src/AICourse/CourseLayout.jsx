@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaClock, FaLanguage } from 'react-icons/fa';
 import { MdCategory } from 'react-icons/md';
@@ -127,6 +127,11 @@ const CourseLayout = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | MY COURSE LAYOUT`;
+    }, []);
 
 
     return (

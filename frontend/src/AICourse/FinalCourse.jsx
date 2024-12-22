@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaClock, FaUpload } from 'react-icons/fa';
 import { finalCourseState, responseState } from '@/store/courseState';
@@ -72,6 +72,11 @@ const FinalCourse = () => {
     }
 
     const activeChapter = chapters[activeChapterIndex];
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | FINAL COURSE STRUCTURE`;
+    }, []);
 
     return (
         <div>

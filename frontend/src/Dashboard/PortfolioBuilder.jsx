@@ -96,6 +96,11 @@ const PortfolioBuilder = () => {
         setEditor(editor);
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | PORTFOLIO BUILDER`;
+    }, []);
+
 
     return (
         <div>
