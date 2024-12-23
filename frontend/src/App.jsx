@@ -30,6 +30,7 @@ import ContactUs from './pages/ContactUs';
 import ViewMyResume from './AIResume/ViewMyResume';
 import NotFound from './pages/NotFound';
 import CourseRecommendation from './Dashboard/CourseRecommendation';
+import AddDetailForm from './home/AddDetailForm';
 
 const App = () => {
 
@@ -40,6 +41,7 @@ const App = () => {
       <BrowserRouter>
         <div className="mx-4 sm:mx-[10%]">
           <Navbar />
+          <AddDetailForm />
           <GoogleTranslate />
           <Routes>
             <Route path='/' element={<Home />} />

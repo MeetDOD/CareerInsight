@@ -6,15 +6,9 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/ui/themeprovider';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import logo from "../assets/image.png"
-import { loggedInState, tokenState, userState } from '@/store/auth';
+import { loggedInState, tokenState } from '@/store/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import axios from 'axios';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ImSpinner2 } from 'react-icons/im';
 
 const Navbar = () => {
 
@@ -23,44 +17,6 @@ const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
     const isLoggedIn = useRecoilValue(loggedInState);
     const setTokenState = useSetRecoilState(tokenState);
-    const user = useRecoilValue(userState);
-    const [showAddDetailsDialog, setShowAddDetailsDialog] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        phoneno: '',
-        gender: '',
-        dateofbirth: '',
-        collegename: '',
-        university: '',
-        academicyear: '',
-        address: '',
-        techstack: '',
-    });
-
-    const [isFormValid, setIsFormValid] = useState(false);
-
-    useEffect(() => {
-        if (user && isDetailsIncomplete(user)) {
-            setShowAddDetailsDialog(true);
-        }
-    }, [user]);
-
-    useEffect(() => {
-        setIsFormValid(!Object.values(formData).some((value) => !value));
-    }, [formData]);
-
-    const isDetailsIncomplete = (user) => {
-        return Object.values({
-            phoneno: user.phoneno,
-            gender: user.gender,
-            dateofbirth: user.dateofbirth,
-            collegename: user.collegename,
-            university: user.university,
-            academicyear: user.academicyear,
-            address: user.address,
-            techstack: user.techstack,
-        }).some((value) => !value);
-    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -82,33 +38,6 @@ const Navbar = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [toggleTheme]);
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSaveDetails = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        if (!isFormValid) return;
-
-        try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/adduserdetail`, formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
-                }
-            );
-            toast.success('Details added successfully!');
-            setShowAddDetailsDialog(false);
-            navigate('/');
-        } catch (err) {
-            toast.error('Failed to add details. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b' style={{ borderColor: `var(--borderColor)` }}>
@@ -179,158 +108,6 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-
-            <Dialog open={showAddDetailsDialog} onOpenChange={() => { }} closeOnEsc={false} closeOnOutsideClick={false}>
-                <DialogContent
-                    className='max-w-[90vw] md:max-w-[600px] lg:max-w-[800px] p-6 rounded-lg shadow-lg border overflow-y-auto max-h-[90vh]'
-                    style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)`, scrollY: "auto" }}>
-
-                    <DialogHeader className="mb-6">
-                        <DialogTitle className="text-2xl font-bold text-center">Complete Your Profile</DialogTitle>
-                        <DialogDescription className="text-center text-sm">
-                            Please fill out all required fields to continue with careerinsight.
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <form className='grid gap-6'>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='phoneno' className='font-medium'>
-                                    Phone Number
-                                </Label>
-                                <Input
-                                    id='phoneno'
-                                    name='phoneno'
-                                    placeholder='Enter your phone number'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                    type="number"
-                                />
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='gender' className='font-medium'>
-                                    Gender
-                                </Label>
-
-                                <Select
-                                    onValueChange={(value) => handleChange({ target: { name: 'gender', value } })}
-                                    id='gender'
-                                    name='gender'
-                                >
-                                    <SelectTrigger className="inputField">
-                                        <SelectValue placeholder='Select your gender' />
-                                    </SelectTrigger>
-
-                                    <SelectContent
-                                        style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}
-                                    >
-                                        <SelectItem value="Male">Male</SelectItem>
-                                        <SelectItem value="Female">Female</SelectItem>
-                                        <SelectItem value="Not to say">Not to say</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                        </div>
-
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='dateofbirth' className='font-medium'>
-                                    Date of Birth
-                                </Label>
-                                <Input
-                                    id='dateofbirth'
-                                    name='dateofbirth'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                    type="date"
-                                />
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='collegename' className='font-medium'>
-                                    College Name
-                                </Label>
-                                <Input
-                                    id='collegename'
-                                    name='collegename'
-                                    placeholder='Enter your college name'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                />
-                            </div>
-                        </div>
-
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='university' className='font-medium'>
-                                    University
-                                </Label>
-                                <Input
-                                    id='university'
-                                    name='university'
-                                    placeholder='Enter your university'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                />
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='academicyear' className='font-medium'>
-                                    Academic Year
-                                </Label>
-                                <Input
-                                    id='academicyear'
-                                    name='academicyear'
-                                    placeholder='Enter your academic year'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                />
-                            </div>
-                        </div>
-
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 '>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='address' className='font-medium'>
-                                    Address
-                                </Label>
-                                <Input
-                                    id='address'
-                                    name='address'
-                                    placeholder='Enter your address'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                />
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                                <Label htmlFor='techstack' className='font-medium'>
-                                    Tech Stack
-                                </Label>
-                                <Input
-                                    id='techstack'
-                                    name='techstack'
-                                    placeholder='Enter your tech stack'
-                                    onChange={handleChange}
-                                    className='inputField'
-                                />
-                            </div>
-                        </div>
-
-                        <DialogFooter className='flex justify-center mt-6'>
-                            <Button
-                                type='button'
-                                onClick={handleSaveDetails}
-                                disabled={!isFormValid || loading}
-                                className='px-6 py-3 text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed'>
-                                {loading ? (
-                                    <div className="flex flex-row gap-2 items-center">
-                                        <ImSpinner2 size={20} className="animate-spin" /> Saving your details
-                                    </div>
-                                ) : 'Save Details'}
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog>
-
         </div>
     )
 }

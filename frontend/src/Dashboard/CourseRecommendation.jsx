@@ -25,7 +25,6 @@ const CourseRecommendation = () => {
                     },
                 });
                 setRecommendedCourses(response.data.recommendedCourses);
-                console.log(response.data.recommendedCourses)
             } catch (err) {
                 console.error('Error fetching recommended courses:', err);
             } finally {
