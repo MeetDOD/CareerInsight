@@ -141,16 +141,24 @@ const getRecommendedCourses = async (req, res) => {
 
         const userTechStack = user.techstack;
 
-        const regexPatterns = userTechStack.map(stack =>
-            new RegExp(`^${stack}`, 'i')
-        );
+        if (!userTechStack || userTechStack.length === 0) {
+            return res.status(400).json({ message: 'Tech stack is empty or not defined.' });
+        }
+
+        const queryConditions = userTechStack.flatMap(stack => [
+            { description: { $regex: stack, $options: 'i' } },
+            { courseName: { $regex: stack, $options: 'i' } },
+            { category: { $regex: stack, $options: 'i' } },
+            { topic: { $regex: stack, $options: 'i' } },
+        ]);
 
         const recommendedCourses = await Course.find({
-            $or: [
-                { category: { $in: regexPatterns } },
-                { topic: { $in: regexPatterns } }
-            ]
+            $or: queryConditions,
         });
+
+        if (recommendedCourses.length === 0) {
+            return res.status(404).json({ message: 'No recommended courses found.' });
+        }
 
         res.status(200).json({ recommendedCourses });
     } catch (error) {
@@ -158,5 +166,6 @@ const getRecommendedCourses = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 module.exports = { addCourse,getCourses,getCourseById,getEnrolledCourses,enrollInCourse,updateProgress,getRecommendedCourses };

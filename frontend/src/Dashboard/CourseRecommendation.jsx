@@ -10,6 +10,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import AppSidebar from './AppSidebar';
+import { FaEdit } from 'react-icons/fa';
 
 const CourseRecommendation = () => {
     const user = useRecoilValue(userState);
@@ -65,6 +66,29 @@ const CourseRecommendation = () => {
                     </Breadcrumb>
                 </div>
                 <div>
+                    <div className="flex flex-wrap gap-3 mb-6 items-center">
+                        {user.techstack && user.techstack.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                                {user.techstack.map((tech, index) => (
+                                    <span
+                                        key={index}
+                                        className="px-3 py-1 bg-blue-100 text-blue-600 text-sm font-semibold rounded-full shadow-md border border-blue-300 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                    >
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 italic">No tech stack information available.</p>
+                        )}
+                        <Link to="/dashboard">
+                            <Button size="sm">
+                                <FaEdit />
+                            </Button>
+                        </Link>
+                    </div>
+
+
                     {loading &&
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {Array.from({ length: 8 }).map((index) => (
