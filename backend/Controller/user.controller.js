@@ -97,7 +97,7 @@ const verifyOTP = async (req, res) => {
         }
 
         const initials = `${email.charAt(0)}`.toUpperCase();
-        const photo = `https://ui-avatars.com/api/?name=${initials}&size=150&background=ffffff&color=f97316`;
+        const photo = `https://ui-avatars.com/api/?name=${initials}&size=150&background=ffffff&color=7c3aed`;
 
 
         const salt = await bcrypt.genSalt(10);
