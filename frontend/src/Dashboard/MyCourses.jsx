@@ -44,7 +44,7 @@ const MyCourses = () => {
         setCurrentPage(page);
     };
 
-    const paginatedCourses = course.slice(
+    const paginatedCourses = course?.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -106,7 +106,7 @@ const MyCourses = () => {
                     </div>
                 }
 
-                {paginatedCourses.length <= 0 ?
+                {paginatedCourses?.length <= 0 ?
                     <div className="flex flex-col space-y-5 min-h-[70vh] items-center justify-center">
                         <div className="text-3xl font-bold tracking-tight">
                             Check out the latest courses to enroll
@@ -117,7 +117,7 @@ const MyCourses = () => {
                     </div>
                     :
                     <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paginatedCourses.map((course) => (
+                        {paginatedCourses?.map((course) => (
                             <div
                                 key={course.id}
                                 className="p-2 shadow-md rounded-lg overflow-hidden border transition duration-300 hover:-translate-y-2"
@@ -170,7 +170,7 @@ const MyCourses = () => {
                     </div>
                 }
 
-                {course.length > 6 &&
+                {course?.length > 6 &&
                     <div className="flex justify-center items-center mt-6 gap-2">
                         <Button
                             onClick={() => handlePageClick(currentPage - 1)}

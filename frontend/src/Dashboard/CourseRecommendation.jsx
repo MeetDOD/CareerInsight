@@ -45,7 +45,7 @@ const CourseRecommendation = () => {
         setCurrentPage(page);
     };
 
-    const paginatedCourses = recommendedCourses.slice(
+    const paginatedCourses = recommendedCourses?.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -130,7 +130,7 @@ const CourseRecommendation = () => {
                         </div>
                     }
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {paginatedCourses.map(course => (
+                        {paginatedCourses?.map(course => (
                             <div
                                 key={course._id}
                                 to={`/viewcourse/${course._id}`}
@@ -167,31 +167,33 @@ const CourseRecommendation = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center items-center mt-6 gap-2">
-                        <Button
-                            onClick={() => handlePageClick(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                            Previous
-                        </Button>
-                        {Array.from({ length: totalPages }).map((_, index) => (
+                    {recommendedCourses?.length > 6 &&
+                        <div className="flex justify-center items-center mt-6 gap-2">
                             <Button
-                                key={index}
-                                onClick={() => handlePageClick(index + 1)}
-                                className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+                                onClick={() => handlePageClick(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
-                                {index + 1}
+                                Previous
                             </Button>
-                        ))}
-                        <Button
-                            onClick={() => handlePageClick(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                            className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                            Next
-                        </Button>
-                    </div>
+                            {Array.from({ length: totalPages }).map((_, index) => (
+                                <Button
+                                    key={index}
+                                    onClick={() => handlePageClick(index + 1)}
+                                    className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+                                >
+                                    {index + 1}
+                                </Button>
+                            ))}
+                            <Button
+                                onClick={() => handlePageClick(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    }
                 </div>
             </SidebarInset>
         </SidebarProvider >

@@ -34,7 +34,7 @@ const CoursesPage = () => {
         setCurrentPage(page);
     };
 
-    const paginatedCourses = courses.slice(
+    const paginatedCourses = courses?.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -81,7 +81,7 @@ const CoursesPage = () => {
                 </div>
                 :
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {paginatedCourses.map((course) => (
+                    {paginatedCourses?.map((course) => (
                         <div
                             key={course._id}
                             to={`/viewcourse/${course._id}`}
@@ -120,7 +120,7 @@ const CoursesPage = () => {
                 </div>
             }
 
-            {courses.length > 6 &&
+            {courses?.length > 6 &&
                 <div className="flex justify-center items-center mt-6 gap-2">
                     <Button
                         onClick={() => handlePageClick(currentPage - 1)}
