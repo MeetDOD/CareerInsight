@@ -13,6 +13,10 @@ const MyCourses = () => {
 
     const [course, setCourse] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+
+    const totalPages = Math.ceil(course.length / itemsPerPage);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -34,6 +38,16 @@ const MyCourses = () => {
 
         fetchCourses();
     }, []);
+
+    const handlePageClick = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
+
+    const paginatedCourses = course.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -92,7 +106,7 @@ const MyCourses = () => {
                     </div>
                 }
 
-                {course.length <= 0 ?
+                {paginatedCourses.length <= 0 ?
                     <div className="flex flex-col space-y-5 min-h-[70vh] items-center justify-center">
                         <div className="text-3xl font-bold tracking-tight">
                             Check out the latest courses to enroll
@@ -103,7 +117,7 @@ const MyCourses = () => {
                     </div>
                     :
                     <div className="grid grid-cols-1 mt-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {course.map((course) => (
+                        {paginatedCourses.map((course) => (
                             <div
                                 key={course.id}
                                 className="p-2 shadow-md rounded-lg overflow-hidden border transition duration-300 hover:-translate-y-2"
@@ -146,7 +160,6 @@ const MyCourses = () => {
                                     </div>
                                 </div>
 
-
                                 <div>
                                     <Link to={`/startcourse/${course.course._id}`}>
                                         <Button className="w-full">View Course</Button>
@@ -154,6 +167,34 @@ const MyCourses = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                }
+
+                {course.length > 6 &&
+                    <div className="flex justify-center items-center mt-6 gap-2">
+                        <Button
+                            onClick={() => handlePageClick(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            Previous
+                        </Button>
+                        {Array.from({ length: totalPages }).map((_, index) => (
+                            <Button
+                                key={index}
+                                onClick={() => handlePageClick(index + 1)}
+                                className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+                            >
+                                {index + 1}
+                            </Button>
+                        ))}
+                        <Button
+                            onClick={() => handlePageClick(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            Next
+                        </Button>
                     </div>
                 }
             </SidebarInset>

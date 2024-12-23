@@ -9,6 +9,10 @@ import { toast } from 'sonner';
 const CoursesPage = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+
+    const totalPages = Math.ceil(courses.length / itemsPerPage);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -24,6 +28,16 @@ const CoursesPage = () => {
         };
         fetchCourses();
     }, []);
+
+    const handlePageClick = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
+
+    const paginatedCourses = courses.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -67,7 +81,7 @@ const CoursesPage = () => {
                 </div>
                 :
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {courses.map((course) => (
+                    {paginatedCourses.map((course) => (
                         <div
                             key={course._id}
                             to={`/viewcourse/${course._id}`}
@@ -103,6 +117,34 @@ const CoursesPage = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+            }
+
+            {courses.length > 6 &&
+                <div className="flex justify-center items-center mt-6 gap-2">
+                    <Button
+                        onClick={() => handlePageClick(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        Previous
+                    </Button>
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                        <Button
+                            key={index}
+                            onClick={() => handlePageClick(index + 1)}
+                            className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+                        >
+                            {index + 1}
+                        </Button>
+                    ))}
+                    <Button
+                        onClick={() => handlePageClick(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        Next
+                    </Button>
                 </div>
             }
         </div>
