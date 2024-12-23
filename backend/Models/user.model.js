@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     academicyear: {
-        type: String
+        type: Number
     },
 
     userType: {

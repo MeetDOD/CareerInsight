@@ -17,24 +17,23 @@ const CourseRecommendation = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (user?.techstack?.length) {
-            const fetchRecommendations = async () => {
-                try {
-                    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/recommendations`, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('token')}`,
-                        },
-                    });
-                    setRecommendedCourses(response.data.recommendedCourses);
-                } catch (err) {
-                    console.error('Error fetching recommended courses:', err);
-                } finally {
-                    setLoading(false);
-                }
-            };
+        const fetchRecommendations = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/usercourse/recommendations`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                setRecommendedCourses(response.data.recommendedCourses);
+                console.log(response.data.recommendedCourses)
+            } catch (err) {
+                console.error('Error fetching recommended courses:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-            fetchRecommendations();
-        }
+        fetchRecommendations();
     }, [user]);
 
     useEffect(() => {
