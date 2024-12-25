@@ -43,6 +43,7 @@ const ResumeBuilder = () => {
                     }
                 );
                 setResumes(response.data.resumes);
+                console.log(response.data)
             } catch (error) {
                 toast.error("Failed to fetch resumes");
             } finally {
@@ -77,7 +78,7 @@ const ResumeBuilder = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        document.title = `CAREERINSIGHT | MY RESUMES PROFILE`;
+        document.title = `CAREERINSIGHT | MY RESUMES`;
     }, []);
 
     return (
@@ -153,7 +154,7 @@ const ResumeBuilder = () => {
                                         className="w-full h-60 object-cover rounded-lg"
                                     />
                                     <div className="mt-4 flex flex-col flex-grow">
-                                        <h3 className="text-lg font-semibold truncate line-clamp-1">
+                                        <h3 className="text-lg font-semibold truncate line-clamp-1" style={{ fontFamily: resume?.fontStyle }}>
                                             {resume?.jobTitle}
                                         </h3>
                                     </div>

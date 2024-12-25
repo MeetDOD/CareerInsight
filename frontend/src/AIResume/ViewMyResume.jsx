@@ -30,6 +30,9 @@ const ViewMyResume = () => {
         if (resumeId) {
             fetchResume();
         }
+
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | ${resumeInfo?.firstName.toUpperCase()}'s RESUME`;
     }, [resumeId]);
 
     if (!resumeInfo) {
