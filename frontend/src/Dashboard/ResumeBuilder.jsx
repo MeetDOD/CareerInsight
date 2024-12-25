@@ -29,6 +29,10 @@ const ResumeBuilder = () => {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const totalPages = Math.ceil(resumes.length / itemsPerPage);
 
     useEffect(() => {
         const fetchResumes = async () => {
@@ -75,6 +79,16 @@ const ResumeBuilder = () => {
             toast.error("Failed to delete resume");
         }
     };
+
+    const handlePageClick = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
+
+    const paginatedResumes = resumes?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -134,7 +148,7 @@ const ResumeBuilder = () => {
                                     </div>
                                 </div>
                             ))
-                            : resumes.map((resume) => (
+                            : paginatedResumes.map((resume) => (
                                 <div
                                     key={resume?._id}
                                     className="p-4 shadow-md rounded-lg flex flex-col border transition duration-300 hover:-translate-y-2"
@@ -186,6 +200,33 @@ const ResumeBuilder = () => {
                                 </div>
                             ))}
                     </div>
+                    {resumes?.length > 5 &&
+                        <div className="flex justify-center items-center mt-6 gap-2">
+                            <Button
+                                onClick={() => handlePageClick(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            >
+                                Previous
+                            </Button>
+                            {Array.from({ length: totalPages }).map((_, index) => (
+                                <Button
+                                    key={index}
+                                    onClick={() => handlePageClick(index + 1)}
+                                    className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+                                >
+                                    {index + 1}
+                                </Button>
+                            ))}
+                            <Button
+                                onClick={() => handlePageClick(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    }
                 </SidebarInset>
             </SidebarProvider>
         </div>

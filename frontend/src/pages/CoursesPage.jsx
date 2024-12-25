@@ -120,7 +120,7 @@ const CoursesPage = () => {
                 </div>
             }
 
-            {courses?.length > 6 &&
+            {courses?.length > 8 &&
                 <div className="flex justify-center items-center mt-6 gap-2">
                     <Button
                         onClick={() => handlePageClick(currentPage - 1)}
