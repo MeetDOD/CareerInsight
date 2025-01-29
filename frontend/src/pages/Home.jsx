@@ -1,6 +1,8 @@
 import { useTheme } from '@/components/ui/themeprovider'
 import FAQ from '@/home/FAQ'
+import Features from '@/home/Features'
 import Hero from '@/home/Hero'
+import WebDetails from '@/home/WebDetails'
 import React, { useEffect } from 'react'
 
 const Home = () => {
@@ -20,6 +22,8 @@ const Home = () => {
             <div className="absolute inset-0 -z-10 h-full w-full"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(37,99,235,0.5)] opacity-50 blur-[80px]"></div></div>
 
             <Hero />
+            <Features />
+            <WebDetails />
             <FAQ />
         </div>
     )

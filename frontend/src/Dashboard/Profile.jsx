@@ -24,7 +24,7 @@ const Profile = () => {
                     <div
                         className="h-48 bg-cover bg-center"
                         style={{
-                            backgroundImage: `url('https://i.pinimg.com/originals/9d/29/e3/9d29e321b90715dcc1c2e3d5a78f320f.jpg')`,
+                            backgroundImage: `url('https://static.canva.com/web/images/e733916c4616f5baa19098cc2844369b.jpg')`,
                         }}
                     ></div>
                     <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
