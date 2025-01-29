@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import Loader from '@/services/Loader';
 import { GiPartyPopper } from "react-icons/gi";
 import Confetti from 'react-confetti';
+import ReactMarkdown from 'react-markdown';
 
 const StartCourse = () => {
 
@@ -32,7 +33,7 @@ const StartCourse = () => {
         return () => {
             window.removeEventListener('resize', poperSizeDetect);
         }
-    }, [windowSize]);
+    }, []);
 
     useEffect(() => {
         const fetchCourse = async () => {
@@ -44,6 +45,7 @@ const StartCourse = () => {
                 if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < response.data.course.chapters.length) {
                     setActiveChapterIndex(savedIndex);
                 }
+                console.log(response.data.course)
             } catch (error) {
                 console.error('Error fetching course:', error);
             } finally {
@@ -165,7 +167,7 @@ const StartCourse = () => {
                 <div className="flex-1 overflow-y-auto lg:mt-0 mt-4">
                     <Card className="shadow-md border rounded-xl border-gray-300" style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                         <CardHeader>
-                            <CardTitle className="text-2xl font-bold">{activeChapter?.title}</CardTitle>
+                            <CardTitle className="text-2xl font-bold">Chapter {activeChapterIndex + 1}: {activeChapter?.title}</CardTitle>
                             <CardDescription className="text-lg text-justify font-semibold">{activeChapter?.explanation}</CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -194,7 +196,7 @@ const StartCourse = () => {
                                             className='p-5 courseSection rounded-xl'
                                         >
                                             <h3 className="text-xl font-bold pb-2"><span className='text-2xl'>{secIndex + 1}.</span> {section?.subtitle}</h3>
-                                            <p className="font-medium text-lg text-justify tracking-tight">{section?.content}</p>
+                                            <ReactMarkdown className="font-medium text-lg text-justify tracking-tight">{section?.content}</ReactMarkdown>
                                         </div>
                                     ))}
                                 </div>
