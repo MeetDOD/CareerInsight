@@ -5,7 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/ui/themeprovider';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
-import logo from "../assets/image.png"
+import logo from "../assets/logo.png"
 import { loggedInState, tokenState } from '@/store/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';

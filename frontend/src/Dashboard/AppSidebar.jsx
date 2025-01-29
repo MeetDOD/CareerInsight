@@ -4,7 +4,7 @@ import { MdSpaceDashboard, MdLibraryBooks, MdCamera } from 'react-icons/md';
 import { FaTools, FaLaptop } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import logo from "../assets/image.png";
+import logo from "../assets/logo.png";
 import { Separator } from "@/components/ui/separator"
 import { CgWebsite } from "react-icons/cg";
 import { tokenState } from '@/store/auth';
@@ -68,9 +68,8 @@ const AppSidebar = () => {
     return (
         <Sidebar className="w-64 min-h-screen shadow-md" style={{ color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
             <SidebarHeader className="px-4" style={{ backgroundColor: `var(--background-color)` }} >
-                <div className="flex items-center gap-3">
-                    {/* <img src={logo} alt="Logo" className="w-24 object-contain" /> */}
-                    <span className="text-lg mx-auto pt-2 text-primary font-bold">📖 Carrer Insights</span>
+                <div className="flex items-center gap-3 justify-center my-1">
+                    <img src={logo} onClick={() => navigate("/")} alt="Logo" className="w-36 cursor-pointer object-contain" />
                 </div>
             </SidebarHeader>
 

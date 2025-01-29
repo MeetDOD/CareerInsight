@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import React, { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import logo from "../assets/image.png";
+import logo from "../assets/logo.png";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
