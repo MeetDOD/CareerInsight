@@ -12,6 +12,7 @@ import { BriefcaseIcon, LineChart, TrendingUp, TrendingDown, Brain } from "lucid
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { SiLevelsdotfyi } from "react-icons/si";
 import { Skeleton } from "@/components/ui/skeleton";
+import PredictionTech from './PredictionTech';
 
 const IndustryInsights = () => {
     const [insights, setInsights] = useState(null);
@@ -160,6 +161,9 @@ const IndustryInsights = () => {
                     </div>
                     :
                     <div className='space-y-5'>
+                        <div>
+                            <PredictionTech />
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <Card style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -284,7 +288,7 @@ const IndustryInsights = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <ul className="space-y-1">
+                                    <ul className="space-y-3">
                                         {insights.keyTrends.map((trend, index) => (
                                             <li key={index} className="flex items-start space-x-2">
                                                 <div className="h-2 w-2 mt-2 rounded-full bg-primary" />

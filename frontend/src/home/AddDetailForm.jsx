@@ -160,7 +160,7 @@ const AddDetailForm = () => {
                                     </SelectTrigger>
 
                                     <SelectContent
-                                        style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}
+                                        style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}
                                     >
                                         <SelectItem value="Male">Male</SelectItem>
                                         <SelectItem value="Female">Female</SelectItem>
