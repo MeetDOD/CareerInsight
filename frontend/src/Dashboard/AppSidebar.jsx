@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
-import { MdSpaceDashboard, MdLibraryBooks, MdCamera } from 'react-icons/md';
+import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights } from 'react-icons/md';
 import { FaTools, FaLaptop } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -20,19 +20,9 @@ const data = {
             icon: MdSpaceDashboard,
         },
         {
-            title: 'Resume Builder',
-            url: '/resumebuilder',
-            icon: FaTools,
-        },
-        {
-            title: 'Mock Interview',
-            url: '/mockinterview',
-            icon: MdCamera,
-        },
-        {
-            title: 'My Portfolio',
-            url: '/createportfolio',
-            icon: CgWebsite,
+            title: 'Insights',
+            url: '/insights',
+            icon: MdInsights,
         },
         {
             title: 'My Courses',
@@ -49,6 +39,21 @@ const data = {
             url: '/courserecommendation',
             icon: FaHandHoldingHeart,
         },
+        {
+            title: 'Resume Builder',
+            url: '/resumebuilder',
+            icon: FaTools,
+        },
+        {
+            title: 'Mock Interview',
+            url: '/mockinterview',
+            icon: MdCamera,
+        },
+        {
+            title: 'My Portfolio',
+            url: '/createportfolio',
+            icon: CgWebsite,
+        }
     ],
 };
 

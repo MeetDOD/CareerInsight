@@ -33,7 +33,7 @@ const Hero = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
                         <div className="flex my-5 gap-2 items-center border border-yellow-300 bg-yellow-50 rounded-lg px-3 py-1 w-fit shadow-md hover:shadow-lg hover:-translate-y-1 transition group">
-                            <div className="w-2 h-2 bg-yellow-400 rounded-full border border-yellow-600"></div>
+                            <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full border border-yellow-600 animate-pulse"></div>
                             <p className="font-medium text-sm text-yellow-600">Learn, Grow, and Succeed with Career Insight</p>
                             <FaArrowRight color="#ca8a04" className="group-hover:translate-x-1 transition duration-300" />
                         </div>
