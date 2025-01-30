@@ -89,6 +89,11 @@ const IndustryInsights = () => {
         median: range.median / 1000,
     }));
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = `CAREERINSIGHT | INDUSTRY INSIGHTS`;
+    }, []);
+
     return (
         <SidebarProvider>
             <AppSidebar />
