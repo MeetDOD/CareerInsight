@@ -140,7 +140,9 @@ const CourseLayout = () => {
 
     return (
         <div className="min-h-screen">
-            <div className="relative shadow-lg bg-gradient-to-r from-indigo-500 to-purple-950 text-white rounded-xl">
+            <div className="relative shadow-lg text-white rounded-xl bg-cover bg-center" style={{
+                backgroundImage: `url('https://static.canva.com/web/images/e733916c4616f5baa19098cc2844369b.jpg')`,
+            }}>
                 <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col items-center justify-center">
                         <img
@@ -154,7 +156,7 @@ const CourseLayout = () => {
                                 placeholder="Enter image URL"
                                 value={customThumbnail}
                                 onChange={handleThumbnailChange}
-                                className="w-full p-2 border rounded-md inputField"
+                                className="bg-white border-black text-black"
                             />
                             <div className='flex flex-row gap-4 mt-5'>
                                 <Button
@@ -186,7 +188,7 @@ const CourseLayout = () => {
                                 </span>
                             </div>
                         </div>
-                        <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-balance font-bold rounded-lg">
+                        <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-green-400 hover:bg-green-500 text-gray-800 text-balance font-bold rounded-lg">
                             {loading ? (
                                 <div className="flex flex-row gap-2 items-center">
                                     <ImSpinner2 size={20} className="animate-spin" /> Generating Course Content

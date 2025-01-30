@@ -10,6 +10,7 @@ import axios from 'axios';
 import { ImSpinner2 } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 import Loader from '@/services/Loader';
+import ReactMarkdown from 'react-markdown';
 
 const FinalCourse = () => {
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
@@ -126,7 +127,7 @@ const FinalCourse = () => {
                 <div className="flex-1 overflow-y-auto lg:mt-0 mt-4">
                     <Card className="shadow-md border rounded-xl border-gray-300" style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                         <CardHeader>
-                            <CardTitle className="text-2xl font-bold">{activeChapter?.title}</CardTitle>
+                            <CardTitle className="text-2xl font-bold">Chapter {activeChapterIndex + 1}: {activeChapter?.title}</CardTitle>
                             <CardDescription className="text-lg text-justify font-semibold">{activeChapter?.explanation}</CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -146,7 +147,7 @@ const FinalCourse = () => {
 
                             )}
 
-                            <h2 className="text-xl mb-5 font-bold">Detail Explaination</h2>
+                            <h2 className="text-xl mb-5 font-bold">Detailed <span className='text-primary'>Explaination</span></h2>
                             {activeChapter?.sections && activeChapter?.sections?.length > 0 && (
                                 <div className="space-y-5">
                                     {activeChapter?.sections.map((section, secIndex) => (
@@ -155,7 +156,7 @@ const FinalCourse = () => {
                                             className='p-5 courseSection rounded-xl'
                                         >
                                             <h3 className="text-xl font-bold pb-2"><span className='text-2xl'>{secIndex + 1}.</span> {section?.subtitle}</h3>
-                                            <p className="font-medium text-lg text-justify">{section?.content}</p>
+                                            <ReactMarkdown className="font-medium text-lg text-justify tracking-tight">{section?.content}</ReactMarkdown>
                                         </div>
                                     ))}
                                 </div>

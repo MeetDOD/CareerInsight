@@ -16,7 +16,7 @@ const SelectOptions = ({ options, setOptions }) => {
                         <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Level" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                             <SelectItem value="Beginner">Beginner</SelectItem>
                             <SelectItem value="Intermediate">Intermediate</SelectItem>
                             <SelectItem value="Advance">Advance</SelectItem>
@@ -30,7 +30,7 @@ const SelectOptions = ({ options, setOptions }) => {
                         <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Duration" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                             <SelectItem value="4 Hours">4 Hours</SelectItem>
                             <SelectItem value="6 Hours">6 Hours</SelectItem>
                             <SelectItem value="8 Hours">8 Hours</SelectItem>
@@ -46,7 +46,7 @@ const SelectOptions = ({ options, setOptions }) => {
                         <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select No. of Chapters" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                             <SelectItem value="4">4 Chapters</SelectItem>
                             <SelectItem value="8">8 Chapters</SelectItem>
                             <SelectItem value="12">12 Chapters</SelectItem>
@@ -61,7 +61,7 @@ const SelectOptions = ({ options, setOptions }) => {
                         <SelectTrigger className="inputField">
                             <SelectValue placeholder="Select Language" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}>
+                        <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                             <SelectItem value="English">English</SelectItem>
                             <SelectItem value="Hindi">Hindi</SelectItem>
                             <SelectItem value="Marathi">Marathi</SelectItem>

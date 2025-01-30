@@ -144,7 +144,9 @@ const ViewCourseLayout = () => {
                 </div>
                 :
                 <div>
-                    <div className="relative shadow-lg bg-gradient-to-r from-indigo-500 to-purple-950 text-white rounded-xl">
+                    <div className="relative shadow-lg text-white rounded-xl bg-cover bg-center" style={{
+                        backgroundImage: `url('https://static.canva.com/web/images/e733916c4616f5baa19098cc2844369b.jpg')`,
+                    }}>
                         <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="flex items-center justify-center">
                                 <img
