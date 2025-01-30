@@ -256,7 +256,7 @@ const IndustryInsights = () => {
                                                     content={({ active, payload, label }) => {
                                                         if (active && payload && payload.length) {
                                                             return (
-                                                                <div className="border rounded-lg text-white shadow-md bg-primary p-4">
+                                                                <div className="rounded-lg text-white shadow-md bg-primary p-4">
                                                                     <p className="font-medium">{label}</p>
                                                                     {payload?.map((item) => (
                                                                         <p key={item?.name} className="text-xs">
