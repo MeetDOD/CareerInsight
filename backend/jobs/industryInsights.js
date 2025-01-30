@@ -8,7 +8,7 @@ const fetchIndustryInsights = async () => {
         Analyze the current state of the software developer industry and provide insights in ONLY the following JSON format without any additional notes or explanations:
         {
           "salaryRanges": [
-            { "role": "string", "min": number, "max": number, "median": number, "location": "string" }
+            { "role": "string", "min": number, "max": number, "median": number, "location": "india" }
           ],
           "growthRate": number,
           "demandLevel": "High" | "Medium" | "Low",

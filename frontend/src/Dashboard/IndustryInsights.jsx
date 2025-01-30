@@ -184,7 +184,7 @@ const IndustryInsights = () => {
                                         Industry Growth
                                     </CardTitle>
                                     <div className='p-2 rounded-full' style={{ backgroundColor: `var(--text-color)` }}>
-                                        <SiLevelsdotfyi className="h-4 w-4 text-muted-foreground" />
+                                        <SiLevelsdotfyi className="h-4 w-4 text-primary" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
@@ -256,7 +256,7 @@ const IndustryInsights = () => {
                                                                     <p className="font-medium">{label}</p>
                                                                     {payload?.map((item) => (
                                                                         <p key={item?.name} className="text-xs">
-                                                                            {item?.name}: ${item?.value}K
+                                                                            {item?.name}: ₹{item?.value}K
                                                                         </p>
                                                                     ))}
                                                                 </div>
