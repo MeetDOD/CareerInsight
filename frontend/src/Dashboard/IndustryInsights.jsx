@@ -189,7 +189,7 @@ const IndustryInsights = () => {
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">
-                                        {insights?.growthRate.toFixed(1)}%
+                                        {insights?.growthRate}%
                                     </div>
                                     <Progress value={insights?.growthRate} className="mt-2" />
                                 </CardContent>
