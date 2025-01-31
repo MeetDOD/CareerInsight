@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights } from 'react-icons/md';
+import { FaUniversity } from "react-icons/fa";
 import { FaTools, FaLaptop } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -53,6 +54,11 @@ const data = {
             title: 'My Portfolio',
             url: '/createportfolio',
             icon: CgWebsite,
+        },
+        {
+            title: 'Company Visits',
+            url: '/companyvisits',
+            icon: FaUniversity,
         }
     ],
 };
