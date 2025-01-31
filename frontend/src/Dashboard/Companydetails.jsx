@@ -32,6 +32,23 @@ import zeus from "../assets/zeus.jpg";
 const companiesData = [
   {
     id: 1,
+    name: "TCS",
+    logo: tcs,
+    Role: ["Ninja", "Digital", "Prime"],
+    rounds: ["Aptitude test-(TCS ION Center)", "Technical Interview"],
+    preparationTips: [
+      "Aptitude round contain logical,quantitative,coding question ",
+      "Practice Basic programming",
+      "Be thorough with your resume",
+      "Be aware of OOPS concept",
+    ],
+    references: [
+      "https://www.youtube.com/playlist?list=PL3JmT-xgOMNzI0gM52dReLwXMah1Ma6nl",
+      "https://www.geeksforgeeks.org/tcs-placement-preparation/",
+    ],
+  },
+  {
+    id: 2,
     name: "Content Stack",
     logo: contentstackimage,
     rounds: [
@@ -56,7 +73,7 @@ const companiesData = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     name: "Infosys",
     logo: infosys,
     Role: ["Specialist Programmer"],
@@ -72,24 +89,6 @@ const companiesData = [
     references: [
       "https://neetcode.io/practice",
       "https://www.youtube.com/playlist?list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz",
-      "Microsoft Careers",
-    ],
-  },
-  {
-    id: 3,
-    name: "TCS",
-    logo: tcs,
-    Role: ["Ninja", "Digital", "Prime"],
-    rounds: ["Aptitude test-(TCS ION Center)", "Technical Interview"],
-    preparationTips: [
-      "Aptitude round contain logical,quantitative,coding question ",
-      "Practice Basic programming",
-      "Be thorough with your resume",
-      "Be aware of OOPS concept",
-    ],
-    references: [
-      "https://www.youtube.com/playlist?list=PL3JmT-xgOMNzI0gM52dReLwXMah1Ma6nl",
-      "https://www.geeksforgeeks.org/tcs-placement-preparation/",
     ],
   },
   {
@@ -192,13 +191,16 @@ const CompanyVisits = () => {
           {companiesData.map((company) => (
             <div
               key={company.id}
-              className="p-4 shadow-md rounded-lg border border-gray-300 transition duration-300 hover:-translate-y-2"
+              className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2"
+              style={{ borderColor: `var(--borderColor)` }}
             >
-              <img
-                src={company.logo}
-                alt={company.name}
-                className="w-full h-32 object-contain"
-              />
+              <div className="flex flex-col items-center ">
+                <img
+                  src={company.logo}
+                  alt={company.name}
+                  className="w-1/2 rounded-lg"
+                />
+              </div>
               <div className="py-4">
                 <h3 className="text-lg font-bold">{company.name}</h3>
                 <Button
@@ -217,14 +219,14 @@ const CompanyVisits = () => {
           open={isModalOpen}
           onOpenChange={closeModal}
         >
-          <DialogContent className="max-w-3xl w-full h-[90vh] max-h-[90vh] overflow-y-auto bg-white p-6 rounded-lg shadow-lg border">
+          <DialogContent style={{ backgroundColor: `var(--background-color)`, borderColor: `var(--borderColor)` }} className="max-w-3xl w-full overflow-y-auto p-6 rounded-lg shadow-lg border">
             {selectedCompany && (
               <>
                 <DialogHeader>
                   <DialogTitle className="text-xl font-bold">
                     {selectedCompany.name} - Interview Details
                   </DialogTitle>
-                  <DialogDescription className="text-gray-600">
+                  <DialogDescription>
                     Important details about the company interview process.
                   </DialogDescription>
                 </DialogHeader>
@@ -233,7 +235,7 @@ const CompanyVisits = () => {
                   {/* Interview Rounds */}
                   <div>
                     <h3 className="text-lg font-semibold">Interview Rounds</h3>
-                    <ul className="list-disc ml-6 text-gray-700">
+                    <ul className="list-disc ml-6">
                       {selectedCompany.rounds.map((round, index) => (
                         <li key={index}>{round}</li>
                       ))}
@@ -243,7 +245,7 @@ const CompanyVisits = () => {
                   {/* Preparation Tips */}
                   <div>
                     <h3 className="text-lg font-semibold">Preparation Tips</h3>
-                    <ul className="list-disc ml-6 text-gray-700">
+                    <ul className="list-disc ml-6">
                       {selectedCompany.preparationTips.map((tip, index) => (
                         <li key={index}>{tip}</li>
                       ))}
@@ -270,7 +272,7 @@ const CompanyVisits = () => {
                   </div>
                 </div>
 
-                <DialogFooter className="sticky bottom-0 bg-white py-2">
+                <DialogFooter className="sticky bottom-0 text-gray-800">
                   <Button variant="outline" onClick={closeModal}>
                     Close
                   </Button>
