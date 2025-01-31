@@ -38,7 +38,7 @@ const PredictionTech = () => {
             <CardContent>
                 <Select onValueChange={(value) => setSelectedLanguage(value)} >
                     <SelectTrigger className="w-48 mb-4 inputField">
-                        <SelectValue placeholder="Select Language" defaultValue="JavaScript" />
+                        <SelectValue placeholder="JavaScript" defaultValue="JavaScript" />
                     </SelectTrigger>
                     <SelectContent style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
                         {languages.map((lang) => (

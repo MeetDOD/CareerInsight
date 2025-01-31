@@ -40,7 +40,7 @@ const Hero = () => {
 
                         <div className="hidden lg:flex gap-5 py-5">
                             <div className="flex justify-center gap-2 items-center opacity-90 text-sm">
-                                <FaArrowRight className="opacity-90 -mr-1" /> Career Roadmap
+                                <FaArrowRight className="opacity-90 -mr-1" /> AI Industry Insights
                             </div>
                             <div className="flex justify-center gap-2 items-center opacity-90 text-sm">
                                 <FaArrowRight className="opacity-90 -mr-1" /> AI Mock Interview
