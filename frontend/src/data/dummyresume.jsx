@@ -7,7 +7,7 @@ export default {
     email: 'dodiyameet041@gmail.com',
     themeColor: '#7c3aed',
     fontStyle: 'Arial',
-    summary: 'god is good, god is great ! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, minima?',
+    summary: 'Greetings, I go by the name Meet Dodiya, where ambition, self-motivation, and an unwavering drive define my identity as a versatile Full Stack Developer.',
     experience: [
         {
             id: 1,

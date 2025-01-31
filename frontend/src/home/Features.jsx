@@ -2,7 +2,7 @@ import React from 'react';
 import assessmentGif from '../assets/Features/assessment.gif';
 import resumeGif from '../assets/Features/resume.gif';
 import interviewGif from '../assets/Features/interview.gif';
-import pathGif from '../assets/Features/path.gif';
+import insightGif from '../assets/Features/insights.gif';
 
 const Features = () => {
 
@@ -23,9 +23,9 @@ const Features = () => {
             description: "Prepare for your dream job with AI-driven mock interviews and feedback",
         },
         {
-            gif: pathGif,
-            title: "AI Learning Path",
-            description: "Personalized learning paths to guide you toward your career goals",
+            gif: insightGif,
+            title: "AI Industry Insights",
+            description: "AI Industry Insights for trends to guide you toward your career goals",
         },
     ];
 

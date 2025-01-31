@@ -33,7 +33,7 @@ const WebDetails = () => {
                     <ul className="mt-6 space-y-3">
                         <li className="flex items-center">
                             <span className="text-green-400 rounded-full border-2 border-green-600 text-xl mr-3 animate-pulse"><FaCheckCircle /></span>
-                            <span className="text-base sm:text-lg font-medium">AI-powered career insights to guide your journey</span>
+                            <span className="text-base sm:text-lg font-medium">AI-powered industry insights to guide your journey</span>
                         </li>
                         <li className="flex items-center">
                             <span className="text-green-400 rounded-full border-2 border-green-600 text-xl mr-3 animate-pulse"><FaCheckCircle /></span>
