@@ -110,6 +110,7 @@ const IndustryInsights = () => {
     }));
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         document.title = `CAREERINSIGHT | INDUSTRY INSIGHTS`;
     }, []);
 
