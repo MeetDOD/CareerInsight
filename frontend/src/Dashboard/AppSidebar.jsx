@@ -1,8 +1,7 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights } from 'react-icons/md';
-import { FaUniversity } from "react-icons/fa";
-import { FaTools, FaLaptop } from 'react-icons/fa';
+import { FaTools, FaLaptop, FaHandHoldingHeart } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from "../assets/logo.png";
@@ -11,7 +10,7 @@ import { CgWebsite } from "react-icons/cg";
 import { tokenState } from '@/store/auth';
 import { useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
-import { FaHandHoldingHeart } from "react-icons/fa";
+import { FaSchool } from "react-icons/fa6";
 
 const data = {
     navMain: [
@@ -58,7 +57,7 @@ const data = {
         {
             title: 'Company Visits',
             url: '/companyvisits',
-            icon: FaUniversity,
+            icon: FaSchool,
         }
     ],
 };

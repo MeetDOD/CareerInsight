@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   SidebarInset,
@@ -32,7 +32,7 @@ import zeus from "../assets/zeus.jpg";
 const companiesData = [
   {
     id: 1,
-    name: "TCS",
+    name: "Tata Consultancy Services",
     logo: tcs,
     Role: ["Ninja", "Digital", "Prime"],
     rounds: ["Aptitude test-(TCS ION Center)", "Technical Interview"],
@@ -93,7 +93,7 @@ const companiesData = [
   },
   {
     id: 4,
-    name: "Bristlecome",
+    name: "Bristlecone",
     logo: bristlecome,
     Role: ["Associate"],
     rounds: [
@@ -115,7 +115,7 @@ const companiesData = [
   },
   {
     id: 5,
-    name: "Zeus",
+    name: "Zeus Learning",
     logo: zeus,
     Role: [
       "Developer",
@@ -158,8 +158,13 @@ const CompanyVisits = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setTimeout(() => setSelectedCompany(null), 300); // Delay unmounting for smooth closing animation
+    setTimeout(() => setSelectedCompany(null), 300);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = `CAREERINSIGHT | COMPANY VISITS`;
+  }, []);
 
   return (
     <SidebarProvider>
@@ -186,12 +191,11 @@ const CompanyVisits = () => {
           </Breadcrumb>
         </div>
 
-        {/* Company List */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {companiesData.map((company) => (
             <div
               key={company.id}
-              className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2"
+              className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2 space-y-3"
               style={{ borderColor: `var(--borderColor)` }}
             >
               <div className="flex flex-col items-center ">
@@ -201,20 +205,23 @@ const CompanyVisits = () => {
                   className="w-1/2 rounded-lg"
                 />
               </div>
-              <div className="py-4">
+
+              <div>
                 <h3 className="text-lg font-bold">{company.name}</h3>
+              </div>
+
+              <div>
                 <Button
-                  className="mt-2 w-full"
+                  className="w-full"
                   onClick={() => openModal(company)}
                 >
-                  <FaInfoCircle className="mr-2" /> More Details
+                  <FaInfoCircle /> More Details
                 </Button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Modal Dialog */}
         <Dialog
           open={isModalOpen}
           onOpenChange={closeModal}
@@ -232,7 +239,6 @@ const CompanyVisits = () => {
                 </DialogHeader>
 
                 <div className="space-y-4">
-                  {/* Interview Rounds */}
                   <div>
                     <h3 className="text-lg font-semibold">Interview Rounds</h3>
                     <ul className="list-disc ml-6">
@@ -242,7 +248,6 @@ const CompanyVisits = () => {
                     </ul>
                   </div>
 
-                  {/* Preparation Tips */}
                   <div>
                     <h3 className="text-lg font-semibold">Preparation Tips</h3>
                     <ul className="list-disc ml-6">
@@ -252,7 +257,6 @@ const CompanyVisits = () => {
                     </ul>
                   </div>
 
-                  {/* References (Clickable Links) */}
                   <div>
                     <h3 className="text-lg font-semibold">References</h3>
                     <ul className="list-disc ml-6">
