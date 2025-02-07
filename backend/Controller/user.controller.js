@@ -255,5 +255,49 @@ const getuserbyid = async (req, res) => {
     }
 }
 
-module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail };
+const deployPortfolio = async (req, res) => {
+    try {
+        const { html, css, username } = req.body;
 
+        if (!html || !css || !username) {
+            return res.status(400).json({ message: 'Missing data' });
+        }
+
+        const fs = require('fs');
+        const path = `./deployments/${username}`;
+
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path, { recursive: true });
+        }
+
+        const tailwindCDN = `<script src="https://cdn.tailwindcss.com"></script>`;
+
+        const finalHtml = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${username}'s Portfolio</title>
+                ${tailwindCDN}
+            </head>
+            <body>
+                ${html}
+            </body>
+            </html>
+        `;
+
+        fs.writeFileSync(`${path}/index.html`, finalHtml);
+
+        res.status(200).json({ 
+            message: 'Portfolio deployed successfully!',
+            url: `/${username}` 
+        });
+
+    } catch (error) {
+        console.error("Error in deploying user portfolio:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio };

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config();
 require('./Config/db');
 const cookieParser = require('cookie-parser');
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.json({ limit: '50mb' }));
 app.use(fileUpload({ useTempFiles: true }))
+app.use(express.static(path.join(__dirname, 'deployments')));
 
 cloudnairyconnect();
 

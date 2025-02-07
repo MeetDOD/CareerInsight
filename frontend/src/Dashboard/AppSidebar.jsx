@@ -50,7 +50,7 @@ const data = {
             icon: MdCamera,
         },
         {
-            title: 'My Portfolio',
+            title: 'Portfolio Builder',
             url: '/createportfolio',
             icon: CgWebsite,
         },
