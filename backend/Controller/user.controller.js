@@ -8,7 +8,7 @@ const { OTP } = require("../Models/otp.model"); // Import the OTP model
 const router = express.Router();
 const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2;
-
+const fs = require("fs");
 
 dotenv.config();
 
@@ -258,20 +258,18 @@ const getuserbyid = async (req, res) => {
 const deployPortfolio = async (req, res) => {
     try {
         const { html, css, username } = req.body;
+        const userId = req.user.id;
 
         if (!html || !css || !username) {
-            return res.status(400).json({ message: 'Missing data' });
+            return res.status(400).json({ message: "Missing data" });
         }
 
-        const fs = require('fs');
         const path = `./deployments/${username}`;
-
         if (!fs.existsSync(path)) {
             fs.mkdirSync(path, { recursive: true });
         }
 
         const tailwindCDN = `<script src="https://cdn.tailwindcss.com"></script>`;
-
         const finalHtml = `
             <!DOCTYPE html>
             <html lang="en">
@@ -288,10 +286,21 @@ const deployPortfolio = async (req, res) => {
         `;
 
         fs.writeFileSync(`${path}/index.html`, finalHtml);
+        const portfolioUrl = `/${username}`;
 
-        res.status(200).json({ 
-            message: 'Portfolio deployed successfully!',
-            url: `/${username}` 
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (!user.portfolioUrl) {
+            user.portfolioUrl = portfolioUrl;
+            await user.save();
+        }
+
+        res.status(200).json({
+            message: "Portfolio deployed successfully!",
+            url: portfolioUrl,
         });
 
     } catch (error) {

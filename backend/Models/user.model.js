@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "student"
     },
+    portfolioUrl: { 
+        type: String, 
+        default: null
+    },
     enrolledCourses: [
         {
             course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
