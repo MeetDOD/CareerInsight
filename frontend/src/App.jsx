@@ -33,6 +33,7 @@ import NotFound from "./pages/NotFound";
 import CourseRecommendation from "./Dashboard/CourseRecommendation";
 import AddDetailForm from "./home/AddDetailForm";
 import IndustryInsights from "./Dashboard/IndustryInsights";
+import JobsFinder from "./Dashboard/JobsFinder";
 
 const App = () => {
   return (
@@ -99,6 +100,14 @@ const App = () => {
               element={
                 <AuthenticatedRoute>
                   <CourseRecommendation />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/jobfinder"
+              element={
+                <AuthenticatedRoute>
+                  <JobsFinder />
                 </AuthenticatedRoute>
               }
             />

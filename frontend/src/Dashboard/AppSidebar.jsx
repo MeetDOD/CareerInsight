@@ -11,6 +11,7 @@ import { tokenState } from '@/store/auth';
 import { useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
 import { FaSchool } from "react-icons/fa6";
+import { BsSuitcaseLgFill } from "react-icons/bs";
 
 const data = {
     navMain: [
@@ -20,12 +21,12 @@ const data = {
             icon: MdSpaceDashboard,
         },
         {
-            title: 'Insights',
+            title: 'Industry Insights',
             url: '/insights',
             icon: MdInsights,
         },
         {
-            title: 'My Courses',
+            title: 'Enrolled Courses',
             url: '/mycourses',
             icon: MdLibraryBooks,
         },
@@ -53,6 +54,11 @@ const data = {
             title: 'Portfolio Builder',
             url: '/createportfolio',
             icon: CgWebsite,
+        },
+        {
+            title: 'Job Finder',
+            url: '/jobfinder',
+            icon: BsSuitcaseLgFill,
         },
         {
             title: 'Company Visits',
