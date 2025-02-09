@@ -12,10 +12,10 @@ const fetchIndustryInsights = async () => {
         ],
         "growthRate": number,
         "demandLevel": "High" | "Medium" | "Low",
-        "topSkills": ["skill1", "skill2"],
+        "topSkills": ["skill1", "skill2","skill3","skill4","skill5"], //give top 5 skills
         "marketOutlook": "Positive" | "Neutral" | "Negative",
         "keyTrends": ["trend1", "trend2"],
-        "recommendedSkills": ["skill1", "skill2"],
+        "recommendedSkills": ["skill1", "skill2"], //give 10 recommended skills
 
         "techStackDemand": [
           { "tech": "string", "percentage": number }

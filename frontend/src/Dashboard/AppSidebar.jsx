@@ -82,10 +82,10 @@ const AppSidebar = () => {
     };
 
     return (
-        <Sidebar className="w-64 min-h-screen shadow-md" style={{ color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
+        <Sidebar className="w-[275px] min-h-screen shadow-md" style={{ color: `var(--text-color)`, borderColor: `var(--borderColor)` }}>
             <SidebarHeader className="px-4" style={{ backgroundColor: `var(--background-color)` }} >
                 <div className="flex items-center gap-3 justify-center my-1">
-                    <img src={logo} onClick={() => navigate("/")} alt="Logo" className="w-36 cursor-pointer object-contain" />
+                    <img src={logo} onClick={() => navigate("/")} alt="Logo" className="w-auto h-9 cursor-pointer object-contain" />
                 </div>
             </SidebarHeader>
 
@@ -111,10 +111,10 @@ const AppSidebar = () => {
                         );
                     })}
                 </SidebarMenu>
+                <Separator orientation="horizontal" className="my-1.5 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
             </SidebarContent>
 
             <SidebarFooter className="p-4" style={{ backgroundColor: `var(--background-color)`, color: `var(--text - color)` }}>
-                <Separator orientation="horizontal" className="my-3 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
                 <Button
                     variant="destructive"
                     onClick={handleLogout}

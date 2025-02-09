@@ -41,8 +41,8 @@ const Navbar = () => {
 
     return (
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b' style={{ borderColor: `var(--borderColor)` }}>
-            <img src={logo} className='w-32 cursor-pointer' alt='TECHCARE' onClick={() => navigate("/")} />
-            <ul className='hidden md:flex items-start gap-5 font-medium list-none'>
+            <img src={logo} className='w-auto h-9 cursor-pointer' alt='CAREER INSIGHT' onClick={() => navigate("/")} />
+            <ul className='hidden md:flex items-center justify-center gap-5 font-medium list-none'>
                 <NavLink to="/">
                     <li className='py-1 hover:bg-primary  hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Home</li>
                 </NavLink>
@@ -56,7 +56,7 @@ const Navbar = () => {
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Contact</li>
                 </NavLink>
             </ul>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-2'>
                 <Button size="sm" variant="ghost" className="border" onClick={toggleTheme} style={{
                     borderColor: `var(--borderColor)`,
                 }}>
@@ -81,7 +81,7 @@ const Navbar = () => {
                 <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden transition-all`} style={{ backgroundColor: `var(--background-color)` }} >
                     <div className='flex items-center justify-between px-5 py-6'>
                         <Link to='/'>
-                            <img src={logo} onClick={() => setShowMenu(false)} className='w-28 cursor-pointer' alt='TECHCARE' />
+                            <img src={logo} onClick={() => setShowMenu(false)} className='w-auto h-9 cursor-pointer' alt='TECHCARE' />
                         </Link>
                         <button className='w-7' onClick={() => setShowMenu(false)}><IoIosCloseCircleOutline size={25} /></button>
                     </div>
