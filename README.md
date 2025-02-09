@@ -1,25 +1,85 @@
-#  🌟 Career Insight
+# 🌟 [Career Insight](https://your-live-demo-link.com) : Your Guide to Tech Trends  
 
-**Career Insight** is a web app designed to help 2nd and 3rd-year students stay ahead in the tech world by providing insights into trending technologies. The app scrapes data from various sources across the web, compiling the latest trends in software development, data science, AI, and more. Whether you're looking to explore new tools, frameworks, or programming languages, Career Insight has you covered.
+**Career Insight** is an AI-powered web app designed to help **2nd and 3rd-year students** stay ahead in the **tech industry**. By analyzing the latest trends in **software development, AI, and data science**, Career Insight provides curated insights into emerging technologies, tools, and frameworks.  
 
-##  🚀 Features
+---
 
-1. **Trending Technologies**: Stay updated with the latest technologies, frameworks, and tools.
-2. **Customized Suggestions**: Get tailored technology suggestions based on your interests.
-3. **Easy-to-Use Dashboard**: Navigate through the latest trends with a user-friendly interface.
-4. **Resource Aggregation**: Find relevant blogs, articles, and tutorials to enhance your learning journey.
+## 🔥 Key Features  
 
-## 🛠️ Technologies Used 
+✅ **Tech Trend Analysis** – Discover the hottest programming languages, frameworks, and AI tools  
+✅ **Personalized Recommendations** – Get **AI-driven** technology suggestions tailored to your interests  
+✅ **Real-time Data Aggregation** – Fetch insights from top sources across the web  
+✅ **User-Friendly Dashboard** – Interactive UI with data visualizations  
+✅ **AI Industry Predictions** – Forecast future tech trends with AI-driven insights  
+✅ **Enrolled Courses** – Track your progress in different courses  
+✅ **AI Course Creation** – Teachers can create and manage courses  
+✅ **AI Mock Interview** – AI-powered interview simulations to enhance job preparation  
+✅ **AI Resume Builder** – Generate professional resumes with ease  
+✅ **Portfolio Builder** – Build and deploy personal portfolios  
+✅ **Job Finder** – Find job listings based on location and preferences  
+✅ **Company Visits** – Explore company insights and visit opportunities  
+✅ **Google Translator API Integration** – Translate content into multiple languages 
 
-1. **Frontend**: React, Tailwind CSS
-2. **Backend**: Node.js, Express
-3. **Web Scraping:** Cheerio, Puppeteer
-4. **Database**: MongoDB
-5. **APIs**: Various tech news and data APIs
+---
 
-##  🚧 Getting Started
+## 🛠 Tech Stack  
 
-1. Clone the repository: `git clone https://github.com/MeetDOD/career_insight_major_project.git`
-2. Go in specific folder: `cd frontend`  `cd backend`
-3. Install dependencies: `npm install`
-4. Run the app: `npm run dev`
+### 🎨 Frontend  
+- ⚛️ **React.js** – Component-based UI  
+- 🎨 **Tailwind CSS** – Modern styling  
+- 🧩 **ShadCN UI** – Elegant UI components  
+- 📊 **Recharts** – Data visualization  
+
+### 🖥 Backend  
+- 🚀 **Node.js & Express.js** – High-performance API backend  
+- 🧠 **Python & Flask** – AI-driven trend analysis  
+- 🗄 **MongoDB & Mongoose** – NoSQL database  
+
+### 🤖 APIs & Integrations  
+- 🔍 **Google Gemini API** – AI-powered insights  
+- 🖼 **Unsplash API** – High-quality images for tech trends  
+
+---
+
+## 📸 Screenshots  
+
+![image](https://github.com/user-attachments/assets/4eec63bc-4524-4546-ba7d-b9046ade1e70)
+
+![image](https://github.com/user-attachments/assets/4eec5fe6-2bd4-4a59-8002-92a25f655399)
+
+![image](https://github.com/user-attachments/assets/eaea31f4-5faf-4eb8-8a7c-011e5c479c6b)
+
+![image](https://github.com/user-attachments/assets/d893bb09-6537-45a1-8492-00795e149032)
+
+![image](https://github.com/user-attachments/assets/0e07675c-147b-43ac-9051-073134dedf03)
+
+![image](https://github.com/user-attachments/assets/ff962558-b4b0-4bf7-b0e3-99149af58b6f)
+
+![image](https://github.com/user-attachments/assets/5b6f8279-98ee-40b2-81b2-cbe13d703e2d)
+
+
+---
+
+## 🛠 Installation  
+
+```bash
+
+# Clone the repository
+git clone https://github.com/MeetDOD/CareerInsight.git
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+
+#Backend
+cd backend
+npm install
+nodemon index.js
+
+```
+
+---
+
+## 📜 License
+**This project is MIT Licensed.**
