@@ -40,7 +40,7 @@ const Navbar = () => {
     }, [toggleTheme]);
 
     return (
-        <div className='flex items-center justify-between text-sm py-4 mb-5 border-b' style={{ borderColor: `var(--borderColor)` }}>
+        <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-primary'>
             <img src={logo} className='w-auto h-9 cursor-pointer' alt='CAREER INSIGHT' onClick={() => navigate("/")} />
             <ul className='hidden md:flex items-center justify-center gap-5 font-medium list-none'>
                 <NavLink to="/">
@@ -57,9 +57,7 @@ const Navbar = () => {
                 </NavLink>
             </ul>
             <div className='flex items-center gap-2'>
-                <Button size="sm" variant="ghost" className="border" onClick={toggleTheme} style={{
-                    borderColor: `var(--borderColor)`,
-                }}>
+                <Button size="sm" variant="ghost" className="border border-primary" onClick={toggleTheme}>
                     {theme === "dark" ? <BsFillMoonStarsFill className="h-5 w-5 text-primary" /> : <BsFillSunFill className="h-5 w-5 text-primary" />}
                 </Button>
                 {isLoggedIn ?

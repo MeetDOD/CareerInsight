@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.4.1",
     "grapesjs": "^0.22.4",
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-tailwind": "^1.0.11",

@@ -65,7 +65,7 @@ const FAQ = () => {
     ];
 
     return (
-        <div className="mb-10">
+        <div className="mb-10 pt-12">
             <div className="flex flex-col items-center gap-5 px-4 my-20">
                 <h1 className='text-2xl md:text-3xl font-bold text-center'>
                     Frequently <span className="text-primary">Asked Questions</span>

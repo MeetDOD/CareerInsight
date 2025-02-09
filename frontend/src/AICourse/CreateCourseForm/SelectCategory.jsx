@@ -1,4 +1,3 @@
-import { Label } from '@/components/ui/label';
 import categorylist from '@/data/categorylist';
 import React from 'react';
 

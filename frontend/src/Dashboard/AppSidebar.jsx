@@ -90,7 +90,7 @@ const AppSidebar = () => {
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col px-4" style={{ backgroundColor: `var(--background-color)` }}>
-                <Separator orientation="horizontal" className="my-1.5 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
+                <Separator orientation="horizontal" className="my-1.5 h-[0.2px] bg-primary" />
                 <SidebarMenu>
                     {data.navMain.map((item, index) => {
                         const isActive = location.pathname === item.url;
@@ -111,10 +111,10 @@ const AppSidebar = () => {
                         );
                     })}
                 </SidebarMenu>
-                <Separator orientation="horizontal" className="my-1.5 h-[0.2px]" style={{ backgroundColor: `var(--borderColor)` }} />
             </SidebarContent>
 
             <SidebarFooter className="p-4" style={{ backgroundColor: `var(--background-color)`, color: `var(--text - color)` }}>
+                <Separator orientation="horizontal" className="my-1.5 h-[0.2px] bg-primary" />
                 <Button
                     variant="destructive"
                     onClick={handleLogout}

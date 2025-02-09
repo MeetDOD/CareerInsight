@@ -9,22 +9,22 @@ const Features = () => {
     const features = [
         {
             gif: assessmentGif,
-            title: "AI Assessment",
+            title: "Assessment",
             description: "Evaluate your skills with AI-powered assessments tailored for students",
         },
         {
             gif: resumeGif,
-            title: "AI Resume Builder",
+            title: "Resume Builder",
             description: "Create professional resumes effortlessly with intelligent suggestions",
         },
         {
             gif: interviewGif,
-            title: "AI Mock Interview",
+            title: "Mock Interview",
             description: "Prepare for your dream job with AI-driven mock interviews and feedback",
         },
         {
             gif: insightGif,
-            title: "AI Industry Insights",
+            title: "Industry Insights",
             description: "AI Industry Insights for trends to guide you toward your career goals",
         },
     ];
@@ -48,7 +48,7 @@ const Features = () => {
                                 src={feature.gif}
                                 alt={feature.title}
                             />
-                            <h3 className="text-xl font-bold">{feature.title}</h3>
+                            <h3 className="text-xl font-bold"><span className='bg-primary text-white px-2 rounded-md'>AI</span> {feature.title}</h3>
                             <p className="mt-2 text-gray-500 font-medium">{feature.description}</p>
                         </div>
                     ))}
