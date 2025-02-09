@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { categoryState, descriptionState, optionsState, responseState, topicState } from '@/store/courseState';
 import { useRecoilState } from 'recoil';
 import fetchRelevantImage from '@/services/ThumbnailGenerator';
+import { motion } from 'framer-motion';
+import { BsStars } from 'react-icons/bs';
 
 const CreateCourse = () => {
     const [activeIndex, setactiveIndex] = useState(0);
@@ -197,17 +199,34 @@ const CreateCourse = () => {
                     )}
 
                     {activeIndex === 2 && (
-                        <Button
-                            size="lg"
-                            onClick={handleSubmit}
-                            disabled={loading}
+                        <motion.div
+                            className="relative p-[2px] rounded-lg mb-3"
+                            initial={{ backgroundPosition: "0% 50%" }}
+                            animate={{ backgroundPosition: "200% 50%" }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                            style={{
+                                background: "linear-gradient(90deg, #ff00ff, #00ffff, #ff0, #ff00ff)",
+                                backgroundSize: "200% 200%",
+                            }}
                         >
-                            {loading ? (
-                                <div className='flex flex-row gap-2 items-center'>
-                                    <ImSpinner2 className='animate-spin' /> Generating ...
-                                </div>
-                            ) : 'Generate Layout'}
-                        </Button>
+                            <Button
+                                onClick={handleSubmit}
+                                type="button"
+                                size="sm"
+                                disabled={loading}
+                                className="relative z-10 bg-primary hover:bg-primary/50 text-white border-none w-full flex items-center gap-2"
+                            >
+                                {loading ?
+                                    <>
+                                        <ImSpinner2 size={20} className="animate-spin" /> Generating layout from AI ...
+                                    </>
+                                    :
+                                    <>
+                                        <BsStars size={20} /> Generate layout from AI
+                                    </>
+                                }
+                            </Button>
+                        </motion.div>
                     )}
                 </div>
             </div>

@@ -12,6 +12,8 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { finalCourseState, responseState } from '@/store/courseState';
 import { Input } from '@/components/ui/input';
 import learn from "../assets/learn.gif"
+import { motion } from 'framer-motion';
+import { BsStars } from 'react-icons/bs';
 
 const CourseLayout = () => {
     const navigate = useNavigate();
@@ -188,13 +190,34 @@ const CourseLayout = () => {
                                 </span>
                             </div>
                         </div>
-                        <Button disabled={loading} onClick={generateCourseContent} className="mt-6 w-full bg-green-400 hover:bg-green-500 text-gray-800 text-balance font-bold rounded-lg">
-                            {loading ? (
-                                <div className="flex flex-row gap-2 items-center">
-                                    <ImSpinner2 size={20} className="animate-spin" /> Generating Course Content
-                                </div>
-                            ) : 'Generate Course Content'}
-                        </Button>
+                        <motion.div
+                            className="relative p-[2px] rounded-lg mt-6"
+                            initial={{ backgroundPosition: "0% 50%" }}
+                            animate={{ backgroundPosition: "200% 50%" }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                            style={{
+                                background: "linear-gradient(90deg, #ff00ff, #00ffff, #ff0, #ff00ff)",
+                                backgroundSize: "200% 200%",
+                            }}
+                        >
+                            <Button
+                                onClick={generateCourseContent}
+                                type="button"
+                                size="sm"
+                                disabled={loading}
+                                className="relative z-10 bg-primary hover:bg-primary/50 text-white border-none w-full flex items-center gap-2"
+                            >
+                                {loading ?
+                                    <>
+                                        <ImSpinner2 size={20} className="animate-spin" /> Generating course content from AI ...
+                                    </>
+                                    :
+                                    <>
+                                        <BsStars size={20} /> Generate course content from AI
+                                    </>
+                                }
+                            </Button>
+                        </motion.div>
                     </div>
                 </div>
             </div>
