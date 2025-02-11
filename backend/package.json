@@ -24,6 +24,7 @@
     "google-auth-library": "^9.11.0",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
+    "linkedin-jobs-api": "^1.0.6",
     "mongoose": "^8.4.3",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.14",

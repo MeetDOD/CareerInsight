@@ -13,16 +13,20 @@ import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { FaBookmark, FaArrowRight, FaLocationDot } from "react-icons/fa6";
+import { FaBookmark, FaLocationDot } from "react-icons/fa6";
 import { Skeleton } from "@/components/ui/skeleton";
+import { GrFormPreviousLink } from "react-icons/gr";
+import { GrFormNextLink } from "react-icons/gr";
 
 const JobsFinder = () => {
     const user = useRecoilValue(userState);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 9;
 
-    console.log(user.address)
+    const totalPages = Math.ceil(jobs.length / itemsPerPage);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -34,19 +38,33 @@ const JobsFinder = () => {
             return;
         }
 
-        axios
-            .post(`${import.meta.env.VITE_FORECAST_API}/jobs`, { location: user.address })
+        axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/getnearestjobs`,
+            { location: user.address },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
             .then((response) => {
-                setJobs(response.data.jobs);
+                setJobs(response.data);
                 setLoading(false);
-                console.log(response)
+                console.log(response.data)
             })
             .catch((err) => {
-                console.error("Error fetching jobs:", err);
                 setError("Failed to load jobs. Please try again.");
                 setLoading(false);
             });
     }, [user.address]);
+
+    const handlePageClick = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
+
+    const paginatedJobs = jobs?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     return (
         <SidebarProvider>
@@ -93,50 +111,86 @@ const JobsFinder = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {jobs.length > 0 ? (
-                            jobs.map((job) => (
-                                <div className="relative bg-white border rounded-xl p-6 shadow-sm transition-all"
-                                    style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
-                                    key={job.job_id}
-                                >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {paginatedJobs.map((job) => (
+                            <div
+                                className="relative bg-white border rounded-xl p-6 shadow-sm transition-all flex flex-col justify-between h-full space-y-4"
+                                style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                            >
+                                <div>
                                     <FaBookmark size={20} className="absolute right-4 cursor-pointer text-primary" />
-                                    <p className="text-sm font-semibold text-gray-500 flex flex-row items-center">
+                                    <div className="flex items-center gap-1">
                                         <FaLocationDot size={18} className="mr-1 text-primary" />
-                                        {job.location}
-                                    </p>
-                                    <h3 className="text-2xl font-bold mt-2">{job.title}</h3>
-                                    <div className="flex space-x-1 mt-3">
-                                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                    </div>
-                                    <div className="flex justify-between items-center mt-6">
-                                        <div className="flex items-center space-x-2">
-                                            <p className="font-medium">{job.company.name}</p>
-                                        </div>
-                                        <a
-                                            href={`https://www.linkedin.com/jobs/view/${job.job_id}`}
-                                            target="_blank"
-                                            className="mt-3 transition group"
-                                        >
-                                            <Button variant="default" className="rounded-full">
-                                                Apply <FaArrowRight className="group-hover:translate-x-1 transition duration-300" />
-                                            </Button>
-                                        </a>
+                                        <h3 className="text-sm font-semibold text-gray-500 line-clamp-1">
+                                            {job.location}
+                                        </h3>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="flex flex-col col-span-full min-h-[70vh] items-center justify-center">
-                                <div className="text-3xl font-bold tracking-tight">
-                                    No jobs found in <span className="text-primary">{user.address}</span>
+
+                                <div>
+                                    <h3 className="text-lg font-bold line-clamp-1">{job.position}</h3>
+                                    <div className="flex space-x-1 mt-1">
+                                        {[...Array(4)].map((_, i) => (
+                                            <div key={i} className="w-2 h-2 bg-primary rounded-full"></div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center space-x-2">
+                                        <img
+                                            src={job.companyLogo}
+                                            alt={job.company}
+                                            className="h-10 w-10 rounded-md object-contain"
+                                        />
+                                        <div className="">
+                                            <p className="font-medium text-sm line-clamp-1">{job.company}</p>
+                                            <span className="text-gray-500 text-xs">{job.date}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <a href={job.jobUrl} target="_blank" className="w-full block">
+                                        <Button variant="default" className="w-full">
+                                            Apply Now
+                                        </Button>
+                                    </a>
                                 </div>
                             </div>
-                        )}
+                        ))}
                     </div>
                 )}
+
+                {jobs?.length > 9 &&
+                    <div className="flex justify-center items-center mt-6 gap-1">
+                        <Button
+                            onClick={() => handlePageClick(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            size="icon"
+                        >
+                            <GrFormPreviousLink />
+                        </Button>
+                        {Array.from({ length: totalPages }).map((_, index) => (
+                            <Button
+                                key={index}
+                                onClick={() => handlePageClick(index + 1)}
+                                className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-violet-900 text-white' : ''}`}
+                            >
+                                {index + 1}
+                            </Button>
+                        ))}
+                        <Button
+                            onClick={() => handlePageClick(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            size="icon"
+                            className={`${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            <GrFormNextLink />
+                        </Button>
+                    </div>
+                }
             </SidebarInset>
         </SidebarProvider>
     );

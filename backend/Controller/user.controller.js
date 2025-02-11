@@ -9,6 +9,7 @@ const router = express.Router();
 const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2;
 const fs = require("fs");
+const linkedIn = require("linkedin-jobs-api");
 
 dotenv.config();
 
@@ -309,4 +310,32 @@ const deployPortfolio = async (req, res) => {
     }
 };
 
-module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio };
+const fetchJobs = async (req, res) => {
+    try {
+        const { 
+            location, 
+            keyword = "software engineer", 
+            dateSincePosted = "24hr", 
+            limit = 40
+        } = req.body;
+
+        if (!location) {
+            return res.status(400).json({ error: "Location is required" });
+        }
+
+        const queryOptions = {
+            keyword,
+            location,
+            dateSincePosted,
+            limit: String(limit),
+        };
+
+        const jobs = await linkedIn.query(queryOptions);
+        res.json(jobs);
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        res.status(500).json({ error: "Failed to fetch jobs" });
+    }
+};
+
+module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio,fetchJobs };
