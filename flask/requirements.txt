@@ -143,7 +143,6 @@ pyppeteer==1.0.2
 pyrsistent==0.19.3
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
-pythonnv==1.0.1
 python-json-logger==2.0.7
 pyttsx3==2.90
 pytz==2024.2

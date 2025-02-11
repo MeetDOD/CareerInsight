@@ -35,7 +35,7 @@ const JobsFinder = () => {
         }
 
         axios
-            .post("http://127.0.0.1:5000/jobs", { location: user.address })
+            .post(`${import.meta.env.VITE_FORECAST_API}/jobs`, { location: user.address })
             .then((response) => {
                 setJobs(response.data.jobs);
                 setLoading(false);
@@ -131,7 +131,7 @@ const JobsFinder = () => {
                         ) : (
                             <div className="flex flex-col col-span-full min-h-[70vh] items-center justify-center">
                                 <div className="text-3xl font-bold tracking-tight">
-                                    No jobs found in <span className="text-red-500">{user.address}</span>
+                                    No jobs found in <span className="text-primary">{user.address}</span>
                                 </div>
                             </div>
                         )}
