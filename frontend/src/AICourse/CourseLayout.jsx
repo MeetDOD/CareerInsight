@@ -25,6 +25,8 @@ const CourseLayout = () => {
     const [customThumbnail, setCustomThumbnail] = useState('');
     const [imageURL, setImageURL] = useState(thumbnail);
 
+    console.log(import.meta.env.VITE_COURSELAYOUT_PROMPT)
+
     const handleThumbnailChange = (e) => {
         setCustomThumbnail(e.target.value);
     };
@@ -58,46 +60,12 @@ const CourseLayout = () => {
         try {
             for (const chapter of chapters) {
 
-                const prompt = `
-                    Generate detailed content for a chapter of a course in JSON format. Include the following fields:
+                const courseLayoutPrompt = import.meta.env.VITE_COURSELAYOUT_PROMPT;
 
-                    1. **title**: The title of the chapter.
-                    2. **explanation**: A brief explanation or summary of the chapter's content.
-                    3. **sections**: An array of sections within the chapter, where each section includes:
-                    - **subtitle**: The title of the section.
-                    - **content**: Detailed content for the section.
+                const prompt = courseLayoutPrompt
+                    .replace("${course.courseName}", course.courseName)
+                    .replace("${chapter.chapterName}", chapter.chapterName);
 
-                    ### Chapter Details:
-                    - **Course Name**: ${course.courseName}
-                    - **Chapter Name**: ${chapter.chapterName}
-
-                    ### JSON Response Structure:
-                    Ensure the response strictly follows this structure:
-
-                    \`\`\`json
-                    {
-                    "title": "Chapter Title",
-                    "explanation": "Brief explanation of the chapter.",
-                    "sections": [
-                        {
-                        "subtitle": "Section 1 Subtitle",
-                        "content": "Detailed explanation for Section 1."
-                        },
-                        {
-                        "subtitle": "Section 2 Subtitle",
-                        "content": "Detailed explanation for Section 2."
-                        }
-                    ]
-                    }
-                    \`\`\`
-
-                    ### Requirements:
-                    1. **Mandatory Fields**: All fields must be provided with meaningful content. No field should be left empty or contain placeholder text.
-                    2. **Sections**: Include at least 2 sections per chapter, each with a unique subtitle and relevant content.
-                    3. **Format**: The response must be in **valid JSON format only**.
-                    4. **Consistency**: Ensure the explanation and section content are relevant to the chapter and course context.
-                    5. **Detailed Content**: Provide rich, educational content suitable for a course tutorial.
-                    `;
                 try {
                     const result = await chatSession.sendMessage(prompt);
                     const data = await result.response.text();

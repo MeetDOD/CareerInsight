@@ -30,29 +30,11 @@ const summaryForm = () => {
     const summaryGenerater = async () => {
         setLoading(true);
 
-        const prompt = `Job Title: ${resumeInfo?.jobTitle}. 
-        Based on this job title, generate a brief JSON-formatted summary for a resume, covering three experience levels: 'Fresher', 'Mid-Level', and 'Experienced'. The response must be a valid JSON array of objects with each object containing the following fields:
-        1. "experienceLevel" - The experience category ('Fresher', 'Mid-Level', or 'Experienced').
-        2. "summary" - A concise, professionally crafted summary tailored to the experience level.
+        const summaryFormPrompt = import.meta.env.VITE_SUMMARYFORM_PROMPT;
 
-        The format of the JSON should strictly be:
-
-        [
-        {
-            "experienceLevel": "Fresher",
-            "summary": "A brief professional summary suitable for a fresher."
-        },
-        {
-            "experienceLevel": "Mid-Level",
-            "summary": "A brief professional summary suitable for someone with 3+ years of experience."
-        },
-        {
-            "experienceLevel": "Experienced",
-            "summary": "A brief professional summary suitable for an experienced professional."
-        }
-        ]
-
-        Ensure the response is valid JSON and avoid using additional formatting like code blocks.`;
+        const prompt = `${summaryFormPrompt}
+        Job Title: ${resumeInfo?.jobTitle}.
+        `;
 
         try {
             const result = await chatSession.sendMessage(prompt);

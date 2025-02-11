@@ -21,33 +21,39 @@ const InterviewSession = () => {
 
     const summeryGenerater = async () => {
         setLoading(true);
-        const prompt = `Job Role: ${formData?.jobRole}, Job Description: ${formData?.jobDesc}, Years of Experience: ${formData?.experience}. 
-        Based on this information, generate 5 interview questions tailored to the job role and the candidate's experience. 
-        Ensure that the questions cover both technical skills and behavioral aspects. 
-        Note: Give response in JSON only.
-        Provide the response in JSON format like this:
+
+        const interviewSessionPrompt = import.meta.env.VITE_INTERVIEWSESSION_PROMPT;
+
+        const prompt = `${interviewSessionPrompt}
+
+        Job Role: ${formData?.jobRole}, 
+        Job Description: ${formData?.jobDesc}, 
+        Years of Experience: ${formData?.experience}.
+
+        ### JSON Response Format:
         [
-        {
-            "question": "Question 1",
-            "category": "Technical/Behavioral"
-        },
-        {
-            "question": "Question 2",
-            "category": "Technical/Behavioral"
-        },
-        {
-            "question": "Question 3",
-            "category": "Technical/Behavioral"
-        },
-        {
-            "question": "Question 4",
-            "category": "Technical/Behavioral"
-        },
-        {
-            "question": "Question 5",
-            "category": "Technical/Behavioral"
-        }
-        ]`;
+            {
+                "question": "Question 1",
+                "category": "Technical/Behavioral"
+            },
+            {
+                "question": "Question 2",
+                "category": "Technical/Behavioral"
+            },
+            {
+                "question": "Question 3",
+                "category": "Technical/Behavioral"
+            },
+            {
+                "question": "Question 4",
+                "category": "Technical/Behavioral"
+            },
+            {
+                "question": "Question 5",
+                "category": "Technical/Behavioral"
+            }
+        ]
+        `;
 
         try {
             const result = await chatSession.sendMessage(prompt);

@@ -32,20 +32,14 @@ const RichTextEditor = ({ onRichTextEditorChange, index }) => {
             alert("Please fill the position title")
             return;
         }
-        console.log(resumeInfo?.experience[index].title)
         setLoading(true);
-        const prompt = `I am working on my resume. Based on the following job title: "${resumeInfo?.experience[index].title}", generate 5-7 bullet points that summarize key achievements and responsibilities related to this job. Please return the result in valid HTML <ul> and <li> format, so that I can directly use it in my resume's experience section. Ensure the bullet points are concise, impactful, and relevant to the job title provided.
-        The response should be in the following format:
-        <ul>
-          <li>Your first bullet point here</li>
-          <li>Your second bullet point here</li>
-          <li>Your third bullet point here</li>
-          <li>Your fourth bullet point here</li>
-          <li>Your fifth bullet point here</li>
-          <li>Your sixth bullet point here (optional)</li>
-          <li>Your seventh bullet point here (optional)</li>
-        </ul>
+
+        const richTextEditorPrompt = import.meta.env.VITE_RICHTEXTEDITOR_PROMPT;
+
+        const prompt = `${richTextEditorPrompt}
+        Job Title: "${resumeInfo?.experience[index].title}".
         `;
+
         try {
             const result = await chatSession.sendMessage(prompt);
             const res = result.response.text();

@@ -80,9 +80,20 @@ const InterviewQuestion = () => {
         console.log("User Answer:", userAnswer);
 
         const currentQuestion = questions[currentQuestionIndex]?.question || '';
-        const feedbackPrompt = `Question: ${currentQuestion}, User Answer: ${userAnswer}. ` +
-            "Provide a rating in 4-6 lines and feedback in JSON format. Response must be in JSON: " +
-            "{ rating: number, feedback: string }.";
+
+        const interviewQuestionPrompt = import.meta.env.VITE_INTERVIEWQUESTION_PROMPT;
+
+        const feedbackPrompt = `${interviewQuestionPrompt}
+
+        Question: ${currentQuestion}, 
+        User Answer: ${userAnswer}.
+
+        ### JSON Response Format:
+        {
+            "rating": number,
+            "feedback": "Detailed feedback on the user's answer."
+        }
+        `;
 
         try {
             const result = await chatSession.sendMessage(feedbackPrompt);

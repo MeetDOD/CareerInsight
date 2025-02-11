@@ -26,6 +26,8 @@ const CreateCourse = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    console.log(import.meta.env.VITE_CREATECOURSE_PROMPT)
+
     const stepperOptions = [
         {
             id: 1,
@@ -53,20 +55,9 @@ const CreateCourse = () => {
             ...options,
         };
 
-        const prompt = `
-            Generate a comprehensive course tutorial in JSON format with the following fields:
+        const createCoursePrompt = import.meta.env.VITE_CREATECOURSE_PROMPT;
 
-            1. **courseName**: The title of the course.
-            2. **description**: A detailed description of the course.
-            3. **topic**: The specific topic covered by the course.
-            4. **category**: The category under which the course falls.
-            5. **courseLevel**: The difficulty level of the course (e.g., Beginner, Intermediate, Advanced).
-            6. **duration**: The overall duration of the course (e.g., "4 hours", "2 weeks").
-            7. **language**: The language in which the course is delivered.
-            8. **chapters**: An array of chapters, where each chapter includes:
-            - **chapterName**: The title of the chapter.
-            - **aboutChapter**: A brief description of the chapter.
-            - **duration**: The estimated time to complete the chapter.
+        const prompt = `${createCoursePrompt}
 
             ### Course Details:
             - **Category**: ${formData.category}
@@ -78,31 +69,27 @@ const CreateCourse = () => {
             - **Language**: ${formData.language}
 
             ### JSON Response Structure:
-            Ensure the response strictly follows this structure:
-
-            \`\`\`json
             {
-            "courseName": "Course Title Here",
-            "description": "Detailed course description here.",
-            "topic": "Specific topic here.",
-            "category": "Category name here.",
-            "courseLevel": "Difficulty level here.",
-            "duration": "Total course duration here.",
-            "language": "Language here.",
-            "chapters": [
-                {
-                "chapterName": "Chapter 1 Title",
-                "aboutChapter": "Brief description of Chapter 1.",
-                "duration": "Duration of Chapter 1"
-                },
-                {
-                "chapterName": "Chapter 2 Title",
-                "aboutChapter": "Brief description of Chapter 2.",
-                "duration": "Duration of Chapter 2"
-                }
-            ]
+                "courseName": "Course Title Here",
+                "description": "Detailed course description here.",
+                "topic": "Specific topic here.",
+                "category": "Category name here.",
+                "courseLevel": "Difficulty level here.",
+                "duration": "Total course duration here.",
+                "language": "Language here.",
+                "chapters": [
+                    {
+                        "chapterName": "Chapter 1 Title",
+                        "aboutChapter": "Brief description of Chapter 1.",
+                        "duration": "Duration of Chapter 1"
+                    },
+                    {
+                        "chapterName": "Chapter 2 Title",
+                        "aboutChapter": "Brief description of Chapter 2.",
+                        "duration": "Duration of Chapter 2"
+                    }
+                ]
             }
-            \`\`\`
 
             ### Requirements:
             1. **Mandatory Fields**: All fields listed above are required. No field should be left empty.
@@ -110,6 +97,7 @@ const CreateCourse = () => {
             3. **Meaningful Content**: Provide meaningful values for all fields. Placeholder text or empty strings are not acceptable.
             4. **Chapters**: Generate exactly ${formData.chapters} chapters, each with unique and relevant details.
             `;
+
         try {
             const result = await chatSession.sendMessage(prompt);
             const data = await result.response.text();
