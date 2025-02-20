@@ -24,6 +24,8 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@react-oauth/google": "^0.12.1",
+    "@react-three/drei": "^9.121.5",
+    "@react-three/fiber": "^8.17.14",
     "@smastrom/react-rating": "^1.5.0",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.1",
@@ -34,6 +36,7 @@
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-tailwind": "^1.0.11",
     "html2pdf.js": "^0.10.1",
+    "leva": "^0.10.0",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.446.0",
     "react": "^18.3.1",
@@ -54,6 +57,7 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.173.0",
     "vaul": "^1.0.0"
   },
   "devDependencies": {

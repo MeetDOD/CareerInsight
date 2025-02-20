@@ -114,7 +114,7 @@ const JobsFinder = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {paginatedJobs.map((job) => (
                             <div
-                                className="relative bg-white border rounded-xl p-6 shadow-sm transition-all flex flex-col justify-between h-full space-y-4"
+                                className="relative bg-white border rounded-xl p-4 shadow-sm transition-all flex flex-col justify-between h-full space-y-4"
                                 style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
                             >
                                 <div>
@@ -150,13 +150,24 @@ const JobsFinder = () => {
                                     </div>
                                 </div>
 
-                                <div>
-                                    <a href={job.jobUrl} target="_blank" className="w-full block">
+                                <div className="flex flex-row gap-2 mt-4">
+                                    <a href={job.jobUrl} target="_blank" rel="noopener noreferrer" className="w-full block">
                                         <Button variant="default" className="w-full">
                                             Apply Now
                                         </Button>
                                     </a>
+                                    <a
+                                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)},${encodeURIComponent(job.company)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full block"
+                                    >
+                                        <Button variant="secondary" className="w-full flex items-center gap-2">
+                                            View on Map
+                                        </Button>
+                                    </a>
                                 </div>
+
                             </div>
                         ))}
                     </div>
