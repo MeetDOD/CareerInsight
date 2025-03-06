@@ -1,4 +1,4 @@
-# 🌟 [Career Insight](https://your-live-demo-link.com) : Your Guide to Tech Trends  
+# 🌟 [Career Insight](https://careerinsight.onrender.com) : Your Guide to Tech Trends  
 
 **Career Insight** is an AI-powered web app designed to help **2nd and 3rd-year students** stay ahead in the **tech industry**. By analyzing the latest trends in **software development, AI, and data science**, Career Insight provides curated insights into emerging technologies, tools, and frameworks.  
 
