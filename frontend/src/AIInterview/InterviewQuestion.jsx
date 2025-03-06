@@ -9,6 +9,7 @@ import { FaMicrophone, FaVolumeUp } from "react-icons/fa";
 import { toast } from 'sonner';
 import { chatSession } from '@/services/GeminiModel';
 import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
+import Scene from './Environment';
 
 const InterviewQuestion = () => {
     const location = useLocation();
@@ -17,6 +18,7 @@ const InterviewQuestion = () => {
     const [userAnswer, setUserAnswer] = useState('');
     const [feedbacks, setFeedbacks] = useState([]);
     const navigate = useNavigate();
+    const [isSpeaking, setIsSpeaking] = useState(false);
 
     const {
         error,
@@ -111,8 +113,11 @@ const InterviewQuestion = () => {
         if ('speechSynthesis' in window) {
             if (window.speechSynthesis.speaking) {
                 window.speechSynthesis.cancel();
+                setIsSpeaking(false);
             } else {
                 const speech = new SpeechSynthesisUtterance(text);
+                speech.onstart = () => setIsSpeaking(true);
+                speech.onend = () => setIsSpeaking(false);
                 window.speechSynthesis.speak(speech);
             }
         } else {
@@ -121,7 +126,32 @@ const InterviewQuestion = () => {
     };
 
     return (
-        <div className='my-10 grid grid-cols-1 md:grid-cols-2 gap-10'>
+        <div>
+
+            <div className='my-10 grid grid-cols-1 md:grid-cols-2 gap-10'>
+                <Scene isSpeaking={isSpeaking} />
+
+                <div>
+                    <div className='flex flex-col justify-center items-center p-5 bg-primary rounded-lg relative'>
+                        <BsFillWebcamFill className='absolute' size={250} color='white' />
+                        <Webcam mirrored={true} style={{ width: "100%", height: "500px", borderRadius: "10px", zIndex: 10 }} />
+                    </div>
+
+                    <div className='my-5 flex justify-center gap-5'>
+                        <Button onClick={() => window.history.back()} variant="secondary" className="border">
+                            Cancel Test
+                        </Button>
+                        <Button onClick={saveUserAnswer}>
+                            {isRecording ? (
+                                <h2 className='flex gap-2 animate-pulse'><FaMicrophone size={20} /> Stop Recording...</h2>
+                            ) : (
+                                "Start Recording"
+                            )}
+                        </Button>
+                    </div>
+                </div>
+
+            </div>
             <div className='p-5 border rounded-lg border-gray-300 shadow-md' style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
                 {questions?.length > 0 ? (
                     <div className="my-4 p-5 shadow-md rounded-lg ">
@@ -179,27 +209,8 @@ const InterviewQuestion = () => {
                     </p>
                 </div>
             </div>
-
-            <div>
-                <div className='flex flex-col justify-center items-center p-5 bg-primary rounded-lg relative'>
-                    <BsFillWebcamFill className='absolute' size={250} color='white' />
-                    <Webcam mirrored={true} style={{ width: "100%", borderRadius: "10px", zIndex: 10 }} />
-                </div>
-
-                <div className='my-5 flex justify-center gap-5'>
-                    <Button onClick={() => window.history.back()} variant="secondary" className="border">
-                        Cancel Test
-                    </Button>
-                    <Button onClick={saveUserAnswer}>
-                        {isRecording ? (
-                            <h2 className='flex gap-2 animate-pulse'><FaMicrophone size={20} /> Stop Recording...</h2>
-                        ) : (
-                            "Start Recording"
-                        )}
-                    </Button>
-                </div>
-            </div>
         </div>
+
     );
 };
 
