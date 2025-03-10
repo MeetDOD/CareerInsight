@@ -34,6 +34,7 @@ import CourseRecommendation from "./Dashboard/CourseRecommendation";
 import AddDetailForm from "./home/AddDetailForm";
 import IndustryInsights from "./Dashboard/IndustryInsights";
 import JobsFinder from "./Dashboard/JobsFinder";
+import KanbanBoard from "./Kanban/KanbanBoard";
 
 const App = () => {
   return (
@@ -224,6 +225,15 @@ const App = () => {
               }
             />
             {/* AI Portfolio Builder Ends*/}
+
+            <Route
+              path="/kanbanboard"
+              element={
+                <AuthenticatedRoute>
+                  <KanbanBoard />
+                </AuthenticatedRoute>
+              }
+            />
 
             <Route path="/*" element={<NotFound />} />
           </Routes>

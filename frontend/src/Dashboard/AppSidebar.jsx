@@ -1,17 +1,17 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
-import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights } from 'react-icons/md';
+import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights, MdWeb } from 'react-icons/md';
 import { FaTools, FaLaptop, FaHandHoldingHeart } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from "../assets/logo.png";
 import { Separator } from "@/components/ui/separator"
-import { CgWebsite } from "react-icons/cg";
 import { tokenState } from '@/store/auth';
 import { useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
 import { FaSchool } from "react-icons/fa6";
 import { BsSuitcaseLgFill } from "react-icons/bs";
+import { PiKanbanFill } from "react-icons/pi";
 
 const data = {
     navMain: [
@@ -19,6 +19,11 @@ const data = {
             title: 'Dashboard',
             url: '/dashboard',
             icon: MdSpaceDashboard,
+        },
+        {
+            title: 'Kanban Board',
+            url: '/kanbanboard',
+            icon: PiKanbanFill,
         },
         {
             title: 'Industry Insights',
@@ -53,7 +58,7 @@ const data = {
         {
             title: 'Portfolio Builder',
             url: '/createportfolio',
-            icon: CgWebsite,
+            icon: MdWeb,
         },
         {
             title: 'Job Finder',
