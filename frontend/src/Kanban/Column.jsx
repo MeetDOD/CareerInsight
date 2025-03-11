@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AddCard from './AddCard'
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 const DropIndicator = ({ beforeId, column }) => {
     return (
@@ -84,6 +85,7 @@ const Column = ({ title, headingColor, column, cards, setCards }) => {
 
                 if (moveToBack) {
                     copy.push(cardToTransfer);
+                    toast.success("Card moved successfully");
                 } else {
                     const insertAtIndex = copy.findIndex(el => el.id == before);
                     if (insertAtIndex === -1) return prev;

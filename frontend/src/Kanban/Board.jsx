@@ -1,9 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Column from './Column'
 import DeleteCard from './DeleteColumn'
 
 const Board = () => {
     const [cards, setCards] = useState([])
+
+    useEffect(() => {
+        const storedCards = localStorage.getItem("kanbanCards");
+        if (storedCards) {
+            setCards(JSON.parse(storedCards));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("kanbanCards", JSON.stringify(cards));
+    }, [cards]);
 
     return (
         <div

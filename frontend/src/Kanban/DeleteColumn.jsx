@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FaFireFlameCurved, FaTrash } from "react-icons/fa6";
 import arrow from "../assets/down.png"
+import { toast } from 'sonner';
 
 const DeleteCard = ({ setCards }) => {
     const [active, setActive] = useState(false);
@@ -18,6 +19,7 @@ const DeleteCard = ({ setCards }) => {
         const cardId = e.dataTransfer.getData('cardId');
         setCards(prev => prev.filter(card => card.id !== cardId));
         setActive(false);
+        toast.success("Card deleted successfully");
     }
 
     return (

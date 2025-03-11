@@ -2,6 +2,7 @@ import { FiPlus } from "react-icons/fi";
 import React, { useState } from 'react'
 import { motion } from 'framer-motion';
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 const AddCard = ({ column, setCards }) => {
     const [text, seText] = useState("");
@@ -19,6 +20,7 @@ const AddCard = ({ column, setCards }) => {
         }
 
         setCards((prev) => [...prev, newCard]);
+        toast.success("Card added successfully");
         setAdding(false);
     };
 
