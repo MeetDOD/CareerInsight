@@ -30,7 +30,7 @@ const AddCard = ({ column, setCards }) => {
                     <Textarea onChange={(e) => seText(e.target.value)}
                         autoFocus
                         placeholder="Add new task..."
-                        className='inputField shadow-md'
+                        className='inputField shadow-sm'
                     />
                     <div className='mt-3 flex items-center justify-end gap-1.5'>
                         <button onClick={() => setAdding(false)} className='px-3 py-1.5 text-xs text-neutral-500 transition-colors hover:text-neutral-300'>

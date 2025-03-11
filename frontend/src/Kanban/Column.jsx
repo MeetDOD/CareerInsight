@@ -10,6 +10,12 @@ const DropIndicator = ({ beforeId, column }) => {
     )
 }
 
+const colorMap = {
+    "red-500": "border-red-500",
+    "yellow-500": "border-yellow-500",
+    "green-500": "border-green-500"
+};
+
 const Card = ({ title, id, column, handleDragStart, color }) => {
     return (
         <>
@@ -21,15 +27,15 @@ const Card = ({ title, id, column, handleDragStart, color }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 style={{ backgroundColor: `var(--background-color)`, color: `var(--text-color)` }}
-                className={`relative cursor-grab rounded-md border-t-8 border-${color} p-4 shadow-md transition-all duration-200 active:cursor-grabbing hover:shadow-lg`}
+                className={`relative cursor-grab rounded-md border border-t-8 p-4 shadow-sm transition-all duration-200 active:cursor-grabbing hover:shadow-md ${colorMap[color] || "border-gray-500"
+                    }`}
             >
-                <div className={`absolute inset-0 rounded-md border border-transparent transition-all duration-300`} />
-
-                <p className="text-sm font-medium">{title} </p>
+                <p className="text-sm font-medium">{title}</p>
             </motion.div>
         </>
     );
 };
+
 
 const Column = ({ title, headingColor, column, cards, setCards }) => {
     const [active, setActive] = useState(false);

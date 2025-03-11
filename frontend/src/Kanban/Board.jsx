@@ -15,7 +15,6 @@ const Board = () => {
                 <Column title="Completed" headingColor="green-500" column="done" cards={cards} setCards={setCards} />
                 <DeleteCard setCards={setCards} />
             </div>
-
         </div>
 
     )
