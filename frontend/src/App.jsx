@@ -35,6 +35,7 @@ import AddDetailForm from "./home/AddDetailForm";
 import IndustryInsights from "./Dashboard/IndustryInsights";
 import JobsFinder from "./Dashboard/JobsFinder";
 import KanbanBoard from "./Kanban/KanbanBoard";
+import WorkSpace from "./Coding/WorkSpace";
 
 const App = () => {
   return (
@@ -231,6 +232,15 @@ const App = () => {
               element={
                 <AuthenticatedRoute>
                   <KanbanBoard />
+                </AuthenticatedRoute>
+              }
+            />
+
+            <Route
+              path="/coding"
+              element={
+                <AuthenticatedRoute>
+                  <WorkSpace />
                 </AuthenticatedRoute>
               }
             />
