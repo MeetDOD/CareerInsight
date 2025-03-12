@@ -35,7 +35,6 @@ const fetchIndustryInsights = async () => {
       const result = await chatSession.sendMessage(prompt);
       const responseText = result.response.text();
       industryInsights = JSON.parse(responseText.replace('```json', '').replace('```', ''));
-      console.log("Industry insights updated:", industryInsights);
     } catch (error) {
       console.error("Error fetching insights:", error.message);
     }
