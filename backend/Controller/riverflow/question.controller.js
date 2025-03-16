@@ -59,15 +59,30 @@ const acceptAnswer = async (req, res) => {
         const question = await Question.findById(questionId);
 
         if (!question) return res.status(404).json({ error: "Question not found" });
-        if (question.author.toString() !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
 
-        question.isResolved = true;
-        question.acceptedAnswer = answerId;
-        await question.save();
+        if (question.author.toString() !== req.user.id) {
+            return res.status(403).json({ error: "Unauthorized" });
+        }
 
-        await Answer.findByIdAndUpdate(answerId, { isAccepted: true });
+        if (question.acceptedAnswer?.toString() === answerId) {
+            question.isResolved = false;
+            question.acceptedAnswer = null;
+            await Answer.findByIdAndUpdate(answerId, { isAccepted: false });
+            await question.save();
 
-        res.status(200).json({ message: "Answer marked as accepted" });
+            return res.status(200).json({ message: "Answer unaccepted", acceptedAnswer: null });
+        } else {
+            if (question.acceptedAnswer) {
+                await Answer.findByIdAndUpdate(question.acceptedAnswer, { isAccepted: false });
+            }
+
+            question.isResolved = true;
+            question.acceptedAnswer = answerId;
+            await Answer.findByIdAndUpdate(answerId, { isAccepted: true });
+            await question.save();
+
+            return res.status(200).json({ message: "Answer accepted", acceptedAnswer: answerId });
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

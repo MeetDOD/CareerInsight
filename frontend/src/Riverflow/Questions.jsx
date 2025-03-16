@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaVoteYea, FaEye, FaRocketchat } from "react-icons/fa";
+import { FaVoteYea, FaEye, FaRocketchat, FaCheckCircle } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import { MdDelete } from "react-icons/md";
@@ -187,7 +187,12 @@ const Questions = () => {
                                             <span className="font-medium">{question.author.fullName}</span>
                                         </div>
                                     </div>
-
+                                    {question.acceptedAnswer && (
+                                        <div className="mt-3 text-green-500 font-medium flex items-center gap-2 border w-fit px-3 py-2 rounded-md bg-green-50 border-green-500">
+                                            <FaCheckCircle size={20} />
+                                            <span>Answer Accepted</span>
+                                        </div>
+                                    )}
                                 </CardContent>
                             </div>
                         ))}
@@ -198,19 +203,19 @@ const Questions = () => {
                         <h2 className="text-lg text-gray-800 font-semibold">How to Use RiverFlow</h2>
                         <ul className="text-sm text-gray-700 mt-2 space-y-2">
                             <li>
-                                <strong>🔹 Asking Questions:</strong> Click "Ask Question" and provide clear details.
+                                <strong>👉 Asking Questions:</strong> Click "Ask Question" and provide clear details.
                             </li>
                             <li>
-                                <strong>🔹 Answering:</strong> Provide well-explained answers to help others.
+                                <strong>👉 Answering:</strong> Provide well-explained answers to help others.
                             </li>
                             <li>
-                                <strong>🔹 Voting:</strong> Upvote useful answers, downvote incorrect ones.
+                                <strong>👉 Voting:</strong> Upvote useful answers, downvote incorrect ones.
                             </li>
                             <li>
-                                <strong>🔹 Tags:</strong> Use relevant tags to categorize your question.
+                                <strong>👉 Tags:</strong> Use relevant tags to categorize your question.
                             </li>
                             <li>
-                                <strong>🔹 Accepting Answers:</strong> Mark the best answer to help future users.
+                                <strong>👉 Accepting Answers:</strong> Mark the best answer to help future users.
                             </li>
                         </ul>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { FaVoteYea, FaEye, FaRocketchat, FaHome, FaCaretUp, FaCaretDown } from "react-icons/fa";
+import { FaVoteYea, FaEye, FaRocketchat, FaHome, FaCaretUp, FaCaretDown, FaCheckCircle } from "react-icons/fa";
 import Loader from "@/services/Loader";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -21,6 +21,7 @@ const ViewQuestion = () => {
     const [answer, setAnswer] = useState("");
     const [hasVotedQuestion, setHasVotedQuestion] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [acceptedAnswer, setAcceptedAnswer] = useState(null);
     const navigate = useNavigate();
 
     if (!user) {
@@ -34,8 +35,10 @@ const ViewQuestion = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 setQuestion(res.data);
+                setAcceptedAnswer(res.data.acceptedAnswer);
                 const userVote = res.data.voters.find(vote => vote.userId === user?._id)?.value;
                 setHasVotedQuestion(userVote);
+                console.log(res.data);
             } catch (error) {
                 console.error("Error fetching question:", error);
             } finally {
@@ -142,15 +145,21 @@ const ViewQuestion = () => {
 
     return (
         <div>
-            <div className='flex flex-row gap-2 justify-between mb-5'>
+            <div className='flex flex-row gap-2 justify-between mb-3'>
                 <Button size="sm" onClick={() => navigate(-1)} className="flex gap-2">
                     <IoMdArrowRoundBack size={20} />Back
                 </Button>
                 <Button onClick={() => navigate("/dashboard")} size="sm" className="flex gap-2"><FaHome size={20} /></Button>
             </div>
-            <div className="max-w-4xl mx-auto py-3">
-                <h1 className="text-2xl font-bold ">{question.title}</h1>
 
+            <div className="max-w-4xl mx-auto py-3">
+                {question.acceptedAnswer && (
+                    <div className="mb-5 text-green-500 font-medium flex items-center gap-2 border w-fit px-3 py-2 rounded-md bg-green-50 border-green-500">
+                        <FaCheckCircle size={20} />
+                        <span>Question Solved</span>
+                    </div>
+                )}
+                <h1 className="text-2xl font-bold ">{question.title}</h1>
                 <div className="flex items-center space-x-4 text-sm text-gray-600 mt-2 border-b border-primary pb-4">
                     <div className="flex items-center gap-1 text-blue-600">
                         <FaVoteYea />
@@ -209,7 +218,7 @@ const ViewQuestion = () => {
                     <h1 className="text-2xl font-semibold">All Answers</h1>
                     <span className="font-medium">{question.answers.length} Answers</span>
                 </div>
-                <AnswerList id={question._id} />
+                <AnswerList id={question._id} acceptedAnswer={acceptedAnswer} setAcceptedAnswer={setAcceptedAnswer} question={question} />
 
                 <div className="mt-8">
                     <h2 className="text-lg font-semibold">Your Answer</h2>

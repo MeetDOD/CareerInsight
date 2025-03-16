@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FaVoteYea, FaReplyAll } from "react-icons/fa";
+import { FaReplyAll, FaCheckCircle } from "react-icons/fa";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/store/auth";
+import { toast } from "sonner";
 
-const AnswerList = ({ id }) => {
+const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
     const [answers, setAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [replyingTo, setReplyingTo] = useState(null);
     const [replyText, setReplyText] = useState("");
     const [comments, setComments] = useState({});
+    const user = useRecoilValue(userState);
 
     useEffect(() => {
         const fetchAnswers = async () => {
@@ -53,30 +57,25 @@ const AnswerList = ({ id }) => {
         }
     }, [answers]);
 
-    const handleReplySubmit = async (answerId) => {
-        if (!replyText.trim()) return;
+    const handleAcceptAnswer = async (answerId) => {
+        if (!user || user._id !== question.author._id) {
+            toast.error("Only the question author can accept an answer!");
+            return;
+        }
 
         try {
-            await axios.post(
-                `${import.meta.env.VITE_BASE_URL}/api/comments`,
-                {
-                    body: replyText,
-                    questionId: id,
-                    answerId,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                }
-            );
+            const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/questions/accept`, {
+                questionId: question._id,
+                answerId
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
 
-            setReplyText("");
-            setReplyingTo(null);
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/comments?answerId=${answerId}`);
-            setComments((prev) => ({ ...prev, [answerId]: response.data }));
-        } catch (err) {
-            console.error("Failed to submit reply:", err);
+            setAcceptedAnswer(res.data.acceptedAnswer);
+            toast.success(res.data.message);
+        } catch (error) {
+            toast.error("Failed to accept answer");
+            console.error(error);
         }
     };
 
@@ -94,6 +93,8 @@ const AnswerList = ({ id }) => {
         return <p className="text-red-500 mt-8">{error}</p>;
     }
 
+    const sortedAnswers = [...answers].sort((a, b) => (a._id === acceptedAnswer ? -1 : b._id === acceptedAnswer ? 1 : 0));
+
     return (
         <div>
             {answers.length === 0 ? (
@@ -102,8 +103,17 @@ const AnswerList = ({ id }) => {
                 </div>
             ) : (
                 <div className="space-y-6">
-                    {answers.map((answer) => (
-                        <div key={answer._id} className="border rounded-lg p-4 shadow-sm" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                    {sortedAnswers.map((answer) => (
+                        <div
+                            key={answer._id}
+                            className={`border rounded-lg p-4 shadow-sm ${acceptedAnswer === answer._id ? "bg-green-50 text-black" : "border"}`}
+                            style={{ borderColor: `var(--borderColor)` }}
+                        >
+                            {acceptedAnswer === answer._id && (
+                                <div className="mb-3 text-green-700 font-medium flex items-center gap-2">
+                                    <FaCheckCircle size={20} /> Accepted Answer
+                                </div>
+                            )}
                             <div className="flex items-center space-x-3 justify-between">
                                 <div className="flex items-center gap-2">
                                     <img
@@ -120,11 +130,16 @@ const AnswerList = ({ id }) => {
 
                             <p className="mt-3 text-sm leading-relaxed">{answer.body}</p>
 
+                            {user && user._id === question.author._id && (
+                                <Button
+                                    onClick={() => handleAcceptAnswer(answer._id)}
+                                    className={`px-3 py-1 rounded-md mt-2 ${acceptedAnswer === answer._id ? "bg-green-500 text-white hover:bg-green-600" : ""}`}
+                                >
+                                    {acceptedAnswer === answer._id ? "Unaccept Answer" : "Accept Answer"}
+                                </Button>
+                            )}
+
                             <div className="mt-3 flex items-center space-x-4 text-sm justify-between">
-                                <div className="flex items-center gap-2">
-                                    <FaVoteYea className="text-blue-500" />
-                                    <span className="font-medium">{answer.votes} votes</span>
-                                </div>
                                 <button
                                     onClick={() => setReplyingTo(answer._id)}
                                     className="flex items-center gap-2 text-primary hover:text-violet-700 hover:underline cursor-pointer"
@@ -135,9 +150,9 @@ const AnswerList = ({ id }) => {
                             </div>
 
                             {replyingTo === answer._id && (
-                                <div className="mt-3 ">
+                                <div className="mt-3">
                                     <Textarea
-                                        className="w-full p-2 rounded-md inputField"
+                                        className={`w-full p-2 rounded-md  ${acceptedAnswer === answer._id ? "" : "inputField"}`}
                                         placeholder="Write your reply..."
                                         rows="3"
                                         value={replyText}
@@ -154,16 +169,14 @@ const AnswerList = ({ id }) => {
 
                             {comments[answer._id]?.length > 0 && (
                                 <div className="mt-4 border-l-2 border-primary pl-4 space-y-2">
-                                    {comments[answer._id]?.map((comment, index) => (
+                                    {comments[answer._id]?.map((comment) => (
                                         <div key={comment._id} className="relative flex items-start gap-3">
-
                                             <img
                                                 src={comment.author?.photo || "/default-avatar.png"}
                                                 alt="User Avatar"
                                                 className="w-8 h-8 rounded-full border border-primary"
                                             />
-
-                                            <div className="courseSection p-3 rounded-lg w-full">
+                                            <div className={`p-3 rounded-lg w-full ${acceptedAnswer === answer._id ? "bg-green-50 border" : "courseSection"} `}>
                                                 <span className="font-medium text-sm">{comment.author?.fullName || "Anonymous"}</span>
                                                 <p className="text-xs text-gray-400">{new Date(comment.createdAt).toLocaleString()}</p>
                                                 <p className="text-sm mt-1">{comment.body}</p>
@@ -171,7 +184,6 @@ const AnswerList = ({ id }) => {
                                         </div>
                                     ))}
                                 </div>
-
                             )}
                         </div>
                     ))}
