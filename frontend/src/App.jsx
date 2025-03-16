@@ -27,7 +27,6 @@ import CoursesPage from "./pages/CoursesPage";
 import GoogleTranslate from "./services/GoogleTranslator";
 import Loader from "./services/Loader";
 import AboutUs from "./pages/AboutUs";
-import ContactUs from "./pages/ContactUs";
 import ViewMyResume from "./AIResume/ViewMyResume";
 import NotFound from "./pages/NotFound";
 import CourseRecommendation from "./Dashboard/CourseRecommendation";
@@ -36,6 +35,8 @@ import IndustryInsights from "./Dashboard/IndustryInsights";
 import JobsFinder from "./Dashboard/JobsFinder";
 import KanbanBoard from "./Kanban/KanbanBoard";
 import WorkSpace from "./Coding/WorkSpace";
+import Questions from "./Riverflow/Questions";
+import ViewQuestion from "./Riverflow/ViewQuestion";
 
 const App = () => {
   return (
@@ -53,7 +54,7 @@ const App = () => {
               element={<ViewCourseLayout />}
             />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/riverflow" element={<Questions />} />
 
             <Route
               path="/login"
@@ -227,6 +228,7 @@ const App = () => {
             />
             {/* AI Portfolio Builder Ends*/}
 
+            {/* Kanban Board Start*/}
             <Route
               path="/kanbanboard"
               element={
@@ -235,7 +237,9 @@ const App = () => {
                 </AuthenticatedRoute>
               }
             />
+            {/* Kanban Board Ends*/}
 
+            {/* Coding Start*/}
             <Route
               path="/coding"
               element={
@@ -244,7 +248,18 @@ const App = () => {
                 </AuthenticatedRoute>
               }
             />
+            {/* Coding Ends*/}
 
+            {/* Riverflow Start*/}
+            <Route
+              path="/question/:id"
+              element={
+                <AuthenticatedRoute>
+                  <ViewQuestion />
+                </AuthenticatedRoute>
+              }
+            />
+            {/* Riverflow End*/}
             <Route path="/*" element={<NotFound />} />
           </Routes>
           <Toaster richColors />

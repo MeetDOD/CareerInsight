@@ -20,7 +20,7 @@ const getComments = async (req, res) => {
         if (questionId) filter.question = questionId;
         if (answerId) filter.answer = answerId;
 
-        const comments = await Comment.find(filter).populate("author", "username");
+        const comments = await Comment.find(filter).populate("author", "fullName photo");
 
         res.status(200).json(comments);
     } catch (error) {

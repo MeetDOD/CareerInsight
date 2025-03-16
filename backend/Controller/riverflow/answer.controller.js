@@ -22,7 +22,7 @@ const createAnswer = async (req, res) => {
 const getAnswersByQuestion = async (req, res) => {
     try {
         const { questionId } = req.params;
-        const answers = await Answer.find({ question: questionId }).populate("author", "username");
+        const answers = await Answer.find({ question: questionId }).populate("author");
 
         res.status(200).json(answers);
     } catch (error) {

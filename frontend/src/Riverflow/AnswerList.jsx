@@ -1,0 +1,184 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { FaVoteYea, FaReplyAll } from "react-icons/fa";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+
+const AnswerList = ({ id }) => {
+    const [answers, setAnswers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [replyingTo, setReplyingTo] = useState(null);
+    const [replyText, setReplyText] = useState("");
+    const [comments, setComments] = useState({});
+
+    useEffect(() => {
+        const fetchAnswers = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/answers/${id}`);
+                setAnswers(response.data);
+            } catch (err) {
+                setError("Failed to load answers. Please try again.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAnswers();
+    }, [id]);
+
+    useEffect(() => {
+        const fetchAllComments = async () => {
+            try {
+                const responses = await Promise.all(
+                    answers.map((answer) =>
+                        axios.get(`${import.meta.env.VITE_BASE_URL}/api/comments?answerId=${answer._id}`)
+                    )
+                );
+
+                const newComments = {};
+                responses.forEach((res, index) => {
+                    newComments[answers[index]._id] = res.data;
+                });
+
+                setComments(newComments);
+            } catch (err) {
+                console.error("Failed to fetch comments:", err);
+            }
+        };
+
+        if (answers.length > 0) {
+            fetchAllComments();
+        }
+    }, [answers]);
+
+    const handleReplySubmit = async (answerId) => {
+        if (!replyText.trim()) return;
+
+        try {
+            await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/api/comments`,
+                {
+                    body: replyText,
+                    questionId: id,
+                    answerId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+
+            setReplyText("");
+            setReplyingTo(null);
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/comments?answerId=${answerId}`);
+            setComments((prev) => ({ ...prev, [answerId]: response.data }));
+        } catch (err) {
+            console.error("Failed to submit reply:", err);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="space-y-4 mt-8">
+                <Skeleton className="h-20 w-full rounded-lg" />
+                <Skeleton className="h-20 w-full rounded-lg" />
+                <Skeleton className="h-20 w-full rounded-lg" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return <p className="text-red-500 mt-8">{error}</p>;
+    }
+
+    return (
+        <div>
+            {answers.length === 0 ? (
+                <div className="border border-primary w-full bg-violet-50 mb-6 py-3 rounded-md text-primary text-center font-medium">
+                    No answers yet 😭. Be the first to answer ⚡
+                </div>
+            ) : (
+                <div className="space-y-6">
+                    {answers.map((answer) => (
+                        <div key={answer._id} className="border rounded-lg p-4 shadow-sm" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                            <div className="flex items-center space-x-3 justify-between">
+                                <div className="flex items-center gap-2">
+                                    <img
+                                        src={answer.author?.photo || "/default-avatar.png"}
+                                        alt="User Avatar"
+                                        className="w-9 h-9 rounded-full border border-primary"
+                                    />
+                                    <div className="font-medium">{answer.author?.fullName || "Anonymous"}</div>
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                    {new Date(answer.createdAt).toLocaleString()}
+                                </div>
+                            </div>
+
+                            <p className="mt-3 text-sm leading-relaxed">{answer.body}</p>
+
+                            <div className="mt-3 flex items-center space-x-4 text-sm justify-between">
+                                <div className="flex items-center gap-2">
+                                    <FaVoteYea className="text-blue-500" />
+                                    <span className="font-medium">{answer.votes} votes</span>
+                                </div>
+                                <button
+                                    onClick={() => setReplyingTo(answer._id)}
+                                    className="flex items-center gap-2 text-primary hover:text-violet-700 hover:underline cursor-pointer"
+                                >
+                                    <FaReplyAll />
+                                    <span className="font-medium">Reply</span>
+                                </button>
+                            </div>
+
+                            {replyingTo === answer._id && (
+                                <div className="mt-3 ">
+                                    <Textarea
+                                        className="w-full p-2 rounded-md inputField"
+                                        placeholder="Write your reply..."
+                                        rows="3"
+                                        value={replyText}
+                                        onChange={(e) => setReplyText(e.target.value)}
+                                    />
+                                    <div className="flex justify-end mt-2 space-x-2">
+                                        <Button variant="secondary" className="border" onClick={() => setReplyingTo(null)}>
+                                            Cancel
+                                        </Button>
+                                        <Button onClick={() => handleReplySubmit(answer._id)}>Submit Reply</Button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {comments[answer._id]?.length > 0 && (
+                                <div className="mt-4 border-l-2 border-primary pl-4 space-y-2">
+                                    {comments[answer._id]?.map((comment, index) => (
+                                        <div key={comment._id} className="relative flex items-start gap-3">
+
+                                            <img
+                                                src={comment.author?.photo || "/default-avatar.png"}
+                                                alt="User Avatar"
+                                                className="w-8 h-8 rounded-full border border-primary"
+                                            />
+
+                                            <div className="courseSection p-3 rounded-lg w-full">
+                                                <span className="font-medium text-sm">{comment.author?.fullName || "Anonymous"}</span>
+                                                <p className="text-xs text-gray-400">{new Date(comment.createdAt).toLocaleString()}</p>
+                                                <p className="text-sm mt-1">{comment.body}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default AnswerList;

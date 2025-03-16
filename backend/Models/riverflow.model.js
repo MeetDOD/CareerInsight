@@ -7,6 +7,7 @@ const questionSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
     answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
     votes: { type: Number, default: 0 },
+    voters: [{ userId: mongoose.Schema.Types.ObjectId, value: Number }],
     views: { type: Number, default: 0 },
     isResolved: { type: Boolean, default: false },
     acceptedAnswer: { type: mongoose.Schema.Types.ObjectId, ref: 'Answer', default: null }

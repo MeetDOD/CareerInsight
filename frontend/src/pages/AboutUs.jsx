@@ -3,6 +3,7 @@ import meet from "../assets/meet.png";
 import kashish from "../assets/kashish.png";
 import ramesh from "../assets/ramesh.png";
 import about from "../assets/about.png";
+import ContactUs from "./ContactUs";
 
 const AboutUs = () => {
     useEffect(() => {
@@ -75,6 +76,7 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
+            <ContactUs />
         </div>
     );
 };

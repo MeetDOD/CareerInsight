@@ -52,8 +52,8 @@ const Navbar = () => {
                 <NavLink to="/about">
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>About</li>
                 </NavLink>
-                <NavLink to="/contact">
-                    <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Contact</li>
+                <NavLink to="/riverflow">
+                    <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Riverflow</li>
                 </NavLink>
             </ul>
             <div className='flex items-center gap-2'>
@@ -87,7 +87,7 @@ const Navbar = () => {
                         <NavLink to="/" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Home</p></NavLink>
                         <NavLink to="/courses" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Courses</p></NavLink>
                         <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">About</p></NavLink>
-                        <NavLink to="/contact" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Contact</p></NavLink>
+                        <NavLink to="/riverflow" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Riverflow</p></NavLink>
                         {!isLoggedIn &&
                             <Button size="lg" onClick={() => { navigate("/login"), setShowMenu(false) }} className='text-lg bg-primary w-full hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold '>
                                 Login / Signup

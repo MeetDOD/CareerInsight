@@ -41,7 +41,7 @@ const ContactUs = () => {
     };
 
     return (
-        <section className="py-24">
+        <section className="pt-24">
             <div className="mx-auto max-w-7xl">
                 <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-24">
                     <div className="flex items-center lg:mb-0 mb-10">
