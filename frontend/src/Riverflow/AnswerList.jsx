@@ -57,6 +57,33 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
         }
     }, [answers]);
 
+    const handleReplySubmit = async (answerId) => {
+        if (!replyText.trim()) return;
+
+        try {
+            await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/api/comments`,
+                {
+                    body: replyText,
+                    questionId: id,
+                    answerId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+
+            setReplyText("");
+            setReplyingTo(null);
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/comments?answerId=${answerId}`);
+            setComments((prev) => ({ ...prev, [answerId]: response.data }));
+        } catch (err) {
+            console.error("Failed to submit reply:", err);
+        }
+    };
+
     const handleAcceptAnswer = async (answerId) => {
         if (!user || user._id !== question.author._id) {
             toast.error("Only the question author can accept an answer!");
@@ -133,7 +160,7 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
                             {user && user._id === question.author._id && (
                                 <Button
                                     onClick={() => handleAcceptAnswer(answer._id)}
-                                    className={`px-3 py-1 rounded-md mt-2 ${acceptedAnswer === answer._id ? "bg-green-500 text-white hover:bg-green-600" : ""}`}
+                                    className={`px-3 py-1 rounded-md mt-2 ${acceptedAnswer === answer._id ? "bg-red-500 text-white hover:bg-red-600" : "bg-green-500 text-white hover:bg-green-600"}`}
                                 >
                                     {acceptedAnswer === answer._id ? "Unaccept Answer" : "Accept Answer"}
                                 </Button>
