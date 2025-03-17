@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { FaVoteYea, FaEye, FaRocketchat, FaHome, FaCaretUp, FaCaretDown, FaCheckCircle } from "react-icons/fa";
+import { FaHome, FaCaretUp, FaCaretDown, FaCheckCircle } from "react-icons/fa";
 import Loader from "@/services/Loader";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -13,6 +13,7 @@ import AnswerList from "./AnswerList";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { userState } from "@/store/auth";
 import { useRecoilValue } from "recoil";
+import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 
 const ViewQuestion = () => {
     const { id } = useParams();
@@ -159,18 +160,18 @@ const ViewQuestion = () => {
                         <span>Question Solved</span>
                     </div>
                 )}
-                <h1 className="text-2xl font-bold ">{question.title}</h1>
-                <div className="flex items-center space-x-4 text-sm text-gray-600 mt-2 border-b border-primary pb-4">
+                <h1 className="text-2xl font-bold break-words">{question.title}</h1>
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mt-2 border-b border-primary pb-4">
                     <div className="flex items-center gap-1 text-blue-600">
-                        <FaVoteYea />
+                        <ThumbsUp />
                         <span className="font-semibold">{question.votes}</span> votes
                     </div>
                     <div className="flex items-center gap-1 text-green-600">
-                        <FaRocketchat />
+                        <MessageCircle />
                         <span className="font-semibold">{question.answers.length}</span> answers
                     </div>
                     <div className="flex items-center gap-1 text-orange-600">
-                        <FaEye />
+                        <Eye />
                         <span className="font-semibold">{question.views}</span> views
                     </div>
                 </div>

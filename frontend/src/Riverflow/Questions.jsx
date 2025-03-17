@@ -9,10 +9,11 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaVoteYea, FaEye, FaRocketchat, FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import { MdDelete } from "react-icons/md";
+import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 
 const Questions = () => {
     const user = useRecoilValue(userState);
@@ -115,44 +116,42 @@ const Questions = () => {
                 Questions with new activity
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
-                <div className="space-y-4 pb-10">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="space-y-4 pb-10 lg:col-span-2">
                     {questions
                         .filter(q => q.title.toLowerCase().includes(search.toLowerCase()))
                         .map((question) => (
-                            <div key={question._id}>
-                                <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center space-x-2 text-sm text-gray-600 rounded-md py-2">
-                                            <div className="flex items-center gap-1 text-blue-600 border border-blue-600 px-2 py-1 rounded-md bg-blue-50">
-                                                <FaVoteYea className="text-lg" />
-                                                <span className="font-semibold">{question.votes}</span> votes
+                            <div key={question._id} className="w-full">
+                                <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg w-full break-words" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                                    <div className="flex flex-wrap justify-between items-center gap-2">
+                                        <div className="flex flex-wrap items-center gap-2 text-gray-700 text-sm">
+                                            <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-3 py-1 rounded-lg shadow-sm">
+                                                <ThumbsUp className="w-5 h-5" />
+                                                <span className="font-semibold">{question.votes}</span>
+                                                <span className="text-xs">Votes</span>
                                             </div>
-
-                                            <div className="flex items-center gap-1 text-green-600 border border-green-600 px-2 py-1 rounded-md bg-green-50">
-                                                <FaRocketchat className="text-lg" />
-                                                <span className="font-semibold">{question.answers.length}</span> answers
+                                            <div className="flex items-center gap-1 text-green-600 bg-green-100 px-3 py-1 rounded-lg shadow-sm">
+                                                <MessageCircle className="w-5 h-5" />
+                                                <span className="font-semibold">{question.answers.length}</span>
+                                                <span className="text-xs">Answers</span>
                                             </div>
-
-                                            <div className="flex items-center gap-1 text-orange-500 border border-orange-600 px-2 py-1 rounded-md bg-orange-50">
-                                                <FaEye className="text-lg" />
-                                                <span className="font-semibold">{question.views}</span> views
+                                            <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-3 py-1 rounded-lg shadow-sm">
+                                                <Eye className="w-5 h-5" />
+                                                <span className="font-semibold">{question.views}</span>
+                                                <span className="text-xs">Views</span>
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div className="mb-2">
                                             {question?.author?._id === user?._id && (
-                                                <div onClick={() => handleDelete(question._id)} className="cursor-pointer bg- text-white rounded-md bg-red-500 p-2 hover:bg-red-600 transition-colors duration-200">
+                                                <div onClick={() => handleDelete(question._id)} className="cursor-pointer text-white rounded-md bg-red-500 p-2 hover:bg-red-600 transition-colors duration-200 gap-2">
                                                     <MdDelete size={22} />
                                                 </div>
                                             )}
                                         </div>
                                     </div>
 
-                                    <Link
-                                        to={`/question/${question._id}`}
-                                        className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200"
-                                    >
+                                    <Link to={`/question/${question._id}`} className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200 ">
                                         {question.title}
                                     </Link>
 
@@ -162,11 +161,7 @@ const Questions = () => {
 
                                     <div className="flex flex-wrap gap-2">
                                         {question.tags.map((tag, index) => (
-                                            <Badge
-                                                key={index}
-                                                variant="outline"
-                                                className="px-2 py-1 text-xs font-medium text-primary bg-violet-50 rounded-full"
-                                            >
+                                            <Badge key={index} variant="outline" className="px-2 py-1 text-xs font-medium text-primary bg-violet-50 rounded-full">
                                                 {tag}
                                             </Badge>
                                         ))}
@@ -179,14 +174,11 @@ const Questions = () => {
                                         </div>
 
                                         <div className="flex items-center gap-2">
-                                            <img
-                                                src={question.author.photo}
-                                                alt={question.author.fullName}
-                                                className="w-7 h-7 rounded-full border border-primary shadow-sm"
-                                            />
+                                            <img src={question.author.photo} alt={question.author.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-primary shadow-sm" />
                                             <span className="font-medium">{question.author.fullName}</span>
                                         </div>
                                     </div>
+
                                     {question.acceptedAnswer && (
                                         <div className="mt-3 text-green-500 font-medium flex items-center gap-2 border w-fit px-3 py-2 rounded-md bg-green-50 border-green-500">
                                             <FaCheckCircle size={20} />
@@ -197,26 +189,15 @@ const Questions = () => {
                             </div>
                         ))}
                 </div>
-
                 <div className="hidden lg:block mb-10">
                     <div className="bg-yellow-50 border-2 border-yellow-400 p-4 rounded-lg shadow-md sticky top-20">
                         <h2 className="text-lg text-gray-800 font-semibold">How to Use RiverFlow</h2>
                         <ul className="text-sm text-gray-700 mt-2 space-y-2">
-                            <li>
-                                <strong>👉 Asking Questions:</strong> Click "Ask Question" and provide clear details.
-                            </li>
-                            <li>
-                                <strong>👉 Answering:</strong> Provide well-explained answers to help others.
-                            </li>
-                            <li>
-                                <strong>👉 Voting:</strong> Upvote useful answers, downvote incorrect ones.
-                            </li>
-                            <li>
-                                <strong>👉 Tags:</strong> Use relevant tags to categorize your question.
-                            </li>
-                            <li>
-                                <strong>👉 Accepting Answers:</strong> Mark the best answer to help future users.
-                            </li>
+                            <li><strong>👉 Asking Questions:</strong> Click "Ask Question" and provide clear details.</li>
+                            <li><strong>👉 Answering:</strong> Provide well-explained answers to help others.</li>
+                            <li><strong>👉 Voting:</strong> Upvote useful answers, downvote incorrect ones.</li>
+                            <li><strong>👉 Tags:</strong> Use relevant tags to categorize your question.</li>
+                            <li><strong>👉 Accepting Answers:</strong> Mark the best answer to help future users.</li>
                         </ul>
                     </div>
                 </div>
