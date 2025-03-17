@@ -37,6 +37,7 @@ import KanbanBoard from "./Kanban/KanbanBoard";
 import WorkSpace from "./Coding/WorkSpace";
 import Questions from "./Riverflow/Questions";
 import ViewQuestion from "./Riverflow/ViewQuestion";
+import PricingPage from "./Pricing/PricingPage";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
             />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/riverflow" element={<Questions />} />
+            <Route path="/pricing" element={<PricingPage />} />
 
             <Route
               path="/login"

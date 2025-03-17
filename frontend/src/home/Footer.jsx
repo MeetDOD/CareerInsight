@@ -2,7 +2,8 @@ import React from 'react';
 import logo from '../assets/logo.png';
 import { FaGithub, FaLinkedin, FaHome, FaInfoCircle, FaBook } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { MdCall } from "react-icons/md";
+import { BiWater } from "react-icons/bi";
+import { IoIosPricetags } from "react-icons/io";
 
 const socialLinks = [
     { id: 'github', url: 'https://github.com/MeetDOD', icon: FaGithub },
@@ -13,7 +14,8 @@ const quickLinks = [
     { id: 'home', label: 'Home', hash: '/', icon: FaHome },
     { id: 'courses', label: 'Courses', hash: '/courses', icon: FaBook },
     { id: 'about', label: 'About', hash: '/about', icon: FaInfoCircle },
-    { id: 'contact', label: 'Contact', hash: '/contact', icon: MdCall }
+    { id: 'riverflow', label: 'Riverflow', hash: '/riverflow', icon: BiWater },
+    { id: 'pricing', label: 'Pricing', hash: '/pricing', icon: IoIosPricetags }
 ];
 
 const Footer = () => {

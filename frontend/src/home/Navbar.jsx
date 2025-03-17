@@ -55,6 +55,9 @@ const Navbar = () => {
                 <NavLink to="/riverflow">
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Riverflow</li>
                 </NavLink>
+                <NavLink to="/pricing">
+                    <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Pricing</li>
+                </NavLink>
             </ul>
             <div className='flex items-center gap-2'>
                 <Button size="sm" variant="ghost" className="border border-primary" onClick={toggleTheme}>
@@ -88,6 +91,7 @@ const Navbar = () => {
                         <NavLink to="/courses" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Courses</p></NavLink>
                         <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">About</p></NavLink>
                         <NavLink to="/riverflow" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Riverflow</p></NavLink>
+                        <NavLink to="/pricing" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Pricing</p></NavLink>
                         {!isLoggedIn &&
                             <Button size="lg" onClick={() => { navigate("/login"), setShowMenu(false) }} className='text-lg bg-primary w-full hover:bg-primary/90 text-white px-6 rounded-md py-2 font-semibold '>
                                 Login / Signup
