@@ -22,10 +22,9 @@ const PricingSection = () => {
     const orderId = createrandomorderid();
     const formdata = new FormData();
     formdata.append("customerEmail", user.email);
-    formdata.append("customerPhone", `${user.mobileno}`);
+    formdata.append("customerPhone", `${user.phoneno}`);
     formdata.append("orderAmount", 99);
     formdata.append("orderId", orderId);
-    formdata.append("customerName", `${user.firstname} ${user.lastname}`);
 
     try {
       const response = await axios.post(

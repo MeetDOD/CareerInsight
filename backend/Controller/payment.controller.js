@@ -11,7 +11,7 @@ const createorder = async (req, res) => {
 
     try {
         const userid = req.user._id;
-        const { orderId, orderAmount, customerEmail, customerPhone,customerName } = req.body;
+        const { orderId, orderAmount, customerEmail, customerPhone } = req.body;
 
         const response = await axios.post(
             CASHFREE_URL,
@@ -19,7 +19,6 @@ const createorder = async (req, res) => {
                 order_id: orderId,
                 order_amount: orderAmount,
                 order_currency: "INR",
-                customer_name:customerName,
                 customer_details: {
                     customer_id: "12345",
                     customer_email: customerEmail,

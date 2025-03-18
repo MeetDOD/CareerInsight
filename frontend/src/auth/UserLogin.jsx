@@ -60,6 +60,7 @@ const UserLogin = () => {
         toast.success(res.data.message);
         setTokenState(res.data?.token);
         localStorage.setItem("token", res.data?.token || "");
+        localStorage.setItem("user", JSON.stringify(res.data?.user));
         navigate("/dashboard");
       } else if (res.status === 400) {
         toast.error("User already exists");

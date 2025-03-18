@@ -146,7 +146,7 @@ const login = async (req, res) => {
 
         const userDetailsIncomplete = !user.phoneno || !user.gender || !user.dateofbirth || !user.collegename || !user.university || !user.academicyear || !user.address || !user.techstack;
 
-        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, email: user.email, fullName: user.fullName, photo: user.photo },userDetailsIncomplete });
+        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, email: user.email, fullName: user.fullName, photo: user.photo,phoneno:user.phoneno? user.phoneno : null },userDetailsIncomplete });
 
     } catch (error) {
         console.error("Error logging in user:", error);
@@ -196,6 +196,7 @@ const updateProfile = async (req, res) => {
             fullName: user.fullName,
             photo: user.photo,
             gender: user.gender,
+            phoneno: user.phoneno,
         }
 
         res.status(200).json({ message: "Profile updated successfully", user: userdata });
@@ -221,8 +222,13 @@ const adduserdetail = async (req, res) => {
         user.academicyear = academicyear;
         user.address = address;
         user.techstack = techstack;
+
+        const userdetails = { phoneno: user.phoneno , email: user.email, fullName: user.fullName, photo: user.photo, _id: user._id};
+
         await user.save();
-        res.status(200).json({ message: "Your details added successfully", user });
+
+
+        res.status(200).json({ message: "Your details added successfully", user: userdetails });
     }
     catch (error) {
         console.error("Error adding extra data:", error);
