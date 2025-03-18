@@ -1,79 +1,152 @@
 import React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HiCheckCircle, HiLightningBolt } from "react-icons/hi";
 import logo from "../assets/logo.png";
 import { ShinyButton } from "@/components/magicui/shiny-button";
+import { cashfree } from "@/services/paymentutil";
+import axios from "axios";
 
 const PricingSection = () => {
-    return (
-        <div className="container px-5 mt-16 mx-auto">
-            <div className="text-center w-full mb-12">
-                <div className="flex flex-wrap justify-center items-center gap-4">
-                    <img src={logo} alt="Career Insight" className="w-auto h-14 sm:h-16" />
-                    <h1 className="sm:text-4xl text-3xl font-bold">Pricing</h1>
-                </div>
-                <p className="lg:w-2/3 mx-auto text-base leading-relaxed mt-4">
-                    Unlock the full potential of <span className="font-semibold">Career Insight</span> with AI-powered tools.
-                    Get started for free or go unlimited for just <span className="font-semibold">₹99/month</span>.
-                </p>
-            </div>
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [sessionid, setSessionid] = useState("");
+  console.log(user);
 
-            <div className="flex flex-wrap justify-center gap-6 items-center">
-                <div
-                    className="p-6 w-full sm:w-80 rounded-xl border shadow-md"
-                    style={{
-                        backgroundColor: `var(--background-color)`,
-                        color: `var(--text-color)`,
-                        borderColor: `var(--borderColor)`,
-                    }}
-                >
-                    <h2 className="text-sm font-semibold uppercase">Free Plan</h2>
-                    <h1 className="text-4xl font-bold mt-2">₹0</h1>
-                    <p className="text-gray-600 mt-2">Try all features up to 3 times</p>
-                    <div className="mt-4 space-y-2">
-                        <p className="flex items-center gap-2">
-                            <HiCheckCircle className="text-green-500 text-xl" /> Create Course upto 3 times
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiCheckCircle className="text-green-500 text-xl" /> AI Resume upto 3 times
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiCheckCircle className="text-green-500 text-xl" /> AI Portfolio upto 3 times
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiCheckCircle className="text-green-500 text-xl" /> AI Mock Interview upto 3 times
-                        </p>
-                    </div>
-                    <Button className="w-full mt-6">GET STARTED</Button>
-                </div>
+  const createrandomorderid = () => {
+    return Math.random()
+      .toString(36)
+      .substring(7);
+  };
 
-                <div
-                    className="p-8 w-full sm:w-96 border border-primary rounded-xl shadow-md text-white bg-gradient-to-r from-[#7c3aed] to-[#00FFF1] magic-border transform scale-105"
-                >
-                    <h2 className="text-sm font-semibold uppercase">Pro Plan</h2>
-                    <h1 className="text-5xl font-bold mt-2 break-words">₹99/month</h1>
-                    <p className="mt-2">Unlimited access to all features</p>
-                    <div className="mt-4 space-y-3">
-                        <p className="flex items-center gap-2">
-                            <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited Course Creation
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited AI Resume Builder
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited AI Portfolio Builder
-                        </p>
-                        <p className="flex items-center gap-2">
-                            <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited AI Mock Interviews
-                        </p>
-                    </div>
-                    <ShinyButton className="py-3 w-full mt-6 bg-white text-gray-900 font-semibold text-lg">
-                        Upgrade Now
-                    </ShinyButton>
-                </div>
-            </div>
+  const handleUpgrade = async () => {
+    const orderId = createrandomorderid();
+    const formdata = new FormData();
+    formdata.append("customerEmail", user.email);
+    formdata.append("customerPhone", `${user.mobileno}`);
+    formdata.append("orderAmount", 99);
+    formdata.append("orderId", orderId);
+    formdata.append("customerName", `${user.firstname} ${user.lastname}`);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/payment/pay`,
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setSessionid(response.data.payment_session_id);
+
+        let checkoutOptions = {
+          paymentSessionId: response.data.payment_session_id,
+          returnUrl: `${
+            import.meta.env.VITE_BASE_URL
+          }/api/payment/verify/${orderId}`,
+        };
+        cashfree.checkout(checkoutOptions).then(function(result) {
+          if (result.error) {
+            console.log(result.error);
+          }
+          if (result.redirect) {
+            console.log(result.redirect);
+            // window.location.href = result.redirect;
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="container px-5 mt-16 mx-auto">
+      <div className="text-center w-full mb-12">
+        <div className="flex flex-wrap justify-center items-center gap-4">
+          <img
+            src={logo}
+            alt="Career Insight"
+            className="w-auto h-14 sm:h-16"
+          />
+          <h1 className="sm:text-4xl text-3xl font-bold">Pricing</h1>
         </div>
-    );
+        <p className="lg:w-2/3 mx-auto text-base leading-relaxed mt-4">
+          Unlock the full potential of{" "}
+          <span className="font-semibold">Career Insight</span> with AI-powered
+          tools. Get started for free or go unlimited for just{" "}
+          <span className="font-semibold">₹99/month</span>.
+        </p>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-6 items-center">
+        <div
+          className="p-6 w-full sm:w-80 rounded-xl border shadow-md"
+          style={{
+            backgroundColor: `var(--background-color)`,
+            color: `var(--text-color)`,
+            borderColor: `var(--borderColor)`,
+          }}
+        >
+          <h2 className="text-sm font-semibold uppercase">Free Plan</h2>
+          <h1 className="text-4xl font-bold mt-2">₹0</h1>
+          <p className="text-gray-600 mt-2">Try all features up to 3 times</p>
+          <div className="mt-4 space-y-2">
+            <p className="flex items-center gap-2">
+              <HiCheckCircle className="text-green-500 text-xl" /> Create Course
+              upto 3 times
+            </p>
+            <p className="flex items-center gap-2">
+              <HiCheckCircle className="text-green-500 text-xl" /> AI Resume
+              upto 3 times
+            </p>
+            <p className="flex items-center gap-2">
+              <HiCheckCircle className="text-green-500 text-xl" /> AI Portfolio
+              upto 3 times
+            </p>
+            <p className="flex items-center gap-2">
+              <HiCheckCircle className="text-green-500 text-xl" /> AI Mock
+              Interview upto 3 times
+            </p>
+          </div>
+          <Button className="w-full mt-6">GET STARTED</Button>
+        </div>
+
+        <div className="p-8 w-full sm:w-96 border border-primary rounded-xl shadow-md text-white bg-gradient-to-r from-[#7c3aed] to-[#00FFF1] magic-border transform scale-105">
+          <h2 className="text-sm font-semibold uppercase">Pro Plan</h2>
+          <h1 className="text-5xl font-bold mt-2 break-words">₹99/month</h1>
+          <p className="mt-2">Unlimited access to all features</p>
+          <div className="mt-4 space-y-3">
+            <p className="flex items-center gap-2">
+              <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited
+              Course Creation
+            </p>
+            <p className="flex items-center gap-2">
+              <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited
+              AI Resume Builder
+            </p>
+            <p className="flex items-center gap-2">
+              <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited
+              AI Portfolio Builder
+            </p>
+            <p className="flex items-center gap-2">
+              <HiLightningBolt className="text-yellow-300 text-xl" /> Unlimited
+              AI Mock Interviews
+            </p>
+          </div>
+          <ShinyButton
+            onClick={() => {
+              handleUpgrade();
+            }}
+            className="py-3 w-full mt-6 bg-white text-gray-900 font-semibold text-lg"
+          >
+            Upgrade Now
+          </ShinyButton>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default PricingSection;

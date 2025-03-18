@@ -38,6 +38,8 @@ import WorkSpace from "./Coding/WorkSpace";
 import Questions from "./Riverflow/Questions";
 import ViewQuestion from "./Riverflow/ViewQuestion";
 import PricingPage from "./Pricing/PricingPage";
+import PaymentSuccess from "./pages/success";
+import PaymentFailure from "./pages/Failure";
 
 const App = () => {
   return (
@@ -50,6 +52,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/failed" element={<PaymentFailure />} />
+
             <Route
               path="/viewcourse/:id/careerinsight/:coursename"
               element={<ViewCourseLayout />}
