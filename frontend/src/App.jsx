@@ -38,7 +38,7 @@ import WorkSpace from "./Coding/WorkSpace";
 import Questions from "./Riverflow/Questions";
 import ViewQuestion from "./Riverflow/ViewQuestion";
 import PricingPage from "./Pricing/PricingPage";
-import PaymentSuccess from "./pages/success";
+import PaymentSuccess from "./pages/Success";
 import PaymentFailure from "./pages/Failure";
 
 const App = () => {
