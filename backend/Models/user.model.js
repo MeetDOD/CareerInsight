@@ -48,7 +48,26 @@ const userSchema = new mongoose.Schema({
     academicyear: {
         type: Number
     },
-
+    subscribed: {
+        type: Boolean,
+        default: false
+    },
+    resumebuilder: {
+        type: Number,
+        default: 3
+    },
+    mockinterview: {
+        type: Number,
+        default: 3
+    },
+    portfoliobuilder: {
+        type: Number,
+        default: 3
+    },
+    createcourse: {
+        type: Number,
+        default: 3
+    },
     userType: {
         type: String,
         default: "student"

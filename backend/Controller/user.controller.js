@@ -230,8 +230,6 @@ const adduserdetail = async (req, res) => {
     }
 }
 
-
-
 const getalluser = async (req, res) => {
     try {
         const user = await User.find();
@@ -338,4 +336,54 @@ const fetchJobs = async (req, res) => {
     }
 };
 
-module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio,fetchJobs };
+const checktrails = async (req, res) => {
+    try {
+        const user = req.user;
+        const pagename = req.params.pagename;
+        console.log("pagename", pagename);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if(user.subscribed) {
+            return res.status(200).json({ message: "You are subscribed user" });
+        }
+
+        if (pagename === "resumebuilder") {
+            if (user.resumebuilder === 0) {
+                return res.status(400).json({ message: "You have used all your trials" });
+            }
+            user.resumebuilder -= 1;
+        }
+        else if (pagename === "mockinterview") {
+            if (user.mockinterview === 0) {
+                return res.status(400).json({ message: "You have used all your trials" });
+            }
+            user.mockinterview -= 1;
+        }
+        else if (pagename === "portfoliobuilder") {
+            if (user.portfoliobuilder === 0 ) {
+                return res.status(400).json({ message: "You have used all your trials" });
+            }
+            user.portfoliobuilder -= 1;
+        }
+        else if (pagename === "createcourse") {
+            if (user.createcourse === 0) {
+                return res.status(400).json({ message: "You have used all your trials" });
+            }
+            user.createcourse -= 1;
+        }
+        else {
+            return res.status(400).json({ message: "Invalid page name" });
+        }
+        await user.save();
+        res.status(200).json({ message: "Trial used successfully"});
+    }
+    catch (error) {
+        console.error("Error getting user by id:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio,fetchJobs,checktrails };

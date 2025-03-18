@@ -15,6 +15,7 @@ const questionRoutes = require("./Routes/riverflowroutes/question.route");
 const answerRoutes = require("./Routes/riverflowroutes/answer.route");
 const commentRoutes = require("./Routes/riverflowroutes/comment.route");
 const voteRoutes = require("./Routes/riverflowroutes/vote.route");
+const paymentRoutes = require("./Routes/payment.route");
 
 const fileUpload = require('express-fileupload');
 const { cloudnairyconnect } = require("./Config/cloudinary");
@@ -41,6 +42,7 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/answers", answerRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/vote", voteRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
