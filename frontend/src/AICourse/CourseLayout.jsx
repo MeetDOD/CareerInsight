@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import learn from "../assets/learn.gif"
 import { motion } from 'framer-motion';
 import { BsStars } from 'react-icons/bs';
+import { toast } from 'sonner';
 
 const CourseLayout = () => {
     const navigate = useNavigate();
@@ -24,8 +25,6 @@ const CourseLayout = () => {
     const thumbnail = location.state?.thumbnail;
     const [customThumbnail, setCustomThumbnail] = useState('');
     const [imageURL, setImageURL] = useState(thumbnail);
-
-    console.log(import.meta.env.VITE_COURSELAYOUT_PROMPT)
 
     const handleThumbnailChange = (e) => {
         setCustomThumbnail(e.target.value);
@@ -59,19 +58,18 @@ const CourseLayout = () => {
 
         try {
             for (const chapter of chapters) {
-
                 const courseLayoutPrompt = import.meta.env.VITE_COURSELAYOUT_PROMPT;
 
                 const prompt = courseLayoutPrompt
                     .replace("${course.courseName}", course.courseName)
                     .replace("${chapter.chapterName}", chapter.chapterName);
 
-                try {
-                    const result = await chatSession.sendMessage(prompt);
-                    const data = await result.response.text();
-                    const cleanedData = data.replace(/```json|```/g, '');
-                    const parsedResponse = JSON.parse(cleanedData);
+                const result = await chatSession.sendMessage(prompt);
+                const data = await result.response.text();
+                const cleanedData = data.replace(/```json|```/g, '');
+                const parsedResponse = JSON.parse(cleanedData);
 
+                try {
                     const videoResult = await getVideos(`${course.courseName} ${chapter.chapterName}`);
                     const videoId = videoResult[0]?.id?.videoId || null;
 
@@ -84,7 +82,12 @@ const CourseLayout = () => {
                     });
 
                 } catch (error) {
-                    console.error(`Error processing chapter "${chapter.chapterName}":`, error);
+                    if (error.message.includes("daily limit")) {
+                        toast.error("You have reached the daily limit of course generation.");
+                        navigate("/dashboard");
+                        return;
+                    }
+                    console.error(`Error fetching video for "${chapter.chapterName}":`, error);
                 }
             }
 
@@ -95,12 +98,14 @@ const CourseLayout = () => {
             });
 
             navigate('/finalcourse');
+
         } catch (error) {
             console.error('Error generating course content:', error);
         } finally {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
