@@ -5,6 +5,7 @@ import hero from '../assets/hero.png';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { loggedInState } from '@/store/auth';
+import { AnimatedShinyText } from '@/components/magicui/animated-shiny-text';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -28,14 +29,15 @@ const Hero = () => {
             <div className="absolute inset-0 -z-10 h-full w-full">
                 <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(124,58,237,0.5)] opacity-50 blur-[80px]"></div>
             </div>
-
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
-                        <div className="flex my-5 gap-2 items-center border border-yellow-300 bg-yellow-50 rounded-lg px-3 py-1 w-fit shadow-md hover:shadow-lg hover:-translate-y-1 transition group">
-                            <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full border border-yellow-600 animate-pulse"></div>
-                            <p className="font-medium text-sm text-yellow-600">Learn, Grow, and Succeed with Career Insight</p>
-                            <FaArrowRight color="#ca8a04" className="group-hover:translate-x-1 transition duration-300" />
+                        <div className="flex my-5 gap-2 items-center border border-yellow-300 bg-yellow-50 rounded-full px-3 py-1 w-fit shadow-md hover:shadow-lg hover:-translate-y-1 transition group">
+                            <AnimatedShinyText className={`flex gap-2 items-center`}>
+                                <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full border border-yellow-600 animate-pulse"></div>
+                                <p className="text-sm text-yellow-600">Introducing Career Insight</p>
+                                <FaArrowRight color="#ca8a04" className="group-hover:translate-x-1 transition duration-300" />
+                            </AnimatedShinyText>
                         </div>
 
                         <div className="hidden lg:flex gap-5 py-5">

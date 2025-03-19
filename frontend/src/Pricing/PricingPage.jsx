@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HiCheckCircle, HiLightningBolt } from "react-icons/hi";
-import logo from "../assets/logo.png";
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { cashfree } from "@/services/paymentutil";
 import axios from "axios";
@@ -41,11 +40,10 @@ const PricingSection = () => {
 
         let checkoutOptions = {
           paymentSessionId: response.data.payment_session_id,
-          returnUrl: `${
-            import.meta.env.VITE_BASE_URL
-          }/api/payment/verify/${orderId}`,
+          returnUrl: `${import.meta.env.VITE_BASE_URL
+            }/api/payment/verify/${orderId}`,
         };
-        cashfree.checkout(checkoutOptions).then(function(result) {
+        cashfree.checkout(checkoutOptions).then(function (result) {
           if (result.error) {
             console.log(result.error);
           }
@@ -62,20 +60,13 @@ const PricingSection = () => {
 
   return (
     <div className="container px-5 mt-16 mx-auto">
-      <div className="text-center w-full mb-12">
-        <div className="flex flex-wrap justify-center items-center gap-4">
-          <img
-            src={logo}
-            alt="Career Insight"
-            className="w-auto h-14 sm:h-16"
-          />
-          <h1 className="sm:text-4xl text-3xl font-bold">Pricing</h1>
-        </div>
-        <p className="lg:w-2/3 mx-auto text-base leading-relaxed mt-4">
-          Unlock the full potential of{" "}
-          <span className="font-semibold">Career Insight</span> with AI-powered
-          tools. Get started for free or go unlimited for just{" "}
-          <span className="font-semibold">₹99/month</span>.
+      <div className='flex flex-col items-center gap-2 my-10 px-4 mb-12'>
+        <h1 className='text-3xl sm:text-4xl font-bold text-center'>
+          Our <span className='text-primary'>Pricing</span>
+        </h1>
+        <p className='text-center text-lg opacity-90 tracking-tight'>
+          Unlock the full potential of <span className="font-semibold">Career Insight</span> with AI-powered
+          tools. Get started for free or go unlimited for just <span className="font-semibold">₹99/month</span>.
         </p>
       </div>
 
@@ -89,7 +80,7 @@ const PricingSection = () => {
           }}
         >
           <h2 className="text-sm font-semibold uppercase">Free Plan</h2>
-          <h1 className="text-4xl font-bold mt-2">₹0</h1>
+          <h1 className="text-4xl font-bold mt-2">₹0/month</h1>
           <p className="text-gray-600 mt-2">Try all features up to 3 times</p>
           <div className="mt-4 space-y-2">
             <p className="flex items-center gap-2">
