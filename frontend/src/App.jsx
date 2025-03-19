@@ -40,6 +40,7 @@ import ViewQuestion from "./Riverflow/ViewQuestion";
 import PricingPage from "./Pricing/PricingPage";
 import PaymentSuccess from "./pages/Success";
 import PaymentFailure from "./pages/Failure";
+import Allpodcast from "./AIPodcast/Allpodcast";
 
 const App = () => {
   return (
@@ -267,6 +268,15 @@ const App = () => {
               }
             />
             {/* Riverflow End*/}
+
+            <Route
+              path="/podcast"
+              element={
+                <AuthenticatedRoute>
+                  <Allpodcast />
+                </AuthenticatedRoute>
+              }
+            />
             <Route path="/*" element={<NotFound />} />
           </Routes>
           <Toaster richColors />

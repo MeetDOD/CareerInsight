@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarRail, } from '@/components/ui/sidebar';
 import { MdSpaceDashboard, MdLibraryBooks, MdCamera, MdInsights, MdWeb } from 'react-icons/md';
-import { FaTools, FaLaptop, FaHandHoldingHeart } from 'react-icons/fa';
+import { FaTools, FaLaptop, FaHandHoldingHeart, FaPodcast } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from "../assets/logo.png";
@@ -29,6 +29,11 @@ const data = {
             title: 'Industry Insights',
             url: '/insights',
             icon: MdInsights,
+        },
+        {
+            title: 'AI Podcast',
+            url: '/podcast',
+            icon: FaPodcast,
         },
         {
             title: 'Enrolled Courses',

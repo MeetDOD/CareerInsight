@@ -288,3 +288,19 @@ code {
   color: white;
   font-size: 1rem;
 }
+
+.rhap_progress-section .rhap_time {
+  color: #fff;
+}
+
+.rhap_progress-section .rhap_progress-filled {
+  background-color: #7c3aed;
+}
+
+.rhap_progress-indicator {
+  background-color: #7c3aed;
+}
+
+.rhap_volume-indicator {
+  background-color: #7c3aed;
+}
