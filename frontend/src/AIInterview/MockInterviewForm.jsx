@@ -1,116 +1,92 @@
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
-import { toast } from "sonner";
+import { startAssistant } from "@/services/vapi";
 import { useNavigate } from "react-router-dom";
+import FeedbackList from "./FeedbackList";
+import { userState } from "@/store/auth";
+import { useRecoilValue } from "recoil";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { AvatarCircles } from "@/components/magicui/avatar-circles";
 
-const MockInterviewForm = ({ onSubmit }) => {
-  const [jobRole, setJobRole] = useState("");
-  const [jobDesc, setJobDesc] = useState("");
-  const [experience, setExperience] = useState("");
+const avatar = [
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671140.jpg",
+  },
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671163.jpg",
+  },
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671132.jpg",
+  },
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671159.jpg",
+  },
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671116.jpg",
+  },
+  {
+    imageUrl: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671151.jpg",
+  }
+]
+
+const MockInterviewForm = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const user = useRecoilValue(userState);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleStartCall = async () => {
+    if (!user.phoneno) {
+      alert("Phone number is missing.");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/user/checktrails/mockinterview`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        onSubmit({ jobRole, jobDesc, experience });
-      } else if (response.status === 400) {
-        toast.error(
-          "You have exhausted your free trials. Please upgrade to premium to continue."
-        );
-        navigate("/pricing");
+      const data = await startAssistant(user.phoneno);
+      if (data?.id) {
+        navigate(`/interviewscreen?call_id=${data.id}&phone=${user.phoneno}`);
+      } else {
+        alert("Failed to start the call. Please try again.");
       }
     } catch (error) {
-      if (error.response?.status === 400) {
-        toast.error(
-          "You have exhausted your free trials. Please upgrade to premium to continue."
-        );
-        navigate("/pricing");
-      } else {
-        toast.error("Something went wrong. Please try again later.");
-      }
+      console.error("Error starting call:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-2xl rounded-lg border border-gray-300 shadow-md p-6"
-        style={{
-          borderColor: `var(--borderColor)`,
-          backgroundColor: `var(--background-color)`,
-        }}
+    <div>
+      <div
+        className="flex flex-col border p-8 rounded-lg shadow-sm"
+        style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
       >
-        <div className="mb-5">
-          <Label className="text-lg font-medium ">Job Position / Role</Label>
-          <Input
-            placeholder="e.g: SDE, Frontend Developer, Backend Developer..."
-            className="mt-2 inputField"
-            type="text"
-            value={jobRole}
-            onChange={(e) => setJobRole(e.target.value)}
-            required
-          />
+        <div className="mb-2 items-center justify-center flex">
+          <AvatarCircles avatarUrls={avatar} />
         </div>
+        <h2 className="text-2xl font-semibold text-center">Start Mock Interview</h2>
+        <h2 className="text-sm font-semibold text-center mb-10 text-gray-500">Sharpen Your Skills with Realistic AI Interview Simulations</h2>
+        <Label>Your phone number<span className="text-red-500">*</span></Label>
+        <Input
+          type="text"
+          value={user.phoneno}
+          readOnly
+          className="inputField cursor-not-allowed mt-3"
+        />
 
-        <div className="mb-5">
-          <Label className="text-lg font-medium">
-            Job Description / Tech Stack
-          </Label>
-          <Textarea
-            placeholder="Describe the job role or required tech stack"
-            className="mt-2 inputField"
-            type="text"
-            value={jobDesc}
-            onChange={(e) => setJobDesc(e.target.value)}
-            required
-            style={{
-              borderColor: `var(--borderColor)`,
-              backgroundColor: `var(--background-color)`,
-            }}
-          />
-        </div>
-
-        <div className="mb-6">
-          <Label className="text-lg font-medium inputField">
-            Years of Experience
-          </Label>
-          <Input
-            placeholder="e.g: 0, 1, 2..."
-            className="mt-2 inputField"
-            type="number"
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="flex justify-between">
-          <Button
-            variant="secondary"
-            className="flex-1 mx-2"
-            onClick={() => window.history.back()}
-          >
-            Cancel
+        <div className="w-full mt-6 flex sm:flex-row flex-col justify-center gap-4">
+          <Button className="w-full border" variant="secondary" onClick={() => navigate("/courses")}>
+            View Courses
           </Button>
-          <Button className="flex-1 mx-2" type="submit">
-            Start Interview
+          <Button className="w-full" onClick={handleStartCall} disabled={loading}>
+            {loading ? "Starting..." : "Start Interview"}
           </Button>
         </div>
-      </form>
+      </div>
+
+      <FeedbackList />
     </div>
   );
 };

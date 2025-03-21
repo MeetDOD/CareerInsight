@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { ImSpinner2 } from "react-icons/im";
 import { toast } from 'sonner';
 import { motion } from "framer-motion";
+import { Sparkles } from 'lucide-react';
 
 const summaryForm = () => {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext);
@@ -82,7 +83,7 @@ const summaryForm = () => {
                                     </>
                                     :
                                     <>
-                                        <BsStars size={20} /> Generate from AI
+                                        <Sparkles className='animate-pulse' size={20} /> Generate from AI
                                     </>
                                 }
                             </Button>

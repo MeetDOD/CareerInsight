@@ -19,6 +19,8 @@ const paymentRoutes = require("./Routes/payment.route");
 
 const podcastRoutes = require("./Routes/podcast.route");
 
+const interviewRoutes = require("./Routes/interview.route");
+
 const fileUpload = require('express-fileupload');
 const { cloudnairyconnect } = require("./Config/cloudinary");
 require('./jobs/schedular')
@@ -46,6 +48,7 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/vote", voteRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/podcast", podcastRoutes);
+app.use("/api/interview", interviewRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

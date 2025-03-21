@@ -96,6 +96,7 @@
   --nav-scroll: #f9fafb;
   --borderColor: #e5e7eb;
   --section: #f3e8ff;
+  --section2: #e1dbe8;
   --skle: #e5e7eb;
 }
 
@@ -105,6 +106,7 @@
   --nav-scroll: #111827;
   --borderColor: #444e5d;
   --section: #1f2937;
+  --section2: #253041;
   --skle: #1f2937;
 }
 
@@ -125,6 +127,10 @@ body {
 
 .courseSection {
   background-color: var(--section);
+}
+
+.courseSection2 {
+  background-color: var(--section2);
 }
 
 .active li {
@@ -303,4 +309,138 @@ code {
 
 .rhap_volume-indicator {
   background-color: #7c3aed;
+}
+
+.volume-level {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(44, 44, 44, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+}
+
+.volume-label {
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.volume-bars {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+}
+
+.volume-bar {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  background-color: #555;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.volume-bar.active {
+  background-color: #ff5722;
+}
+
+.volume-value {
+  color: #ffffff;
+}
+
+.active-call-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(44, 44, 44, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.end-call-button {
+  margin-top: 20px;
+}
+
+.end-call-button button {
+  padding: 10px 20px;
+  background-color: #ff5722;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.end-call-button button:hover {
+  background-color: #e64a19;
+}
+
+.assistant-speech-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgba(44, 44, 44, 0.8);
+  border-radius: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.speech-indicator {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+  border-radius: 50%;
+  background-color: #f03e3e;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.speaking {
+  background-color: #3ef07c;
+  transform: scale(1.2);
+}
+
+.speech-status {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.call-result {
+  background-color: rgba(44, 44, 44, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-align: left;
+  width: 80%;
+  max-width: 500px;
+}
+
+.call-result p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }

@@ -11,9 +11,6 @@ import ResumeBody from "./AIResume/ResumeBody";
 import OnlineTest from "./Dashboard/OnlineTest";
 import DonwloadResume from "./AIResume/DonwloadResume";
 import { Toaster } from "sonner";
-import InterviewSession from "./AIInterview/InterviewSession";
-import InterviewFeedback from "./AIInterview/InterviewFeedback";
-import InterviewQuestion from "./AIInterview/InterviewQuestion";
 import CreateCourse from "./AICourse/CreateCourse";
 import CourseLayout from "./AICourse/CourseLayout";
 import FinalCourse from "./AICourse/FinalCourse";
@@ -41,6 +38,7 @@ import PricingPage from "./Pricing/PricingPage";
 import PaymentSuccess from "./pages/Success";
 import PaymentFailure from "./pages/Failure";
 import Allpodcast from "./AIPodcast/Allpodcast";
+import InterviewScreen from "./AIInterview/InterviewScreen";
 
 const App = () => {
   return (
@@ -164,26 +162,10 @@ const App = () => {
               }
             />
             <Route
-              path="/interviewsession"
+              path="/interviewscreen"
               element={
                 <AuthenticatedRoute>
-                  <InterviewSession />
-                </AuthenticatedRoute>
-              }
-            />
-            <Route
-              path="/interviewstarts"
-              element={
-                <AuthenticatedRoute>
-                  <InterviewQuestion />
-                </AuthenticatedRoute>
-              }
-            />
-            <Route
-              path="/interviewfeedback"
-              element={
-                <AuthenticatedRoute>
-                  <InterviewFeedback />
+                  <InterviewScreen />
                 </AuthenticatedRoute>
               }
             />
