@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Breadcrumb,
@@ -28,6 +29,9 @@ import infosys from "../assets/infosys.jpg";
 import tcs from "../assets/TCS.jpg";
 import bristlecome from "../assets/bristlecome.jpg";
 import zeus from "../assets/zeus.jpg";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { PlusCircle, X } from "lucide-react";
 
 const companiesData = [
   {
@@ -150,6 +154,18 @@ const companiesData = [
 const CompanyVisits = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newCompany, setNewCompany] = useState({
+    name: '',
+    logo: '',
+    Role: [],
+    rounds: [],
+    preparationTips: [],
+    references: []
+  });
+  const [newRole, setNewRole] = useState('');
+  const [newRound, setNewRound] = useState('');
+  const [newTip, setNewTip] = useState('');
+  const [newReference, setNewReference] = useState('');
 
   const openModal = (company) => {
     setSelectedCompany(company);
@@ -159,6 +175,11 @@ const CompanyVisits = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedCompany(null), 300);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(newCompany);
   };
 
   useEffect(() => {
@@ -190,37 +211,232 @@ const CompanyVisits = () => {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {companiesData.map((company) => (
-            <div
-              key={company.id}
-              className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2 space-y-3"
-              style={{ borderColor: `var(--borderColor)` }}
-            >
-              <div className="flex flex-col items-center ">
-                <img
-                  src={company.logo}
-                  alt={company.name}
-                  className="w-1/2 rounded-lg"
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="mb-4 w-40" size="sm">Add New Company</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+            <DialogHeader >
+              <DialogTitle >Add Company</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="name">Company Name</Label>
+                <Input
+                  id="name"
+                  className="inputField"
+                  value={newCompany.name}
+                  onChange={(e) => setNewCompany({...newCompany, name: e.target.value})}
+                  required
                 />
               </div>
 
-              <div>
-                <h3 className="text-lg font-bold">{company.name}</h3>
+              <div className="space-y-2">
+                <Label htmlFor="logo">Logo URL</Label>
+                <Input
+                  id="logo"
+                  className="inputField"
+                  value={newCompany.logo}
+                  onChange={(e) => setNewCompany({...newCompany, logo: e.target.value})}
+                  type="url"
+                  required
+                />
               </div>
 
-              <div>
-                <Button
-                  className="w-full"
-                  onClick={() => openModal(company)}
-                >
-                  <FaInfoCircle /> More Details
-                </Button>
+              <div className="space-y-2">
+                <Label>Roles</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={newRole}
+                    className="inputField"
+                    onChange={(e) => setNewRole(e.target.value)}
+                    placeholder="Add a role (e.g., Ninja, Digital)"
+                  />
+                  <Button 
+                    type="button"
+                    onClick={() => {
+                      if (newRole.trim()) {
+                        setNewCompany({
+                          ...newCompany,
+                          Role: [...newCompany.Role, newRole.trim()]
+                        });
+                        setNewRole('');
+                      }
+                    }}
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {newCompany.Role.map((role, index) => (
+                    <div key={index} className="flex items-center gap-2 bg-secondary p-2 rounded-md">
+                      <span>{role}</span>
+                      <Button 
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setNewCompany({
+                            ...newCompany,
+                            Role: newCompany.Role.filter((_, i) => i !== index)
+                          });
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+
+              <div className="space-y-2">
+                <Label>Interview Rounds</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={newRound}
+                    className="inputField"
+                    onChange={(e) => setNewRound(e.target.value)}
+                    placeholder="Add an interview round"
+                  />
+                  <Button 
+                    type="button"
+                    onClick={() => {
+                      if (newRound.trim()) {
+                        setNewCompany({
+                          ...newCompany,
+                          rounds: [...newCompany.rounds, newRound.trim()]
+                        });
+                        setNewRound('');
+                      }
+                    }}
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {newCompany.rounds.map((round, index) => (
+                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
+                      <span>{round}</span>
+                      <Button 
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setNewCompany({
+                            ...newCompany,
+                            rounds: newCompany.rounds.filter((_, i) => i !== index)
+                          });
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Preparation Tips</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={newTip}
+                    className="inputField"
+                    onChange={(e) => setNewTip(e.target.value)}
+                    placeholder="Add a preparation tip"
+                  />
+                  <Button 
+                    type="button"
+                    onClick={() => {
+                      if (newTip.trim()) {
+                        setNewCompany({
+                          ...newCompany,
+                          preparationTips: [...newCompany.preparationTips, newTip.trim()]
+                        });
+                        setNewTip('');
+                      }
+                    }}
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {newCompany.preparationTips.map((tip, index) => (
+                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
+                      <span>{tip}</span>
+                      <Button 
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setNewCompany({
+                            ...newCompany,
+                            preparationTips: newCompany.preparationTips.filter((_, i) => i !== index)
+                          });
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>References</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={newReference}
+                    className="inputField"
+                    onChange={(e) => setNewReference(e.target.value)}
+                    placeholder="Add a reference URL"
+                    type="url"
+                  />
+                  <Button 
+                    type="button"
+                    onClick={() => {
+                      if (newReference.trim()) {
+                        setNewCompany({
+                          ...newCompany,
+                          references: [...newCompany.references, newReference.trim()]
+                        });
+                        setNewReference('');
+                      }
+                    }}
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {newCompany.references.map((ref, index) => (
+                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
+                      <span className="truncate">{ref}</span>
+                      <Button 
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setNewCompany({
+                            ...newCompany,
+                            references: newCompany.references.filter((_, i) => i !== index)
+                          });
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4">
+                <DialogTrigger asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogTrigger>
+                <Button type="submit">Add Company</Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
 
         <Dialog
           open={isModalOpen}
@@ -285,6 +501,39 @@ const CompanyVisits = () => {
             )}
           </DialogContent>
         </Dialog>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {companiesData.map((company) => (
+            <div
+              key={company.id}
+              className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2 space-y-3"
+              style={{ borderColor: `var(--borderColor)` }}
+            >
+              <div className="flex flex-col items-center ">
+                <img
+                  src={company.logo}
+                  alt={company.name}
+                  className="w-1/2 rounded-lg"
+                />
+              </div>
+
+              <div>
+                <h3 className="text-lg font-bold">{company.name}</h3>
+              </div>
+
+              <div>
+                <Button
+                  className="w-full"
+                  onClick={() => openModal(company)}
+                >
+                  <FaInfoCircle /> More Details
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+       
       </SidebarInset>
     </SidebarProvider>
   );
