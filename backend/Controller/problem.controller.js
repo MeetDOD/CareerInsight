@@ -14,6 +14,18 @@ const addproblem = async (req, res) => {
   }
 };
 
+// Create and save many problems
+const addproblems = async (req, res) => {
+  try {
+    const problems = await Problem.insertMany(req.body);
+    res
+      .status(201)
+      .json({ message: "Problems created successfully", problems });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating problems", error });
+  }
+};
+
 // Retrieve and return all problems from the database.
 const getproblems = async (req, res) => {
   try {
@@ -107,4 +119,5 @@ module.exports = {
   getproblems,
   getproblem,
   checkCode,
+  addproblems,
 };
