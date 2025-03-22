@@ -40,6 +40,7 @@ import PaymentFailure from "./pages/Failure";
 import Allpodcast from "./AIPodcast/Allpodcast";
 import InterviewScreen from "./AIInterview/InterviewScreen";
 import AllCodingQuestions from "./Coding/AllCodingQuestions";
+import Quizresult from "./AICourse/Quizresult";
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/success" element={<PaymentSuccess />} />
             <Route path="/failed" element={<PaymentFailure />} />
+            <Route path="/quizresult" element={<Quizresult />} />
 
             <Route
               path="/viewcourse/:id/careerinsight/:coursename"
@@ -62,11 +64,14 @@ const App = () => {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/riverflow" element={<Questions />} />
             <Route path="/codingquestions" element={<AllCodingQuestions />} />
-            <Route path="/pricing" element={
-              <AuthenticatedRoute>
-                <PricingPage />
-              </AuthenticatedRoute>
-            } />
+            <Route
+              path="/pricing"
+              element={
+                <AuthenticatedRoute>
+                  <PricingPage />
+                </AuthenticatedRoute>
+              }
+            />
 
             <Route
               path="/login"

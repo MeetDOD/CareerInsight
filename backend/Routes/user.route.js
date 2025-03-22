@@ -1,7 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { register, login, updateProfile, verifyOTP, getalluser, getuserbyid, adduserdetail, deployPortfolio, fetchJobs,checktrails,fetchJobsByCourse } = require("../Controller/user.controller");
-const { authenticateToken } = require("../Middlewares/auth.middleware")
+const {
+  register,
+  login,
+  updateProfile,
+  verifyOTP,
+  getalluser,
+  getuserbyid,
+  adduserdetail,
+  deployPortfolio,
+  fetchJobs,
+  checktrails,
+  fetchJobsByCourse,
+  savecoursemarks,
+  getquizresults,
+} = require("../Controller/user.controller");
+const { authenticateToken } = require("../Middlewares/auth.middleware");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -14,5 +28,7 @@ router.post("/deployportfolio", authenticateToken, deployPortfolio);
 router.post("/getnearestjobs", authenticateToken, fetchJobs);
 router.get("/checktrails/:pagename", authenticateToken, checktrails);
 router.post("/getjobsbycourse", fetchJobsByCourse);
+router.post("/savecoursemarks", authenticateToken, savecoursemarks);
+router.get("/getquizresults", authenticateToken, getquizresults);
 
 module.exports = router;

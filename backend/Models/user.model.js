@@ -81,6 +81,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    coursemarks: [
+      {
+        course: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
+        marks: { type: Number },
+      },
+    ],
     enrolledCourses: [
       {
         course: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
