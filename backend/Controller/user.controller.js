@@ -342,6 +342,36 @@ const fetchJobs = async (req, res) => {
     }
 };
 
+const fetchJobsByCourse = async (req, res) => {
+    try {
+        const { 
+            location, 
+            dateSincePosted = "24hr", 
+            limit = 6,
+            courseCategory
+        } = req.body;
+
+        if (!location || !courseCategory) {
+            return res.status(400).json({ error: "Location and course category are required" });
+        }
+
+        const keyword = courseCategory.toLowerCase();
+
+        const queryOptions = {
+            keyword,
+            location,
+            dateSincePosted,
+            limit: String(limit),
+        };
+
+        const jobs = await linkedIn.query(queryOptions);
+        res.json(jobs);
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        res.status(500).json({ error: "Failed to fetch jobs" });
+    }
+};
+
 const checktrails = async (req, res) => {
     try {
         const user = req.user;
@@ -392,4 +422,4 @@ const checktrails = async (req, res) => {
     }
 }
 
-module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio,fetchJobs,checktrails };
+module.exports = { register, verifyOTP, login, updateProfile, getalluser, getuserbyid, adduserdetail,deployPortfolio,fetchJobs,checktrails,fetchJobsByCourse };
