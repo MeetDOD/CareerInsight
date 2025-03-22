@@ -268,12 +268,16 @@ const CompanyVisits = () => {
           </Breadcrumb>
         </div>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button className="mb-4 w-40" size="sm">Add New Company</Button>
-          </DialogTrigger>
+          {user.role === "Admin" && (
+            <DialogTrigger asChild>
+              <Button className="mb-4 w-40" size="sm">
+                Add New Company
+              </Button>
+            </DialogTrigger>
+          )}
           <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
-            <DialogHeader >
-              <DialogTitle >Add Company</DialogTitle>
+            <DialogHeader>
+              <DialogTitle>Add Company</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
