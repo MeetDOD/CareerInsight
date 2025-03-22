@@ -275,7 +275,6 @@ const StartCourse = () => {
                                                 handleNavigation(activeChapterIndex + 1);
                                                 updateUserProgress();
                                             }}
-                                            className="bg-indigo-500 text-white hover:bg-indigo-600 flex gap-2 px-4 py-2 transition"
                                         >
                                             Next <IoMdArrowRoundForward size={20} />
                                         </Button>

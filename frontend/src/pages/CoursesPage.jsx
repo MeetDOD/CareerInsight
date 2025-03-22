@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox"
 
 const CoursesPage = () => {
     const [courses, setCourses] = useState([]);
@@ -26,11 +27,11 @@ const CoursesPage = () => {
     const filteredCourses = courses.filter(course => {
         const matchesSearch = course.courseName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             course.category.toLowerCase().includes(searchQuery.toLowerCase());
-        
+
         const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(course.category);
         const matchesLevel = selectedLevels.length === 0 || selectedLevels.includes(course.courseLevel);
         const matchesDuration = selectedDurations.length === 0 || selectedDurations.includes(course.duration);
-        console.log(matchesLevel,matchesCategory,matchesDuration," matched data");
+        console.log(matchesLevel, matchesCategory, matchesDuration, " matched data");
         return matchesSearch && matchesCategory && matchesLevel && matchesDuration;
     });
 
@@ -64,19 +65,19 @@ const CoursesPage = () => {
         document.title = "CAREERINSIGHT | COURSES";
     }, []);
 
-    console.log(selectedLevels,selectedCategories,selectedDurations,"data");
+    console.log(selectedLevels, selectedCategories, selectedDurations, "data");
     console.log("courses", courses)
 
     return (
         <div>
-            <div className='flex flex-col items-center gap-2 my-10 px-4'>
+            <div className='flex flex-col items-center gap-2 my-10 px-4 '>
                 <h1 className='text-2xl md:text-3xl font-bold text-center'>
                     Latest <span className='text-primary'>Courses</span>
                 </h1>
                 <p className='text-center text-lg opacity-90 tracking-tight'>
                     Explore our newest courses designed to help you gain essential skills and advance your career.
                 </p>
-                <div className="w-full max-w-md mt-4 relative">
+                <div className="w-full mt-4 relative">
                     <Input
                         type="text"
                         placeholder="Search courses by name or category..."
@@ -91,76 +92,74 @@ const CoursesPage = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-6 px-4">
-                <div className="md:w-64 space-y-4">
-                    <div className="border rounded-lg p-4">
+            <div className="flex flex-col md:flex-row gap-6 px-4 ">
+                <div className="md:w-64 space-y-4" style={{
+                    position: 'sticky',
+                    top: '20px',
+                    height: 'calc(100vh - 40px)'
+                }}>
+                    <div className="border rounded-lg p-4" style={{ borderColor: `var(--borderColor)` }}>
                         <h3 className="font-semibold mb-3">Categories</h3>
                         <div className="space-y-2">
                             {categories.map((category) => (
-                                <label key={category} className="flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
+                                <div key={category} className="flex items-center gap-2">
+                                    <Checkbox
                                         checked={selectedCategories.includes(category)}
-                                        onChange={(e) => {
-                                            setSelectedCategories(prev =>
-                                                e.target.checked
+                                        onCheckedChange={(checked) => {
+                                            setSelectedCategories((prev) =>
+                                                checked
                                                     ? [...prev, category]
-                                                    : prev.filter(c => c !== category)
+                                                    : prev.filter((c) => c !== category)
                                             );
                                             setCurrentPage(1);
                                         }}
-                                        className="rounded"
                                     />
                                     <span>{category}</span>
-                                </label>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    <div className="border rounded-lg p-4">
+                    <div className="border rounded-lg p-4" style={{ borderColor: `var(--borderColor)` }}>
                         <h3 className="font-semibold mb-3">Course Level</h3>
                         <div className="space-y-2">
                             {levels.map((level) => (
-                                <label key={level} className="flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
+                                <div key={level} className="flex items-center gap-2">
+                                    <Checkbox
                                         checked={selectedLevels.includes(level)}
-                                        onChange={(e) => {
-                                            setSelectedLevels(prev =>
-                                                e.target.checked
+                                        onCheckedChange={(checked) => {
+                                            setSelectedLevels((prev) =>
+                                                checked
                                                     ? [...prev, level]
-                                                    : prev.filter(l => l !== level)
+                                                    : prev.filter((l) => l !== level)
                                             );
                                             setCurrentPage(1);
                                         }}
-                                        className="rounded"
                                     />
                                     <span>{level}</span>
-                                </label>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    <div className="border rounded-lg p-4">
+                    <div className="border rounded-lg p-4" style={{ borderColor: `var(--borderColor)` }}>
                         <h3 className="font-semibold mb-3">Course Duration</h3>
                         <div className="space-y-2">
                             {durations.map((duration) => (
-                                <label key={duration} className="flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
+                                <div key={duration} className="flex items-center gap-2">
+                                    <Checkbox
                                         checked={selectedDurations.includes(duration)}
-                                        onChange={(e) => {
-                                            setSelectedDurations(prev =>
-                                                e.target.checked
+                                        onCheckedChange={(checked) => {
+                                            setSelectedDurations((prev) =>
+                                                checked
                                                     ? [...prev, duration]
-                                                    : prev.filter(d => d !== duration)
+                                                    : prev.filter((d) => d !== duration)
                                             );
                                             setCurrentPage(1);
                                         }}
-                                        className="rounded"
                                     />
                                     <span>{duration}</span>
-                                </label>
+                                </div>
                             ))}
                         </div>
                     </div>

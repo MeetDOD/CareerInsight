@@ -55,8 +55,11 @@ const App = () => {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/success" element={<PaymentSuccess />} />
             <Route path="/failed" element={<PaymentFailure />} />
-            <Route path="/quizresult" element={<Quizresult />} />
-
+            <Route path="/quizresult" element={
+              <AuthenticatedRoute>
+                <Quizresult />
+              </AuthenticatedRoute>
+            } />
             <Route
               path="/viewcourse/:id/careerinsight/:coursename"
               element={<ViewCourseLayout />}

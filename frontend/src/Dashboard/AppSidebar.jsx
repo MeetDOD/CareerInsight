@@ -12,22 +12,23 @@ import { toast } from 'sonner';
 import { FaSchool } from "react-icons/fa6";
 import { BsSuitcaseLgFill } from "react-icons/bs";
 import { PiKanbanFill } from "react-icons/pi";
-import { Crown } from 'lucide-react';
+import { Crown, FileUser } from 'lucide-react';
 
 const data = {
     navMain: [
         { title: 'Dashboard', url: '/dashboard', icon: MdSpaceDashboard },
-        { title: 'Kanban Board', url: '/kanbanboard', icon: PiKanbanFill },
+        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool },
+        // { title: 'Kanban Board', url: '/kanbanboard', icon: PiKanbanFill },
         { title: 'Industry Insights', url: '/insights', icon: MdInsights },
         // { title: 'AI Podcast', url: '/podcast', icon: FaPodcast },
         { title: 'Enrolled Courses', url: '/mycourses', icon: MdLibraryBooks },
         { title: 'Create Course', url: '/createcourse', icon: FaLaptop },
-        // { title: 'Recommendation', url: '/courserecommendation', icon: FaHandHoldingHeart },
-        // { title: 'Resume Builder', url: '/resumebuilder', icon: FaTools },
-        // { title: 'Mock Interview', url: '/mockinterview', icon: MdCamera },
-        // { title: 'Portfolio Builder', url: '/createportfolio', icon: MdWeb },
+        { title: 'Recommendation', url: '/courserecommendation', icon: FaHandHoldingHeart },
+        { title: 'Resume Builder', url: '/resumebuilder', icon: FaTools },
+        { title: 'Mock Interview', url: '/mockinterview', icon: MdCamera },
+        { title: 'Portfolio Builder', url: '/createportfolio', icon: MdWeb },
         { title: 'Job Finder', url: '/jobfinder', icon: BsSuitcaseLgFill },
-        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool }
+        { title: 'Quiz Result', url: '/quizresult', icon: FileUser }
     ],
 };
 
