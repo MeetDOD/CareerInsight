@@ -1,91 +1,97 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     username: {
-        type: String,
+      type: String,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     fullName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     password: {
-        type: String,
-        min: 8,
-        required: true
+      type: String,
+      min: 8,
+      required: true,
     },
     otp: {
-        type: Number
+      type: Number,
     },
     dateofbirth: {
-        type: Date,
+      type: Date,
     },
     gender: {
-        type: String,
+      type: String,
     },
     photo: {
-        type: String
+      type: String,
     },
     phoneno: {
-        type: Number
+      type: Number,
     },
     address: {
-        type: String
+      type: String,
     },
     techstack: {
-        type: [String]
+      type: [String],
     },
     collegename: {
-        type: String
+      type: String,
     },
     university: {
-        type: String
+      type: String,
     },
     academicyear: {
-        type: Number
+      type: Number,
     },
     subscribed: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     resumebuilder: {
-        type: Number,
-        default: 3
+      type: Number,
+      default: 3,
     },
     mockinterview: {
-        type: Number,
-        default: 3
+      type: Number,
+      default: 3,
     },
     portfoliobuilder: {
-        type: Number,
-        default: 3
+      type: Number,
+      default: 3,
     },
     createcourse: {
-        type: Number,
-        default: 3
+      type: Number,
+      default: 3,
     },
     userType: {
-        type: String,
-        default: "student"
+      type: String,
+      default: "student",
     },
-    portfolioUrl: { 
-        type: String, 
-        default: null
+    portfolioUrl: {
+      type: String,
+      default: null,
+    },
+    role: {
+      type: String,
+      default: "user",
     },
     enrolledCourses: [
-        {
-            course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
-            enrolledAt: { type: Date, default: Date.now },
-            progress: { type: Number, default: 0 }    ,
-            activeChapterIndex: { type: Number, default: 0 }    
-        }
+      {
+        course: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
+        enrolledAt: { type: Date, default: Date.now },
+        progress: { type: Number, default: 0 },
+        activeChapterIndex: { type: Number, default: 0 },
+      },
     ],
-},
-    { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 const User = mongoose.model("user", userSchema);
 
