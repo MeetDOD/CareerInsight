@@ -32,6 +32,7 @@ import zeus from "../assets/zeus.jpg";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle, X } from "lucide-react";
+import { MdCancel } from "react-icons/md";
 
 const companiesData = [
   {
@@ -215,7 +216,7 @@ const CompanyVisits = () => {
           <DialogTrigger asChild>
             <Button className="mb-4 w-40" size="sm">Add New Company</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
             <DialogHeader >
               <DialogTitle >Add Company</DialogTitle>
             </DialogHeader>
@@ -225,8 +226,9 @@ const CompanyVisits = () => {
                 <Input
                   id="name"
                   className="inputField"
+                  placeholder="Enter company name"
                   value={newCompany.name}
-                  onChange={(e) => setNewCompany({...newCompany, name: e.target.value})}
+                  onChange={(e) => setNewCompany({ ...newCompany, name: e.target.value })}
                   required
                 />
               </div>
@@ -236,8 +238,9 @@ const CompanyVisits = () => {
                 <Input
                   id="logo"
                   className="inputField"
+                  placeholder="Enter company logo URL"
                   value={newCompany.logo}
-                  onChange={(e) => setNewCompany({...newCompany, logo: e.target.value})}
+                  onChange={(e) => setNewCompany({ ...newCompany, logo: e.target.value })}
                   type="url"
                   required
                 />
@@ -252,7 +255,7 @@ const CompanyVisits = () => {
                     onChange={(e) => setNewRole(e.target.value)}
                     placeholder="Add a role (e.g., Ninja, Digital)"
                   />
-                  <Button 
+                  <Button
                     type="button"
                     onClick={() => {
                       if (newRole.trim()) {
@@ -264,26 +267,30 @@ const CompanyVisits = () => {
                       }
                     }}
                   >
-                    <PlusCircle className="h-4 w-4" />
+                    Add
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {newCompany.Role.map((role, index) => (
-                    <div key={index} className="flex items-center gap-2 bg-secondary p-2 rounded-md">
-                      <span>{role}</span>
-                      <Button 
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          setNewCompany({
-                            ...newCompany,
-                            Role: newCompany.Role.filter((_, i) => i !== index)
-                          });
-                        }}
+                    <div key={index} className="flex items-center gap-2">
+                      <div
+                        key={index}
+                        className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
+                        {role}
+                        <button
+                          type="button"
+                          className="ml-1"
+                          onClick={() => {
+                            setNewCompany({
+                              ...newCompany,
+                              Role: newCompany.Role.filter((_, i) => i !== index)
+                            });
+                          }}
+                        >
+                          <MdCancel />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -298,7 +305,7 @@ const CompanyVisits = () => {
                     onChange={(e) => setNewRound(e.target.value)}
                     placeholder="Add an interview round"
                   />
-                  <Button 
+                  <Button
                     type="button"
                     onClick={() => {
                       if (newRound.trim()) {
@@ -310,17 +317,19 @@ const CompanyVisits = () => {
                       }
                     }}
                   >
-                    <PlusCircle className="h-4 w-4" />
+                    Add
                   </Button>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
                   {newCompany.rounds.map((round, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span>{round}</span>
-                      <Button 
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {round}
+                      <button
                         type="button"
-                        variant="ghost"
-                        size="sm"
+                        className="ml-1"
                         onClick={() => {
                           setNewCompany({
                             ...newCompany,
@@ -328,13 +337,12 @@ const CompanyVisits = () => {
                           });
                         }}
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
+                        <MdCancel />
+                      </button>
                     </div>
                   ))}
                 </div>
               </div>
-
               <div className="space-y-2">
                 <Label>Preparation Tips</Label>
                 <div className="flex gap-2">
@@ -344,7 +352,7 @@ const CompanyVisits = () => {
                     onChange={(e) => setNewTip(e.target.value)}
                     placeholder="Add a preparation tip"
                   />
-                  <Button 
+                  <Button
                     type="button"
                     onClick={() => {
                       if (newTip.trim()) {
@@ -356,17 +364,19 @@ const CompanyVisits = () => {
                       }
                     }}
                   >
-                    <PlusCircle className="h-4 w-4" />
+                    Add
                   </Button>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
                   {newCompany.preparationTips.map((tip, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span>{tip}</span>
-                      <Button 
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {tip}
+                      <button
                         type="button"
-                        variant="ghost"
-                        size="sm"
+                        className="ml-1"
                         onClick={() => {
                           setNewCompany({
                             ...newCompany,
@@ -374,8 +384,8 @@ const CompanyVisits = () => {
                           });
                         }}
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
+                        <MdCancel />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -391,7 +401,7 @@ const CompanyVisits = () => {
                     placeholder="Add a reference URL"
                     type="url"
                   />
-                  <Button 
+                  <Button
                     type="button"
                     onClick={() => {
                       if (newReference.trim()) {
@@ -403,17 +413,19 @@ const CompanyVisits = () => {
                       }
                     }}
                   >
-                    <PlusCircle className="h-4 w-4" />
+                    Add
                   </Button>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
                   {newCompany.references.map((ref, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span className="truncate">{ref}</span>
-                      <Button 
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {ref}
+                      <button
                         type="button"
-                        variant="ghost"
-                        size="sm"
+                        className="ml-1"
                         onClick={() => {
                           setNewCompany({
                             ...newCompany,
@@ -421,8 +433,8 @@ const CompanyVisits = () => {
                           });
                         }}
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
+                        <MdCancel />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -430,7 +442,7 @@ const CompanyVisits = () => {
 
               <div className="flex justify-end gap-2 pt-4">
                 <DialogTrigger asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="secondary">Cancel</Button>
                 </DialogTrigger>
                 <Button type="submit">Add Company</Button>
               </div>
@@ -533,7 +545,7 @@ const CompanyVisits = () => {
           ))}
         </div>
 
-       
+
       </SidebarInset>
     </SidebarProvider>
   );
