@@ -393,7 +393,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </button>
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -442,7 +442,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </button>
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -493,7 +493,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </button>
+                      </Button>
                     </div>
                   ))}
                 </div>
