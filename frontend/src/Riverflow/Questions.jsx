@@ -121,8 +121,8 @@ const Questions = () => {
                     {questions
                         .filter(q => q.title.toLowerCase().includes(search.toLowerCase()))
                         .map((question) => (
-                            <div key={question._id} className="w-full">
-                                <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg w-full break-words" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                            <Link to={`/question/${question._id}`} key={question._id} className="w-full">
+                                <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg w-full break-words hover:shadow-md transition duration-300 hover:-translate-y-2 " style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
                                     <div className="flex flex-wrap justify-between items-center gap-2">
                                         <div className="flex flex-wrap items-center gap-2 text-gray-700 text-sm">
                                             <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-3 py-1 rounded-lg shadow-sm">
@@ -142,7 +142,7 @@ const Questions = () => {
                                             </div>
                                         </div>
 
-                                        <div className="mb-2">
+                                        <div>
                                             {question?.author?._id === user?._id && (
                                                 <div onClick={() => handleDelete(question._id)} className="cursor-pointer text-white rounded-md bg-red-500 p-2 hover:bg-red-600 transition-colors duration-200 gap-2">
                                                     <MdDelete size={22} />
@@ -151,9 +151,9 @@ const Questions = () => {
                                         </div>
                                     </div>
 
-                                    <Link to={`/question/${question._id}`} className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200 ">
+                                    <div className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200 ">
                                         {question.title}
-                                    </Link>
+                                    </div>
 
                                     <CardDescription className="line-clamp-2">
                                         {question.body}
@@ -186,7 +186,7 @@ const Questions = () => {
                                         </div>
                                     )}
                                 </CardContent>
-                            </div>
+                            </Link>
                         ))}
                 </div>
                 <div className="hidden lg:block mb-10">

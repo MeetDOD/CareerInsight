@@ -6,7 +6,6 @@ import Loader from "@/services/Loader";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import NotFound from "@/pages/NotFound";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import AnswerList from "./AnswerList";
@@ -14,6 +13,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { userState } from "@/store/auth";
 import { useRecoilValue } from "recoil";
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
+import { Editor, EditorProvider, Toolbar, BtnUndo, BtnRedo, BtnBold, BtnItalic, BtnUnderline, BtnStrikeThrough, BtnNumberedList, BtnBulletList, BtnLink, Separator } from 'react-simple-wysiwyg';
+import DOMPurify from "dompurify";
 
 const ViewQuestion = () => {
     const { id } = useParams();
@@ -24,6 +25,7 @@ const ViewQuestion = () => {
     const [loading, setLoading] = useState(true);
     const [acceptedAnswer, setAcceptedAnswer] = useState(null);
     const navigate = useNavigate();
+    const [richText, setRichText] = useState(answer);
 
     if (!user) {
         toast.error("Please login to use riverflow");
@@ -94,7 +96,7 @@ const ViewQuestion = () => {
     };
 
     const handleSubmit = async () => {
-        if (!answer.trim()) {
+        if (!richText.trim()) {
             toast.error("Answer cannot be empty!");
             return;
         }
@@ -103,7 +105,7 @@ const ViewQuestion = () => {
             setLoading(true);
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/answers`, {
                 questionId: id,
-                body: answer,
+                body: DOMPurify.sanitize(richText),
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -111,7 +113,7 @@ const ViewQuestion = () => {
             });
 
             toast.success("Answer submitted successfully!");
-            setAnswer("");
+            setRichText("");
         } catch (error) {
             console.error("Error submitting answer:", error);
             toast.error("Failed to submit answer. Please try again.");
@@ -223,14 +225,35 @@ const ViewQuestion = () => {
 
                 <div className="mt-8">
                     <h2 className="text-lg font-semibold">Your Answer</h2>
-                    <Textarea
-                        className="w-full mt-2 p-3 inputField"
-                        placeholder="Write your answer here..."
-                        rows="5"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                    />
-                    <Button className="mt-3" onClick={handleSubmit} disabled={loading}>
+
+                    <EditorProvider>
+                        <Editor
+                            value={richText}
+                            onChange={(e) => setRichText(e.target.value)}
+                            className="w-full mt-2 p-3 inputField border rounded-md"
+                        >
+                            <Toolbar>
+                                <BtnUndo />
+                                <BtnRedo />
+                                <Separator />
+                                <BtnBold />
+                                <BtnItalic />
+                                <BtnUnderline />
+                                <BtnStrikeThrough />
+                                <Separator />
+                                <BtnNumberedList />
+                                <BtnBulletList />
+                                <Separator />
+                                <BtnLink />
+                            </Toolbar>
+                        </Editor>
+                    </EditorProvider>
+
+                    <Button
+                        className="mt-3"
+                        onClick={() => handleSubmit(DOMPurify.sanitize(richText))}
+                        disabled={loading}
+                    >
                         {loading ? "Submitting..." : "Submit Answer"}
                     </Button>
                 </div>

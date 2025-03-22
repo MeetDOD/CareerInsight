@@ -3,10 +3,11 @@ import axios from "axios";
 import { FaReplyAll, FaCheckCircle } from "react-icons/fa";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Editor, EditorProvider, Toolbar, BtnUndo, BtnRedo, BtnBold, BtnItalic, BtnUnderline, BtnStrikeThrough, BtnNumberedList, BtnBulletList, BtnLink, Separator } from 'react-simple-wysiwyg';
 import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import { toast } from "sonner";
+import DOMPurify from "dompurify";
 
 const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
     const [answers, setAnswers] = useState([]);
@@ -14,6 +15,7 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
     const [error, setError] = useState("");
     const [replyingTo, setReplyingTo] = useState(null);
     const [replyText, setReplyText] = useState("");
+    const [richText, setRichText] = useState(replyText);
     const [comments, setComments] = useState({});
     const user = useRecoilValue(userState);
 
@@ -155,7 +157,7 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
                                 </div>
                             </div>
 
-                            <p className="mt-3 text-sm leading-relaxed">{answer.body}</p>
+                            <p className="mt-3 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(answer.body) }}></p>
 
                             {user && user._id === question.author._id && (
                                 <Button
@@ -178,13 +180,32 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
 
                             {replyingTo === answer._id && (
                                 <div className="mt-3">
-                                    <Textarea
-                                        className={`w-full p-2 rounded-md  ${acceptedAnswer === answer._id ? "" : "inputField"}`}
-                                        placeholder="Write your reply..."
-                                        rows="3"
-                                        value={replyText}
-                                        onChange={(e) => setReplyText(e.target.value)}
-                                    />
+                                    <EditorProvider>
+                                        <Editor
+                                            value={richText}
+                                            onChange={(e) => {
+                                                setRichText(e.target.value);
+                                                setReplyText(e.target.value);
+                                            }}
+                                            className={`w-full p-2 rounded-md border ${acceptedAnswer === answer._id ? "" : "inputField"}`}
+                                        >
+                                            <Toolbar>
+                                                <BtnUndo />
+                                                <BtnRedo />
+                                                <Separator />
+                                                <BtnBold />
+                                                <BtnItalic />
+                                                <BtnUnderline />
+                                                <BtnStrikeThrough />
+                                                <Separator />
+                                                <BtnNumberedList />
+                                                <BtnBulletList />
+                                                <Separator />
+                                                <BtnLink />
+                                            </Toolbar>
+                                        </Editor>
+                                    </EditorProvider>
+
                                     <div className="flex justify-end mt-2 space-x-2">
                                         <Button variant="secondary" className="border" onClick={() => setReplyingTo(null)}>
                                             Cancel
@@ -193,7 +214,6 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
                                     </div>
                                 </div>
                             )}
-
                             {comments[answer._id]?.length > 0 && (
                                 <div className="mt-4 border-l-2 border-primary pl-4 space-y-2">
                                     {comments[answer._id]?.map((comment) => (
@@ -206,7 +226,7 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
                                             <div className={`p-3 rounded-lg w-full ${acceptedAnswer === answer._id ? "bg-green-50 border" : "courseSection"} `}>
                                                 <span className="font-medium text-sm">{comment.author?.fullName || "Anonymous"}</span>
                                                 <p className="text-xs text-gray-400">{new Date(comment.createdAt).toLocaleString()}</p>
-                                                <p className="text-sm mt-1">{comment.body}</p>
+                                                <p className="text-sm mt-1" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment.body) }}></p>
                                             </div>
                                         </div>
                                     ))}
