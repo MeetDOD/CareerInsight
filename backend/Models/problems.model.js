@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const ProblemSchema = new mongoose.Schema({
+  type: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
   difficulty: {
