@@ -39,6 +39,7 @@ import PaymentSuccess from "./pages/Success";
 import PaymentFailure from "./pages/Failure";
 import Allpodcast from "./AIPodcast/Allpodcast";
 import InterviewScreen from "./AIInterview/InterviewScreen";
+import AllCodingQuestions from "./Coding/AllCodingQuestions";
 
 const App = () => {
   return (
@@ -60,7 +61,12 @@ const App = () => {
             />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/riverflow" element={<Questions />} />
-            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/codingquestions" element={<AllCodingQuestions />} />
+            <Route path="/pricing" element={
+              <AuthenticatedRoute>
+                <PricingPage />
+              </AuthenticatedRoute>
+            } />
 
             <Route
               path="/login"

@@ -10,6 +10,11 @@ import Loader from '@/services/Loader';
 import { GiPartyPopper } from "react-icons/gi";
 import Confetti from 'react-confetti';
 import ReactMarkdown from 'react-markdown';
+import { FaBookmark, FaLocationDot } from "react-icons/fa6";
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/auth';
+import { Newspaper, PartyPopper } from 'lucide-react';
+import QuizDialog from './QuizDialog';
 
 const StartCourse = () => {
 
@@ -20,6 +25,9 @@ const StartCourse = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
     const navigate = useNavigate();
+    const [jobs, setJobs] = useState([]);
+    const user = useRecoilValue(userState)
+    const [isQuizOpen, setIsQuizOpen] = useState(false);
 
     const poperSizeDetect = () => {
         const width = document.documentElement.clientWidth;
@@ -45,7 +53,6 @@ const StartCourse = () => {
                 if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < response.data.course.chapters.length) {
                     setActiveChapterIndex(savedIndex);
                 }
-                console.log(response.data.course)
             } catch (error) {
                 console.error('Error fetching course:', error);
             } finally {
@@ -55,6 +62,34 @@ const StartCourse = () => {
 
         fetchCourse();
     }, [id]);
+
+    useEffect(() => {
+        if (course && course.category) {
+            const fetchJobsByCourse = async () => {
+                try {
+                    const response = await axios.post(
+                        `${import.meta.env.VITE_BASE_URL}/api/user/getjobsbycourse`,
+                        {
+                            location: user?.address,
+                            courseCategory: course?.category,
+                            limit: 6
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            }
+                        }
+                    );
+                    setJobs(response.data);
+                } catch (error) {
+                    console.error('Error fetching jobs:', error);
+                    toast.error("Failed to fetch jobs.");
+                }
+            };
+
+            fetchJobsByCourse();
+        }
+    }, [course]);
 
     const handleNavigation = (newIndex) => {
         if (newIndex >= 0 && newIndex < course.chapters.length) {
@@ -201,37 +236,118 @@ const StartCourse = () => {
                                     ))}
                                 </div>
                             )}
-                            <div className='flex flex-row gap-2 justify-between mt-5'>
+                            <div className="flex flex-row justify-between items-center mt-5">
                                 <Button
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => handleNavigation(activeChapterIndex - 1)}
-                                    className="flex gap-2 border"
+                                    className="flex gap-2 border px-4 py-2 hover:bg-gray-100 transition"
                                     disabled={activeChapterIndex === 0}
                                 >
                                     <IoMdArrowRoundBack size={20} /> Previous
                                 </Button>
-                                <Button
-                                    size="sm"
-                                    onClick={() => {
-                                        if (activeChapterIndex === course.chapters.length - 1) {
-                                            handleFinish();
-                                        } else {
-                                            handleNavigation(activeChapterIndex + 1);
-                                            updateUserProgress();
-                                        }
-                                    }}
-                                    className="flex gap-2 px-5"
-                                >
-                                    {activeChapterIndex === course.chapters.length - 1
-                                        ? <span className='flex gap-2'>Finish <GiPartyPopper size={20} /></span>
-                                        : <span className='flex gap-2 items-center'>Next<IoMdArrowRoundForward size={20} /></span>
-                                    }
-                                </Button>
+
+                                <div className="flex gap-4">
+                                    {activeChapterIndex === course.chapters.length - 1 && (
+                                        <>
+                                            <Button
+                                                onClick={() => setIsQuizOpen(true)}
+                                                size="sm"
+                                                className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 transition"
+                                            >
+                                                Give Quiz <Newspaper size={20} />
+                                            </Button>
+                                            <QuizDialog open={isQuizOpen} onClose={() => setIsQuizOpen(false)} course={course} />
+                                            <Button
+                                                size="sm"
+                                                onClick={handleFinish}
+                                                className="bg-green-500 text-white hover:bg-green-600 flex gap-2 px-4 py-2 transition"
+                                            >
+                                                Finish <GiPartyPopper size={20} />
+                                            </Button>
+                                        </>
+                                    )}
+
+                                    {activeChapterIndex !== course.chapters.length - 1 && (
+                                        <Button
+                                            size="sm"
+                                            onClick={() => {
+                                                handleNavigation(activeChapterIndex + 1);
+                                                updateUserProgress();
+                                            }}
+                                            className="bg-indigo-500 text-white hover:bg-indigo-600 flex gap-2 px-4 py-2 transition"
+                                        >
+                                            Next <IoMdArrowRoundForward size={20} />
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
+
                         </CardContent>
                     </Card>
                 </div>
+            </div>
+
+            <h2 className="text-2xl font-bold my-10">Suggested Jobs based on <span className='font-medium text-white rounded-lg py-2 px-3 bg-primary'>{course?.category}</span></h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {jobs.map((job, index) => (
+                    <div
+                        className="relative bg-white border rounded-xl p-4 shadow-sm transition-all flex flex-col justify-between h-full space-y-4"
+                        style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}
+                    >
+                        <div>
+                            <FaBookmark size={20} className="absolute right-4 cursor-pointer text-primary" />
+                            <div className="flex items-center gap-1">
+                                <FaLocationDot size={18} className="mr-1 text-primary" />
+                                <h3 className="text-sm font-semibold text-gray-500 line-clamp-1">
+                                    {job.location}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-bold line-clamp-1">{job.position}</h3>
+                            <div className="flex space-x-1 mt-1">
+                                {[...Array(4)].map((_, i) => (
+                                    <div key={i} className="w-2 h-2 bg-primary rounded-full"></div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center space-x-2">
+                                <img
+                                    src={job.companyLogo}
+                                    alt={job.company}
+                                    className="h-10 w-10 rounded-md object-contain"
+                                />
+                                <div className="">
+                                    <p className="font-medium text-sm line-clamp-1">{job.company}</p>
+                                    <span className="text-gray-500 text-xs">{job.date}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-row gap-2 mt-4">
+                            <a href={job.jobUrl} target="_blank" rel="noopener noreferrer" className="w-full block">
+                                <Button variant="default" className="w-full">
+                                    Apply Now
+                                </Button>
+                            </a>
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)},${encodeURIComponent(job.company)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full block"
+                            >
+                                <Button variant="secondary" className="w-full flex items-center gap-2">
+                                    View on Map
+                                </Button>
+                            </a>
+                        </div>
+
+                    </div>
+                ))}
             </div>
         </div>
     )

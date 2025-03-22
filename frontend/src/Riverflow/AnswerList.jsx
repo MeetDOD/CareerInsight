@@ -60,13 +60,13 @@ const AnswerList = ({ id, acceptedAnswer, setAcceptedAnswer, question }) => {
     }, [answers]);
 
     const handleReplySubmit = async (answerId) => {
-        if (!replyText.trim()) return;
+        if (!richText.trim()) return;
 
         try {
             await axios.post(
                 `${import.meta.env.VITE_BASE_URL}/api/comments`,
                 {
-                    body: replyText,
+                    body: DOMPurify.sanitize(richText),
                     questionId: id,
                     answerId,
                 },
