@@ -18,6 +18,7 @@ const voteRoutes = require("./Routes/riverflowroutes/vote.route");
 const paymentRoutes = require("./Routes/payment.route");
 
 const podcastRoutes = require("./Routes/podcast.route");
+const problemRoutes = require("./Routes/problem.route");
 
 const interviewRoutes = require("./Routes/interview.route");
 
@@ -49,6 +50,7 @@ app.use("/api/vote", voteRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/podcast", podcastRoutes);
 app.use("/api/interview", interviewRoutes);
+app.use("/api/problems", problemRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
