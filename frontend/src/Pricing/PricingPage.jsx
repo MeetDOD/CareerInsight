@@ -1,27 +1,26 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HiCheckCircle, HiLightningBolt } from "react-icons/hi";
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { cashfree } from "@/services/paymentutil";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/store/auth";
 
 const PricingSection = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const user1 = useRecoilValue(userState);
   const [sessionid, setSessionid] = useState("");
-  console.log(user);
 
   const createrandomorderid = () => {
-    return Math.random()
-      .toString(36)
-      .substring(7);
+    return Math.random().toString(36).substring(7);
   };
 
   const handleUpgrade = async () => {
     const orderId = createrandomorderid();
     const formdata = new FormData();
-    formdata.append("customerEmail", user.email);
-    formdata.append("customerPhone", `${user.phoneno}`);
+    formdata.append("customerEmail", user1.email);
+    formdata.append("customerPhone", `${user1.phoneno}`);
     formdata.append("orderAmount", 99);
     formdata.append("orderId", orderId);
 
@@ -35,21 +34,21 @@ const PricingSection = () => {
           },
         }
       );
+
       if (response.status === 200) {
         setSessionid(response.data.payment_session_id);
 
         let checkoutOptions = {
           paymentSessionId: response.data.payment_session_id,
-          returnUrl: `${import.meta.env.VITE_BASE_URL
-            }/api/payment/verify/${orderId}`,
+          returnUrl: `${import.meta.env.VITE_BASE_URL}/api/payment/verify/${orderId}`,
         };
+
         cashfree.checkout(checkoutOptions).then(function (result) {
           if (result.error) {
             console.log(result.error);
           }
           if (result.redirect) {
             console.log(result.redirect);
-            // window.location.href = result.redirect;
           }
         });
       }
@@ -60,11 +59,11 @@ const PricingSection = () => {
 
   return (
     <div className="container px-5 mt-16 mx-auto">
-      <div className='flex flex-col items-center gap-2 my-10 px-4 mb-12'>
-        <h1 className='text-3xl sm:text-4xl font-bold text-center'>
-          Our <span className='text-primary'>Pricing</span>
+      <div className="flex flex-col items-center gap-2 my-10 px-4 mb-12">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center">
+          Our <span className="text-primary">Pricing</span>
         </h1>
-        <p className='text-center text-lg opacity-90 tracking-tight'>
+        <p className="text-center text-lg opacity-90 tracking-tight">
           Unlock the full potential of <span className="font-semibold">Career Insight</span> with AI-powered
           tools. Get started for free or go unlimited for just <span className="font-semibold">₹99/month</span>.
         </p>
@@ -125,13 +124,15 @@ const PricingSection = () => {
               AI Mock Interviews
             </p>
           </div>
+
+          {/* Disable button if user is already subscribed */}
           <ShinyButton
-            onClick={() => {
-              handleUpgrade();
-            }}
-            className="py-3 w-full mt-6 bg-white text-gray-900 font-semibold text-lg"
+            onClick={handleUpgrade}
+            className={`py-3 w-full mt-6 font-semibold text-lg 
+              ${user1.subscribed ? "bg-gray-400 text-gray-700 cursor-not-allowed" : "bg-white text-gray-900"}`}
+            disabled={user1.subscribed}
           >
-            Upgrade Now
+            {user1.subscribed ? "Subscribed" : "Upgrade Now"}
           </ShinyButton>
         </div>
       </div>
