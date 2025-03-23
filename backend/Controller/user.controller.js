@@ -11,6 +11,7 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const linkedIn = require("linkedin-jobs-api");
 const QuizResult = require("../Models/coursemarks.model");
+const axios = require("axios");
 
 dotenv.config();
 
@@ -520,6 +521,84 @@ const getquizresults = async (req, res) => {
   }
 };
 
+const fetchleetcodequestions = async (req, res) => {
+  try {
+    const response = await axios.get("https://leetcode.com/api/problems/all/");
+    const allQuestions = response.data.stat_status_pairs;
+
+    // Extract 20 free questions (no "paid_only" flag)
+    const freeQuestions = allQuestions
+      .filter((q) => !q.paid_only) // Only free questions
+      .slice(0, 20) // Get first 20
+      .map((q) => ({
+        title: q.stat.question__title,
+        difficulty:
+          q.difficulty.level === 1
+            ? "Easy"
+            : q.difficulty.level === 2
+            ? "Medium"
+            : "Hard",
+        url: `https://leetcode.com/problems/${q.stat.question__title_slug}/`,
+      }));
+
+    res.json(freeQuestions);
+  } catch (error) {
+    console.error("Error fetching LeetCode data:", error);
+    res.status(500).json({ message: "Error fetching data" });
+  }
+};
+
+const leaderboard = async (req, res) => {
+  try {
+    const quizResults = await QuizResult.aggregate([
+      {
+        $group: {
+          _id: "$user",
+          uniqueCourses: { $addToSet: "$course" }, // Get unique courses completed
+          totalScore: { $sum: "$score" }, // Sum the scores from quizzes
+        },
+      },
+      {
+        $addFields: {
+          courseScore: { $multiply: [{ $size: "$uniqueCourses" }, 10] }, // Add 10 points per course
+          user: "$_id",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          user: 1,
+          totalScore: { $add: ["$totalScore", "$courseScore"] }, // Combine total scores
+          completedCourses: { $size: "$uniqueCourses" }, // Count unique courses
+        },
+      },
+      {
+        $sort: { completedCourses: -1, totalScore: -1 }, // Sort by courses completed, then by score
+      },
+      {
+        $limit: 10, // Get top 10 users
+      },
+    ]);
+
+    const users = await User.find({
+      _id: { $in: quizResults.map((q) => q.user) },
+    })
+      .select("fullName photo")
+      .lean();
+
+    const leaderboard = quizResults.map((result) => ({
+      user: users.find((u) => u._id.equals(result.user)),
+      completedCourses: result.completedCourses,
+      score: result.totalScore,
+    }));
+
+    res.status(200).json({ leaderboard });
+  } catch (error) {
+    console.error("Error fetching leaderboard data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   register,
   verifyOTP,
@@ -534,4 +613,6 @@ module.exports = {
   fetchJobsByCourse,
   savecoursemarks,
   getquizresults,
+  fetchleetcodequestions,
+  leaderboard,
 };

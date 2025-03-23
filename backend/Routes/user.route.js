@@ -14,6 +14,8 @@ const {
   fetchJobsByCourse,
   savecoursemarks,
   getquizresults,
+  fetchleetcodequestions,
+  leaderboard,
 } = require("../Controller/user.controller");
 const { authenticateToken } = require("../Middlewares/auth.middleware");
 
@@ -30,5 +32,7 @@ router.get("/checktrails/:pagename", authenticateToken, checktrails);
 router.post("/getjobsbycourse", fetchJobsByCourse);
 router.post("/savecoursemarks", authenticateToken, savecoursemarks);
 router.get("/getquizresults", authenticateToken, getquizresults);
+router.get("/fetchleetcodequestions", fetchleetcodequestions);
+router.get("/leaderboard", leaderboard);
 
 module.exports = router;

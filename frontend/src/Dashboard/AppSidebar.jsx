@@ -17,7 +17,6 @@ import { Crown, FileUser } from 'lucide-react';
 const data = {
     navMain: [
         { title: 'Dashboard', url: '/dashboard', icon: MdSpaceDashboard },
-        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool },
         // { title: 'Kanban Board', url: '/kanbanboard', icon: PiKanbanFill },
         { title: 'Industry Insights', url: '/insights', icon: MdInsights },
         // { title: 'AI Podcast', url: '/podcast', icon: FaPodcast },
@@ -27,6 +26,7 @@ const data = {
         { title: 'Resume Builder', url: '/resumebuilder', icon: FaTools },
         { title: 'Mock Interview', url: '/mockinterview', icon: MdCamera },
         { title: 'Portfolio Builder', url: '/createportfolio', icon: MdWeb },
+        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool },
         { title: 'Job Finder', url: '/jobfinder', icon: BsSuitcaseLgFill },
         { title: 'Quiz Result', url: '/quizresult', icon: FileUser }
     ],
@@ -46,7 +46,6 @@ const AppSidebar = () => {
         navigate("/");
     };
 
-    // List of pro features
     const proFeatures = ['AI Podcast', 'Create Course', 'Resume Builder', 'Mock Interview', 'Portfolio Builder'];
 
     return (
@@ -79,9 +78,9 @@ const AppSidebar = () => {
 
                                     <div className="text-sm font-semibold flex items-center">
                                         {item.title}
-                                        {/* {user.subscribed && isPro && (
-                                            <Crown className="text-yellow-400 ml-2" size={18} />  
-                                        )} */}
+                                        {user.subscribed && isPro && (
+                                            <Crown className="text-yellow-400 ml-2" size={18} />
+                                        )}
                                     </div>
                                 </Link>
                             </SidebarMenuItem>

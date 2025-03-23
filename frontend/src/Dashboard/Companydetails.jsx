@@ -24,137 +24,15 @@ import {
 import { Separator } from "@/components/ui/separator";
 import AppSidebar from "./AppSidebar";
 import { FaInfoCircle } from "react-icons/fa";
-import contentstackimage from "../assets/contentstackimage.jpg";
-import infosys from "../assets/infosys.jpg";
-import tcs from "../assets/TCS.jpg";
-import bristlecome from "../assets/bristlecome.jpg";
-import zeus from "../assets/zeus.jpg";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, X } from "lucide-react";
 import { MdCancel } from "react-icons/md";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
-
-// const companiesData = [
-//   {
-//     id: 1,
-//     name: "Tata Consultancy Services",
-//     logo: tcs,
-//     Role: ["Ninja", "Digital", "Prime"],
-//     rounds: ["Aptitude test-(TCS ION Center)", "Technical Interview"],
-//     preparationTips: [
-//       "Aptitude round contain logical,quantitative,coding question ",
-//       "Practice Basic programming",
-//       "Be thorough with your resume",
-//       "Be aware of OOPS concept",
-//     ],
-//     references: [
-//       "https://www.youtube.com/playlist?list=PL3JmT-xgOMNzI0gM52dReLwXMah1Ma6nl",
-//       "https://www.geeksforgeeks.org/tcs-placement-preparation/",
-//     ],
-//   },
-//   {
-//     id: 2,
-//     name: "Content Stack",
-//     logo: contentstackimage,
-//     rounds: [
-//       "Online Test from College",
-//       "Technical Interview 1",
-//       "Manager Interview 2",
-//       "HR Interview",
-//     ],
-//     preparationTips: [
-//       "Maintain an aggregate CGPA of 8.5",
-//       "Focus on Data Structures and Algorithms",
-//       "Practice html css concepts",
-//       "Basic Concepts and fundamentals of javascript",
-//       "Well versed with Fullstack development",
-//       "Should know MySQL concept",
-//       "Online test include 1 DSA question and 1 SQL query",
-//     ],
-//     references: [
-//       "https://neetcode.io/practice",
-//       "https://sqlzoo.net/wiki/SQL_Tutorial",
-//       "https://www.geeksforgeeks.org/javascript/",
-//     ],
-//   },
-//   {
-//     id: 3,
-//     name: "Infosys",
-//     logo: infosys,
-//     Role: ["Specialist Programmer"],
-//     rounds: ["Coding Round", "Interview"],
-//     preparationTips: [
-//       "Prepare for aptitude tests",
-//       "Focus on Data Structures and Algorithms",
-//       "Be thorough with SQL and databases",
-//       "Study system design",
-//       "Prepare for behavioral and leadership questions",
-//       "Be aware of OOPS concept",
-//     ],
-//     references: [
-//       "https://neetcode.io/practice",
-//       "https://www.youtube.com/playlist?list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz",
-//     ],
-//   },
-//   {
-//     id: 4,
-//     name: "Bristlecone",
-//     logo: bristlecome,
-//     Role: ["Associate"],
-//     rounds: [
-//       "Online Test",
-//       "Group Discussion-1",
-//       "Group Discussion-2",
-//       "Technical Interview",
-//     ],
-//     preparationTips: [
-//       "Basic Aptitude",
-//       "Communication Skills",
-//       "Be thorough with your resume",
-//       "Be confident in behavioral questions",
-//     ],
-//     references: [
-//       "https://www.youtube.com/watch?v=8SyZWgzLQSo",
-//       "https://www.geeksforgeeks.org/aptitude-for-placements/",
-//     ],
-//   },
-//   {
-//     id: 5,
-//     name: "Zeus Learning",
-//     logo: zeus,
-//     Role: [
-//       "Developer",
-//       "Quality Assurance",
-//       "Visual Designer",
-//       "Inspectional Designer",
-//     ],
-//     rounds: [
-//       "Online Test",
-//       "Paper pen Test",
-//       "Technical Interview-1",
-//       "Technical Interview-2",
-//       "HR Round",
-//     ],
-//     preparationTips: [
-//       "Basic Aptitude",
-//       "Coding question for Developer",
-//       "Logical puzzle and Testcase write for QA ",
-//       "Analysis of Design for Visual and Inspectional",
-//       "Communication Skills",
-//       "Be thorough with your resume",
-//       "Be confident in behavioral questions",
-//       "Expect tricky Logical question",
-//     ],
-//     references: [
-//       "https://www.youtube.com/watch?v=8SyZWgzLQSo",
-//       "https://www.geeksforgeeks.org/aptitude-for-placements/",
-//     ],
-//   },
-// ];
+import { Sparkles } from "lucide-react";
+import CompanyRoadmap from "./CompanyRoadmap";
 
 const CompanyVisits = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -172,9 +50,18 @@ const CompanyVisits = () => {
   const [newTip, setNewTip] = useState("");
   const [newReference, setNewReference] = useState("");
   const [companiesData, setCompaniesData] = useState([]);
+  const [isRoadMapOpen, setIsRoadMapOpen] = useState(false);
+
 
   const user = useRecoilValue(userState);
-  console.log(user);
+
+
+
+  const handleOpenRoadMap = (company) => {
+    setSelectedCompany(company);
+    setIsRoadMapOpen(true);
+  };
+
 
   const handleaddcompany = async (e) => {
     e.preventDefault();
@@ -196,8 +83,8 @@ const CompanyVisits = () => {
           },
         }
       );
-      console.log(response.data);
       toast.success("Company added successfully");
+      closeModal();
     } catch (error) {
       toast.error("Failed to add company");
     }
@@ -215,7 +102,6 @@ const CompanyVisits = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newCompany);
   };
 
   useEffect(() => {
@@ -235,7 +121,6 @@ const CompanyVisits = () => {
           }
         );
         setCompaniesData(response.data);
-        console.log(response.data);
       } catch (error) {
         toast.error("Failed to fetch companies data");
       } finally {
@@ -276,7 +161,11 @@ const CompanyVisits = () => {
               </Button>
             </DialogTrigger>
           )}
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto" style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+          <DialogContent className="max-w-[90vw] md:max-w-[600px] lg:max-w-[800px] p-6 rounded-lg shadow-lg border overflow-y-auto max-h-[90vh]" style={{
+            borderColor: `var(--borderColor)`,
+            backgroundColor: `var(--background-color)`,
+            scrollY: "auto",
+          }}>
             <DialogHeader>
               <DialogTitle>Add Company</DialogTitle>
             </DialogHeader>
@@ -332,12 +221,14 @@ const CompanyVisits = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {newCompany.Role.map((role, index) => (
-                    <div key={index} className="flex items-center gap-2 bg-secondary p-2 rounded-md">
-                      <span>{role}</span>
-                      <Button
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {role}
+                      <button
                         type="button"
-                        variant="ghost"
-                        size="sm"
+                        className="ml-1"
                         onClick={() => {
                           setNewCompany({
                             ...newCompany,
@@ -345,8 +236,8 @@ const CompanyVisits = () => {
                           });
                         }}
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
+                        <MdCancel />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -378,9 +269,12 @@ const CompanyVisits = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {newCompany.rounds.map((round, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span>{round}</span>
-                      <Button
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {round}
+                      <button
                         type="button"
                         className="ml-1"
                         onClick={() => {
@@ -393,7 +287,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </Button>
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -427,9 +321,12 @@ const CompanyVisits = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {newCompany.preparationTips.map((tip, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span>{tip}</span>
-                      <Button
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {tip}
+                      <button
                         type="button"
                         className="ml-1"
                         onClick={() => {
@@ -442,7 +339,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </Button>
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -478,9 +375,12 @@ const CompanyVisits = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {newCompany.references.map((ref, index) => (
-                    <div key={index} className="flex items-center justify-between bg-secondary p-2 rounded-md">
-                      <span className="truncate">{ref}</span>
-                      <Button
+                    <div
+                      key={index}
+                      className="flex items-center bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {ref}
+                      <button
                         type="button"
                         className="ml-1"
                         onClick={() => {
@@ -493,7 +393,7 @@ const CompanyVisits = () => {
                         }}
                       >
                         <MdCancel />
-                      </Button>
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -534,36 +434,62 @@ const CompanyVisits = () => {
                   <div>
                     <h3 className="text-lg font-semibold">Interview Rounds</h3>
                     <ul className="list-disc ml-6">
-                      {selectedCompany.rounds.map((round, index) => (
-                        <li key={index}>{round}</li>
-                      ))}
+                      {selectedCompany.Role && selectedCompany.Role.length >= 1 ? (
+                        selectedCompany.Role[0].split(",").map((role, index) => (
+                          <li key={index}>{role.trim()}</li>
+                        ))
+                      ) : (
+                        <li>No roles found</li>
+                      )}
+                    </ul>
+                  </div>
+
+
+                  <div>
+                    <h3 className="text-lg font-semibold">Interview Rounds</h3>
+                    <ul className="list-disc ml-6">
+                      {selectedCompany.rounds && selectedCompany.rounds.length >= 1 ? (
+                        selectedCompany.rounds[0].split(",").map((round, index) => (
+                          <li key={index}>{round.trim()}</li>
+                        ))
+                      ) : (
+                        <li>No round found</li>
+                      )}
                     </ul>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold">Preparation Tips</h3>
                     <ul className="list-disc ml-6">
-                      {selectedCompany.preparationTips.map((tip, index) => (
-                        <li key={index}>{tip}</li>
-                      ))}
+                      {selectedCompany.preparationTips && selectedCompany.preparationTips.length >= 1 ? (
+                        selectedCompany.preparationTips[0].split(",").map((tip, index) => (
+                          <li key={index}>{tip.trim()}</li>
+                        ))
+                      ) : (
+                        <li>No round found</li>
+                      )}
                     </ul>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold">References</h3>
                     <ul className="list-disc ml-6">
-                      {selectedCompany.references.map((ref, index) => (
-                        <li key={index}>
-                          <a
-                            href={ref}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                          >
-                            {ref}
-                          </a>
-                        </li>
-                      ))}
+                      {selectedCompany.references && selectedCompany.references.length >= 1 ? (
+                        selectedCompany.references[0].split(",").map((ref, index) => (
+                          <li key={index}>
+                            <a
+                              href={ref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 hover:underline"
+                            >
+                              {ref.trim()}
+                            </a>
+                          </li>
+                        ))
+                      ) : (
+                        <li>No round found</li>
+                      )}
                     </ul>
                   </div>
                 </div>
@@ -584,11 +510,11 @@ const CompanyVisits = () => {
               className="p-4 border shadow-md rounded-lg transition duration-300 hover:-translate-y-2 space-y-3"
               style={{ borderColor: `var(--borderColor)` }}
             >
-              <div className="flex flex-col items-center ">
+              <div className="flex flex-col items-center">
                 <img
                   src={company.logo}
                   alt={company.name}
-                  className="w-1/2 rounded-lg"
+                  className="w-1/2 rounded-lg object-cover"
                 />
               </div>
 
@@ -596,16 +522,29 @@ const CompanyVisits = () => {
                 <h3 className="text-lg font-bold">{company.name}</h3>
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Button className="w-full" onClick={() => openModal(company)}>
                   <FaInfoCircle /> More Details
+                </Button>
+                <Button
+                  className="w-full border"
+                  variant="secondary"
+                  onClick={() => handleOpenRoadMap(company)}
+                >
+                  <Sparkles /> Generate Road Map
                 </Button>
               </div>
             </div>
           ))}
+
+          {isRoadMapOpen && selectedCompany && (
+            <CompanyRoadmap
+              open={isRoadMapOpen}
+              onClose={() => setIsRoadMapOpen(false)}
+              singlecompany={selectedCompany}
+            />
+          )}
         </div>
-
-
       </SidebarInset>
     </SidebarProvider>
   );

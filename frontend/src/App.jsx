@@ -41,6 +41,8 @@ import Allpodcast from "./AIPodcast/Allpodcast";
 import InterviewScreen from "./AIInterview/InterviewScreen";
 import AllCodingQuestions from "./Coding/AllCodingQuestions";
 import Quizresult from "./AICourse/Quizresult";
+import Leaderboard from "./pages/Leaderboard";
+import LeetcodeQuestions from "./pages/Codingquestion";
 
 const App = () => {
   return (
@@ -53,20 +55,25 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/success" element={<PaymentSuccess />} />
             <Route path="/failed" element={<PaymentFailure />} />
-            <Route path="/quizresult" element={
-              <AuthenticatedRoute>
-                <Quizresult />
-              </AuthenticatedRoute>
-            } />
+            <Route path="/leetcode" element={<LeetcodeQuestions />} />
+            <Route
+              path="/quizresult"
+              element={
+                <AuthenticatedRoute>
+                  <Quizresult />
+                </AuthenticatedRoute>
+              }
+            />
             <Route
               path="/viewcourse/:id/careerinsight/:coursename"
               element={<ViewCourseLayout />}
             />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/riverflow" element={<Questions />} />
-            <Route path="/codingquestions" element={<AllCodingQuestions />} />
+            <Route path="/codingquestions" element={<LeetcodeQuestions />} />
             <Route
               path="/pricing"
               element={
