@@ -19,14 +19,14 @@ const data = {
         { title: 'Dashboard', url: '/dashboard', icon: MdSpaceDashboard },
         // { title: 'Kanban Board', url: '/kanbanboard', icon: PiKanbanFill },
         { title: 'Industry Insights', url: '/insights', icon: MdInsights },
-        // { title: 'AI Podcast', url: '/podcast', icon: FaPodcast },
+        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool },
         { title: 'Enrolled Courses', url: '/mycourses', icon: MdLibraryBooks },
         { title: 'Create Course', url: '/createcourse', icon: FaLaptop },
         { title: 'Recommendation', url: '/courserecommendation', icon: FaHandHoldingHeart },
         { title: 'Resume Builder', url: '/resumebuilder', icon: FaTools },
         { title: 'Mock Interview', url: '/mockinterview', icon: MdCamera },
         { title: 'Portfolio Builder', url: '/createportfolio', icon: MdWeb },
-        { title: 'Company Visits', url: '/companyvisits', icon: FaSchool },
+        { title: 'AI Podcast', url: '/podcast', icon: FaPodcast },
         { title: 'Job Finder', url: '/jobfinder', icon: BsSuitcaseLgFill },
         { title: 'Quiz Result', url: '/quizresult', icon: FileUser }
     ],
@@ -68,18 +68,18 @@ const AppSidebar = () => {
                                 <Link
                                     to={item.url}
                                     className={`flex items-center gap-3.5 px-3 py-2 my-0.5 rounded-lg text-sm font-medium transition-all duration-200
-                                        hover:bg-primary hover:text-white hover:shadow-sm
-                                        ${isActive ? "bg-primary shadow-md" : ''}`}
+                                    hover:bg-primary hover:text-white hover:shadow-sm
+                                    ${isActive ? "bg-primary shadow-md" : ''}`}
                                     style={{ color: `var(--text-color)` }}>
 
                                     <div className="p-1.5 rounded-md" style={{ backgroundColor: `var(--text-color)` }}>
                                         <item.icon style={{ color: `var(--background-color)` }} size={20} />
                                     </div>
 
-                                    <div className="text-sm font-semibold flex items-center">
-                                        {item.title}
+                                    <div className="text-sm font-semibold flex items-center w-full">
+                                        <span>{item.title}</span>
                                         {user.subscribed && isPro && (
-                                            <Crown className="text-yellow-400 ml-2" size={18} />
+                                            <Crown className="text-yellow-400 ml-auto" size={18} />
                                         )}
                                     </div>
                                 </Link>

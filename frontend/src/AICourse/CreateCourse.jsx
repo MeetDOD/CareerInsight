@@ -22,6 +22,10 @@ import fetchRelevantImage from "@/services/ThumbnailGenerator";
 import { motion } from "framer-motion";
 import { BsStars } from "react-icons/bs";
 import axios from "axios";
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import AppSidebar from "@/Dashboard/AppSidebar";
 
 const CreateCourse = () => {
   const [activeIndex, setactiveIndex] = useState(0);
@@ -157,118 +161,143 @@ const CreateCourse = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center mt-10">
-        <h2 className="text-4xl text-primary font-bold tracking-tight">
-          Create Course
-        </h2>
-        <p className="text-lg mt-2 font-semibold tracking-tighter text-gray-500">
-          Enter the details properly and accurate to get the desire response
-          from AI
-        </p>
-        <div className="flex mt-20">
-          {stepperOptions.map((item, index) => (
-            <div className="flex items-center">
-              <div className="flex flex-col items-center w-[50px] md:w-[100px]">
-                <div
-                  className={`bg-gray-200 p-3 rounded-full ${activeIndex >=
-                    index && "bg-primary"}`}
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset style={{ backgroundColor: `var(--background-color)` }}>
+        <div className="flex items-center gap-2 mb-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block font-semibold">
+                Dashboard
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage
+                  className="font-semibold"
+                  style={{ color: `var(--text-color)` }}
                 >
-                  {item.icon}
-                </div>
-                <div>
-                  <h2 className="hidden font-bold md:block md:text-sm">
-                    {item.nameCategory}
-                  </h2>
-                </div>
-              </div>
+                  Create a Course
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+        <div>
+          <div className="flex flex-col justify-center items-center mt-10">
+            <h2 className="text-4xl text-primary font-bold tracking-tight">
+              Create Course
+            </h2>
+            <p className="text-lg mt-2 font-semibold tracking-tighter text-gray-500">
+              Enter the details properly and accurate to get the desire response
+              from AI
+            </p>
+            <div className="flex mt-20">
+              {stepperOptions.map((item, index) => (
+                <div className="flex items-center">
+                  <div className="flex flex-col items-center w-[50px] md:w-[100px]">
+                    <div
+                      className={`bg-gray-200 p-3 rounded-full ${activeIndex >=
+                        index && "bg-primary"}`}
+                    >
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h2 className="hidden font-bold md:block md:text-sm">
+                        {item.nameCategory}
+                      </h2>
+                    </div>
+                  </div>
 
-              {index != stepperOptions?.length - 1 && (
-                <div
-                  className={`h-1 mb-0 md:mb-5 w-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex -
-                    1 >=
-                    index && "bg-violet-600"}`}
-                ></div>
+                  {index != stepperOptions?.length - 1 && (
+                    <div
+                      className={`h-1 mb-0 md:mb-5 w-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex -
+                        1 >=
+                        index && "bg-violet-600"}`}
+                    ></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {activeIndex == 0 ? (
+            <SelectCategory category={category} setCategory={setCategory} />
+          ) : activeIndex == 1 ? (
+            <ToipcDescription
+              topic={topic}
+              setTopic={setTopic}
+              description={description}
+              setDescription={setDescription}
+            />
+          ) : activeIndex == 2 ? (
+            <SelectOptions options={options} setOptions={setOptions} />
+          ) : null}
+
+          <div className="mt-20">
+            <div className="flex justify-between mt-10">
+              <Button
+                className="border"
+                variant="secondary"
+                size="lg"
+                disabled={activeIndex == 0}
+                onClick={() => setactiveIndex(activeIndex - 1)}
+              >
+                Previous
+              </Button>
+
+              {activeIndex < 2 && (
+                <Button
+                  size="lg"
+                  onClick={() => setactiveIndex(activeIndex + 1)}
+                  disabled={
+                    (activeIndex === 0 && !category) ||
+                    (activeIndex === 1 && (!topic || !description)) ||
+                    activeIndex === 2
+                  }
+                >
+                  Next
+                </Button>
+              )}
+
+              {activeIndex === 2 && (
+                <motion.div
+                  className="relative p-[2px] rounded-lg mb-3"
+                  initial={{ backgroundPosition: "0% 50%" }}
+                  animate={{ backgroundPosition: "200% 50%" }}
+                  transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #ff00ff, #00ffff, #ff0, #ff00ff)",
+                    backgroundSize: "200% 200%",
+                  }}
+                >
+                  <Button
+                    onClick={handleSubmit}
+                    type="button"
+                    size="sm"
+                    disabled={loading}
+                    className="relative z-10 bg-primary hover:bg-primary/50 text-white border-none w-full flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <ImSpinner2 size={20} className="animate-spin" /> Generating
+                        layout from AI ...
+                      </>
+                    ) : (
+                      <>
+                        <BsStars size={20} /> Generate layout from AI
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
               )}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-
-      {activeIndex == 0 ? (
-        <SelectCategory category={category} setCategory={setCategory} />
-      ) : activeIndex == 1 ? (
-        <ToipcDescription
-          topic={topic}
-          setTopic={setTopic}
-          description={description}
-          setDescription={setDescription}
-        />
-      ) : activeIndex == 2 ? (
-        <SelectOptions options={options} setOptions={setOptions} />
-      ) : null}
-
-      <div className="px-10 md:px-20 lg:px-44 mt-20">
-        <div className="flex justify-between mt-10">
-          <Button
-            className="border"
-            variant="secondary"
-            size="lg"
-            disabled={activeIndex == 0}
-            onClick={() => setactiveIndex(activeIndex - 1)}
-          >
-            Previous
-          </Button>
-
-          {activeIndex < 2 && (
-            <Button
-              size="lg"
-              onClick={() => setactiveIndex(activeIndex + 1)}
-              disabled={
-                (activeIndex === 0 && !category) ||
-                (activeIndex === 1 && (!topic || !description)) ||
-                activeIndex === 2
-              }
-            >
-              Next
-            </Button>
-          )}
-
-          {activeIndex === 2 && (
-            <motion.div
-              className="relative p-[2px] rounded-lg mb-3"
-              initial={{ backgroundPosition: "0% 50%" }}
-              animate={{ backgroundPosition: "200% 50%" }}
-              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-              style={{
-                background:
-                  "linear-gradient(90deg, #ff00ff, #00ffff, #ff0, #ff00ff)",
-                backgroundSize: "200% 200%",
-              }}
-            >
-              <Button
-                onClick={handleSubmit}
-                type="button"
-                size="sm"
-                disabled={loading}
-                className="relative z-10 bg-primary hover:bg-primary/50 text-white border-none w-full flex items-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <ImSpinner2 size={20} className="animate-spin" /> Generating
-                    layout from AI ...
-                  </>
-                ) : (
-                  <>
-                    <BsStars size={20} /> Generate layout from AI
-                  </>
-                )}
-              </Button>
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 
