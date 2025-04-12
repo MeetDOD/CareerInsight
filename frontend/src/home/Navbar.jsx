@@ -46,9 +46,9 @@ const Navbar = () => {
                 {/* <NavLink to="/">
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Home</li>
                 </NavLink> */}
-                <NavLink to="/codingquestions">
+                {/* <NavLink to="/codingquestions">
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>Coding</li>
-                </NavLink>
+                </NavLink> */}
                 {/* <NavLink to="/about">
                     <li className='py-1 hover:bg-primary hover:text-white px-2 rounded-md hover:-translate-y-1 transition duration-300'>About</li>
                 </NavLink> */}
@@ -96,7 +96,7 @@ const Navbar = () => {
                         {/* <NavLink to="/" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Home</p></NavLink> */}
                         {/* <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">About</p></NavLink> */}
                         <NavLink to="/courses" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Courses</p></NavLink>
-                        <NavLink to="/codingquestions" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Coding</p></NavLink>
+                        {/* <NavLink to="/codingquestions" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Coding</p></NavLink> */}
                         <NavLink to="/riverflow" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Riverflow</p></NavLink>
                         <NavLink to="/pricing" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Pricing</p></NavLink>
                         <NavLink to="/leaderboard" onClick={() => setShowMenu(false)}><p className="px-4 py-2 hover:text-primary transition rounded-md inline-block">Leaderboard</p></NavLink>

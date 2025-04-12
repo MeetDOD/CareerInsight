@@ -129,10 +129,10 @@ const PricingSection = () => {
           <ShinyButton
             onClick={handleUpgrade}
             className={`py-3 w-full mt-6 font-semibold text-lg 
-              ${user1.subscribed ? "bg-gray-400 text-gray-700 cursor-not-allowed" : "bg-white text-gray-900"}`}
-            disabled={user1.subscribed}
+              ${user1?.subscribed ? "bg-gray-400 text-gray-700 cursor-not-allowed" : "bg-white text-gray-900"}`}
+            disabled={user1?.subscribed}
           >
-            {user1.subscribed ? "Subscribed" : "Upgrade Now"}
+            {user1?.subscribed ? "Subscribed" : "Upgrade Now"}
           </ShinyButton>
         </div>
       </div>

@@ -14,6 +14,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "@/store/auth";
 import { MdDelete } from "react-icons/md";
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
+import Loader from "@/services/Loader";
 
 const Questions = () => {
     const user = useRecoilValue(userState);
@@ -21,6 +22,7 @@ const Questions = () => {
     const [search, setSearch] = useState("");
     const [showDialog, setShowDialog] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [questionLoading, setQuestionLoading] = useState(false);
     const [questionData, setQuestionData] = useState({
         title: "",
         body: "",
@@ -29,12 +31,14 @@ const Questions = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
+            setQuestionLoading(true);
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/questions`);
                 setQuestions(res.data);
-                console.log(res.data);
             } catch (error) {
                 console.error("Error fetching questions", error);
+            } finally {
+                setQuestionLoading(false);
             }
         };
         fetchQuestions();
@@ -91,6 +95,10 @@ const Questions = () => {
         }
     };
 
+    if (questionLoading) {
+        return <Loader />;
+    }
+
     return (
         <div className="py-6">
             <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -116,79 +124,82 @@ const Questions = () => {
                 Questions with new activity
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="space-y-4 pb-10 lg:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 ">
+                <div className="pb-10 lg:col-span-2 space-y-4">
                     {questions
                         .filter(q => q.title.toLowerCase().includes(search.toLowerCase()))
                         .map((question) => (
-                            <Link to={`/question/${question._id}`} key={question._id} className="w-full">
-                                <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg w-full break-words hover:shadow-md transition duration-300 hover:-translate-y-2 " style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
-                                    <div className="flex flex-wrap justify-between items-center gap-2">
-                                        <div className="flex flex-wrap items-center gap-2 text-gray-700 text-sm">
-                                            <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-3 py-1 rounded-lg shadow-sm">
-                                                <ThumbsUp className="w-5 h-5" />
-                                                <span className="font-semibold">{question.votes}</span>
-                                                <span className="text-xs">Votes</span>
-                                            </div>
-                                            <div className="flex items-center gap-1 text-green-600 bg-green-100 px-3 py-1 rounded-lg shadow-sm">
-                                                <MessageCircle className="w-5 h-5" />
-                                                <span className="font-semibold">{question.answers.length}</span>
-                                                <span className="text-xs">Answers</span>
-                                            </div>
-                                            <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-3 py-1 rounded-lg shadow-sm">
-                                                <Eye className="w-5 h-5" />
-                                                <span className="font-semibold">{question.views}</span>
-                                                <span className="text-xs">Views</span>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            {question?.author?._id === user?._id && (
-                                                <div onClick={() => handleDelete(question._id)} className="cursor-pointer text-white rounded-md bg-red-500 p-2 hover:bg-red-600 transition-colors duration-200 gap-2">
-                                                    <MdDelete size={22} />
+                            <div key={question._id} className="w-full">
+                                <Link to={`/question/${question._id}`} key={question._id} className="w-full block">
+                                    <CardContent className="p-5 space-y-3 border shadow-sm rounded-lg w-full break-words hover:shadow-md transition duration-300 hover:-translate-y-2 " style={{ borderColor: `var(--borderColor)`, backgroundColor: `var(--background-color)` }}>
+                                        <div className="flex flex-wrap justify-between items-center gap-2">
+                                            <div className="flex flex-wrap items-center gap-2 text-gray-700 text-sm">
+                                                <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-3 py-1 rounded-lg shadow-sm">
+                                                    <ThumbsUp className="w-5 h-5" />
+                                                    <span className="font-semibold">{question.votes}</span>
+                                                    <span className="text-xs">Votes</span>
                                                 </div>
-                                            )}
-                                        </div>
-                                    </div>
+                                                <div className="flex items-center gap-1 text-green-600 bg-green-100 px-3 py-1 rounded-lg shadow-sm">
+                                                    <MessageCircle className="w-5 h-5" />
+                                                    <span className="font-semibold">{question.answers.length}</span>
+                                                    <span className="text-xs">Answers</span>
+                                                </div>
+                                                <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-3 py-1 rounded-lg shadow-sm">
+                                                    <Eye className="w-5 h-5" />
+                                                    <span className="font-semibold">{question.views}</span>
+                                                    <span className="text-xs">Views</span>
+                                                </div>
+                                            </div>
 
-                                    <div className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200 ">
-                                        {question.title}
-                                    </div>
-
-                                    <CardDescription className="line-clamp-2">
-                                        {question.body}
-                                    </CardDescription>
-
-                                    <div className="flex flex-wrap gap-2">
-                                        {question.tags.map((tag, index) => (
-                                            <Badge key={index} variant="outline" className="px-2 py-1 text-xs font-medium text-primary bg-violet-50 rounded-full">
-                                                {tag}
-                                            </Badge>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex justify-between items-center text-xs pt-2 mt-3">
-                                        <div className="flex items-center gap-1">
-                                            <span>Asked on</span>
-                                            <span className="font-medium">{new Date(question.createdAt).toDateString()}</span>
+                                            <div>
+                                                {question?.author?._id === user?._id && (
+                                                    <div onClick={() => handleDelete(question._id)} className="cursor-pointer text-white rounded-md bg-red-500 p-2 hover:bg-red-600 transition-colors duration-200 gap-2">
+                                                        <MdDelete size={22} />
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
 
-                                        <div className="flex items-center gap-2">
-                                            <img src={question.author.photo} alt={question.author.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-primary shadow-sm" />
-                                            <span className="font-medium">{question.author.fullName}</span>
+                                        <div className="text-lg font-semibold text-primary hover:text-violet-800 transition-colors duration-200 ">
+                                            {question.title}
                                         </div>
-                                    </div>
 
-                                    {question.acceptedAnswer && (
-                                        <div className="mt-3 text-green-500 font-medium flex items-center gap-2 border w-fit px-3 py-2 rounded-md bg-green-50 border-green-500">
-                                            <FaCheckCircle size={20} />
-                                            <span>Answer Accepted</span>
+                                        <CardDescription className="line-clamp-2">
+                                            {question.body}
+                                        </CardDescription>
+
+                                        <div className="flex flex-wrap gap-2">
+                                            {question.tags.map((tag, index) => (
+                                                <Badge key={index} variant="outline" className="px-2 py-1 text-xs font-medium text-primary bg-violet-50 rounded-full">
+                                                    {tag}
+                                                </Badge>
+                                            ))}
                                         </div>
-                                    )}
-                                </CardContent>
-                            </Link>
+
+                                        <div className="flex justify-between items-center text-xs pt-2 mt-3">
+                                            <div className="flex items-center gap-1">
+                                                <span>Asked on</span>
+                                                <span className="font-medium">{new Date(question.createdAt).toDateString()}</span>
+                                            </div>
+
+                                            <div className="flex items-center gap-2">
+                                                <img src={question.author.photo} alt={question.author.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-primary shadow-sm" />
+                                                <span className="font-medium">{question.author.fullName}</span>
+                                            </div>
+                                        </div>
+
+                                        {question.acceptedAnswer && (
+                                            <div className="mt-3 text-green-500 font-medium flex items-center gap-2 border w-fit px-3 py-2 rounded-md bg-green-50 border-green-500">
+                                                <FaCheckCircle size={20} />
+                                                <span>Answer Accepted</span>
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Link>
+                            </div>
                         ))}
                 </div>
+
                 <div className="hidden lg:block mb-10">
                     <div className="bg-yellow-50 border-2 border-yellow-400 p-4 rounded-lg shadow-md sticky top-20">
                         <h2 className="text-lg text-gray-800 font-semibold">How to Use RiverFlow</h2>
