@@ -20,30 +20,31 @@ const fetchGradientImage = async () => {
       `https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=galaxy+night+sky+stars&image_type=photo&safesearch=true&per_page=50`
     );
     if (response.data.hits && response.data.hits.length > 0) {
-      const randomImage = response.data.hits[Math.floor(Math.random() * response.data.hits.length)];
+      const randomImage =
+        response.data.hits[
+          Math.floor(Math.random() * response.data.hits.length)
+        ];
       return randomImage.largeImageURL;
     }
     return null;
   } catch (err) {
-    console.error("Error fetching thumbnail image:", err);
     return null;
   }
 };
 
-
 const addPauses = (text) => {
   return text
-    .replace(/\./g, ". ")  
-    .replace(/,/g, ", ") 
-    .replace(/ and /g, " ... and ") 
-    .replace(/\? /g, "? ... ") 
+    .replace(/\./g, ". ")
+    .replace(/,/g, ", ")
+    .replace(/ and /g, " ... and ")
+    .replace(/\? /g, "? ... ");
 };
 
 const sanitizeTextForTTS = (text) =>
   text
-    .replace(/\*/g, "") 
-    .replace(/[^a-zA-Z0-9.,'?!\s]/g, "") 
-    .replace(/\s+/g, " ") 
+    .replace(/\*/g, "")
+    .replace(/[^a-zA-Z0-9.,'?!\s]/g, "")
+    .replace(/\s+/g, " ")
     .trim()
     .slice(0, 250);
 
@@ -60,7 +61,10 @@ const elevenLabsVoices = {
 const generateAudioWithAxios = async (text, voiceId) => {
   const apiKey = process.env.ELEVENLABS_API_KEY;
 
-  const pacedText = text.replace(/,/g, ", ").replace(/\./g, ". ").replace(/ and /gi, " ... and ");
+  const pacedText = text
+    .replace(/,/g, ", ")
+    .replace(/\./g, ". ")
+    .replace(/ and /gi, " ... and ");
 
   const response = await axios.post(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream`,
@@ -68,7 +72,7 @@ const generateAudioWithAxios = async (text, voiceId) => {
       text: pacedText,
       model_id: "eleven_multilingual_v2",
       voice_settings: {
-        stability: 0.35, 
+        stability: 0.35,
         similarity_boost: 0.85,
       },
     },
@@ -112,7 +116,7 @@ const createPodcast = async (req, res) => {
     Host1 speaks like ${voice1}, Host2 speaks like ${voice2}. 
     start with hey welcome to careerinsights podcast and then talk about the
     Topic: "${topic}". Mark lines with 'Host1:' or 'Host2:'. 
-    Keep it concise with around 14 to 15 lines total only, each line less than 200 characters.`;    
+    Keep it concise with around 14 to 15 lines total only, each line less than 200 characters.`;
 
     const result = await chatSession.sendMessage(prompt);
     const conversation = result.response.text();
@@ -129,7 +133,12 @@ const createPodcast = async (req, res) => {
 
     const tempAudioFiles = [];
 
-    const generateAudioForLine = async (text, voiceId, lineIndex, attempt = 1) => {
+    const generateAudioForLine = async (
+      text,
+      voiceId,
+      lineIndex,
+      attempt = 1
+    ) => {
       const safeText = addPauses(sanitizeTextForTTS(text));
       if (!safeText || safeText.length < 2) {
         console.warn(`Line ${lineIndex} text too short or invalid, skipping.`);
@@ -186,17 +195,11 @@ const createPodcast = async (req, res) => {
     await new Promise((resolve, reject) => {
       const merger = ffmpeg();
       tempAudioFiles.forEach((file) => merger.input(file));
-      merger
-        .on("end", resolve)
-        .on("error", reject)
-        .mergeToFile(mergedFilePath);
+      merger.on("end", resolve).on("error", reject).mergeToFile(mergedFilePath);
     });
 
     console.log("Uploading merged audio to Cloudinary...");
     const audioUrl = await uploadToCloudinary(mergedFilePath);
-
-    console.log("Fetching podcast thumbnail...");
-    const thumbnail = await fetchGradientImage();
 
     console.log("Saving podcast in database...");
     const newPodcast = await Podcast.create({
@@ -206,12 +209,9 @@ const createPodcast = async (req, res) => {
       voice2,
       audioUrl,
       conversation,
-      thumbnail
     });
 
-    [...tempAudioFiles, mergedFilePath].forEach((file) =>
-      fs.unlinkSync(file)
-    );
+    [...tempAudioFiles, mergedFilePath].forEach((file) => fs.unlinkSync(file));
 
     console.log("Podcast generation complete!");
 
@@ -257,5 +257,4 @@ const getAllPodcasts = async (req, res) => {
   }
 };
 
-
-module.exports = { createPodcast,getAllPodcasts };
+module.exports = { createPodcast, getAllPodcasts };
