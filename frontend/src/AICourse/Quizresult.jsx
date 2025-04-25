@@ -16,11 +16,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { userState } from "@/store/auth";
+import { useRecoilValue } from "recoil";
 
 const Quizresult = () => {
   const [quizResults, setQuizResults] = useState([]);
   const [expandedQuiz, setExpandedQuiz] = useState(null);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const user = useRecoilValue(userState);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
@@ -82,123 +85,117 @@ const Quizresult = () => {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-5">
-            Quiz Results
+            <span className="text-primary">{user?.fullName}</span> Quiz Results
           </h1>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {quizResults.length > 0 ? (
               quizResults.map((quiz) => (
-                <div
-                  key={quiz._id}
-                >
-                  <Card
-                    className="relative rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 group flex flex-col h-full hover:-translate-y-1"
-                    style={{
-                      backgroundImage: `url(${quiz.course.thumbnail})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      minHeight: "150px",
-                      borderColor: `var(--borderColor)`,
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-black/30 to-transparent z-0 transition-opacity group-hover:opacity-90"></div>
-
-                    <div className="relative z-10 flex flex-col h-full p-4 text-white">
-                      <CardHeader className="p-0 mb-4">
-                        <CardTitle className="text-lg font-semibold flex justify-between items-center">
-                          <span className="line-clamp-1 bg-primary rounded-md px-2 py-1">Quiz: {quiz.course.courseName}</span>
-                          <span className="ml-2 bg-primary rounded-md px-2 py-1 ">
+                <div key={quiz._id}>
+                  <Card className="group relative flex flex-col overflow-hidden rounded-xl border shadow-md transition hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: `var(--background-color)`, borderColor: `var(--borderColor)` }}>
+                    <div className="flex items-center gap-4 p-4">
+                      <img
+                        src={quiz.course.thumbnail}
+                        alt="Course Thumbnail"
+                        className="h-20 w-20 rounded-lg object-cover"
+                      />
+                      <div className="flex flex-col justify-between w-full">
+                        <div className="flex justify-between items-center">
+                          <h2 className="text-lg font-semibold line-clamp-1 px-3 py-1 rounded-md" style={{ color: `var(--text-color)` }}>
+                            Quiz: {quiz.course.courseName}
+                          </h2>
+                          <span className="text-sm bg-primary text-white px-3 py-1 rounded-md">
                             {quiz.score}/{quiz.questions.length}
                           </span>
-                        </CardTitle>
-                      </CardHeader>
+                        </div>
 
-                      <CardContent className="mt-auto p-0">
-                        <div className="flex flex-row gap-2">
+                        <div className="mt-4 flex gap-3">
                           <Button
                             variant="secondary"
                             onClick={() =>
                               navigate(`/viewcourse/${quiz.course._id}/careerinsight/${quiz.course.courseName}`)
                             }
-                            className="flex-1 border"
+                            className="w-full"
                           >
-                            View Courses
+                            View Course
                           </Button>
 
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button
-                                className="flex-1"
                                 onClick={() => setSelectedQuiz(quiz)}
+                                className="w-full"
                               >
                                 View Details
                               </Button>
                             </DialogTrigger>
-                            <DialogContent
-                              className="max-h-[90vh] max-w-[90vw] md:max-w-[600px] lg:max-w-[800px] overflow-y-auto"
-                              style={{
-                                borderColor: `var(--borderColor)`,
-                                backgroundColor: `var(--background-color)`,
-                              }}
-                            >
+
+                            <DialogContent className="max-h-[90vh] max-w-[90vw] md:max-w-[600px] lg:max-w-[800px] overflow-y-auto dark:bg-gray-900">
                               <DialogHeader>
                                 <DialogTitle>
-                                  Quiz Details for {selectedQuiz?.course.courseName}
+                                  Quiz Details - {selectedQuiz?.course.courseName}
                                 </DialogTitle>
                               </DialogHeader>
 
-                              {selectedQuiz?.questions.map((q, index) => (
-                                <div
-                                  key={index}
-                                  className={`rounded-xl p-4 shadow-sm border transition-all duration-300 hover:shadow-md ${q.isCorrect ? "border-green-400 bg-green-50" : "border-red-400 bg-red-50"
-                                    }`}
-                                >
-                                  <div className="flex items-start justify-between mb-2">
-                                    <h3 className="text-base font-semibold text-gray-800 dark:text-white">
-                                      {index + 1}. {q.questionText}
-                                    </h3>
-                                    <div
-                                      className={`px-2 ml-2 py-0.5 text-xs font-medium rounded-full ${q.isCorrect ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"
-                                        }`}
-                                    >
-                                      {q.isCorrect ? "Correct" : "Incorrect"}
-                                    </div>
-                                  </div>
-
-                                  <div className="flex items-center gap-2 mt-1 text-sm">
-                                    <div
-                                      className={`flex items-center justify-center w-6 h-6 rounded-full ${q.isCorrect ? "bg-green-500" : "bg-red-500"
-                                        }`}
-                                    >
-                                      {q.isCorrect ? (
-                                        <CircleCheck className="text-white" size={16} />
-                                      ) : (
-                                        <CircleX className="text-white" size={16} />
-                                      )}
-                                    </div>
-                                    <span className="text-gray-700 dark:text-gray-300">
-                                      <strong>Your Answer:</strong> {q.userAnswer}
-                                    </span>
-                                  </div>
-
-                                  {!q.isCorrect && (
-                                    <div className="flex items-center gap-2 mt-1 text-sm">
-                                      <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500">
-                                        <CircleCheck className="text-white" size={16} />
-                                      </div>
-                                      <span className="text-gray-700 dark:text-gray-300">
-                                        <strong>Correct Answer:</strong> {q.correctAnswer}
+                              <div className="space-y-4 mt-4">
+                                {selectedQuiz?.questions.map((q, index) => (
+                                  <div
+                                    key={index}
+                                    className={`rounded-lg p-4 border shadow-sm transition-all duration-300 ${q.isCorrect
+                                      ? "border-green-400 bg-green-50"
+                                      : "border-red-400 bg-red-50"
+                                      }`}
+                                  >
+                                    <div className="flex justify-between items-start mb-2">
+                                      <h3 className="text-base font-semibold text-gray-800 dark:text-white">
+                                        {index + 1}. {q.questionText}
+                                      </h3>
+                                      <span
+                                        className={`text-xs px-2 py-1 rounded-full font-medium ${q.isCorrect
+                                          ? "bg-green-200 text-green-800"
+                                          : "bg-red-200 text-red-800"
+                                          }`}
+                                      >
+                                        {q.isCorrect ? "Correct" : "Incorrect"}
                                       </span>
                                     </div>
-                                  )}
-                                </div>
-                              ))}
+
+                                    <div className="flex items-center gap-2 mt-2 text-sm">
+                                      <div
+                                        className={`w-6 h-6 flex items-center justify-center rounded-full ${q.isCorrect ? "bg-green-500" : "bg-red-500"
+                                          }`}
+                                      >
+                                        {q.isCorrect ? (
+                                          <CircleCheck className="text-white" size={16} />
+                                        ) : (
+                                          <CircleX className="text-white" size={16} />
+                                        )}
+                                      </div>
+                                      <span className="text-gray-700 dark:text-gray-300">
+                                        <strong>Your Answer:</strong> {q.userAnswer}
+                                      </span>
+                                    </div>
+
+                                    {!q.isCorrect && (
+                                      <div className="flex items-center gap-2 mt-2 text-sm">
+                                        <div className="w-6 h-6 flex items-center justify-center rounded-full bg-green-500">
+                                          <CircleCheck className="text-white" size={16} />
+                                        </div>
+                                        <span className="text-gray-700 dark:text-gray-300">
+                                          <strong>Correct Answer:</strong> {q.correctAnswer}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
                             </DialogContent>
                           </Dialog>
                         </div>
-                      </CardContent>
+                      </div>
                     </div>
                   </Card>
                 </div>
+
               ))
             ) : (
               <p className="text-gray-600 text-center">No quiz results found.</p>
