@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: flask-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend:app
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
