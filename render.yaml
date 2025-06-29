@@ -3,7 +3,7 @@ services:
     name: flask-backend
     env: python
     plan: free
-    buildCommand: pip install -r flask/requirements.txt
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn backend:app
     rootDir: flask
     envVars:
