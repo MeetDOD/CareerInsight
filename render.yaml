@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: flask-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r flask/requirements.txt
+    startCommand: gunicorn backend:app
+    rootDir: flask
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
